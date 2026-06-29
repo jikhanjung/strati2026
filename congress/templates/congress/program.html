@@ -11,18 +11,47 @@
   {% endfor %}
 </div>
 
+<div class="roomtabs" role="tablist">
+  {% if plenary %}<button class="roomtab on" data-panel="plenary" data-room="Plenary">Plenary</button>{% endif %}
+  {% for room, short, talks in columns %}
+    <button class="roomtab {% if not plenary and forloop.first %}on{% endif %}"
+            data-panel="r{{ forloop.counter }}" data-room="{{ room }}">{{ short }}</button>
+  {% endfor %}
+</div>
+
 {% if plenary %}
-<section class="room">
+<section class="room panel on" data-panel="plenary">
   <h2 class="room-h">Plenary &amp; Ceremony</h2>
   {% for t in plenary %}{% include "congress/_talk_item.html" %}{% endfor %}
 </section>
 {% endif %}
 
-{% for room, talks in columns %}
-<section class="room">
-  <h2 class="room-h">{{ room }}</h2>
+{% for room, short, talks in columns %}
+<section class="room panel {% if not plenary and forloop.first %}on{% endif %}" data-panel="r{{ forloop.counter }}">
+  <h2 class="room-h">{{ room }}{% if talks.0.floor %} · {{ talks.0.floor }}{% endif %}</h2>
   {% for t in talks %}{% include "congress/_talk_item.html" %}{% endfor %}
 </section>
 {% endfor %}
 {% endif %}
+{% endblock %}
+
+{% block scripts %}
+<script>
+(function () {
+  const tabs = [...document.querySelectorAll('.roomtab')];
+  const panels = [...document.querySelectorAll('.panel')];
+  if (!tabs.length) return;
+  function activate(panel) {
+    tabs.forEach(t => t.classList.toggle('on', t.dataset.panel === panel));
+    panels.forEach(p => p.classList.toggle('on', p.dataset.panel === panel));
+    const t = tabs.find(t => t.dataset.panel === panel);
+    if (t) sessionStorage.setItem('strati_room', t.dataset.room);
+  }
+  // 이전에 보던 룸 이름이 오늘도 있으면 유지, 아니면 첫 탭
+  const want = sessionStorage.getItem('strati_room');
+  const match = tabs.find(t => t.dataset.room === want);
+  activate((match || tabs[0]).dataset.panel);
+  tabs.forEach(t => t.addEventListener('click', () => activate(t.dataset.panel)));
+})();
+</script>
 {% endblock %}

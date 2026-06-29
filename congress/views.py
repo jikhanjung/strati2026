@@ -10,6 +10,14 @@ ROOM_ORDER = [
 ]
 
 
+def short_room(name):
+    if name.startswith("International Room"):
+        return "Int'l " + name.rsplit(" ", 1)[-1]
+    if name.startswith("Room "):
+        return name.split(" ", 1)[1]
+    return name
+
+
 def _days():
     return list(Talk.objects.order_by("date").values_list("date", flat=True).distinct())
 
@@ -49,7 +57,7 @@ def program(request):
             by_room[t.room].append(t)
         else:
             plenary.append(t)
-    columns = [(r, by_room[r]) for r in rooms]
+    columns = [(r, short_room(r), by_room[r]) for r in rooms]
 
     return render(request, "congress/program.html", {
         "days": days, "selected": sel, "columns": columns, "plenary": plenary,
