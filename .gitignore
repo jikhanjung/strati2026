@@ -1,0 +1,9 @@
+# 원본 PDF (대용량) — output/JSON 만 추적
+data/
+build/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
