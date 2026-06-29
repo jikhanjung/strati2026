@@ -1,6 +1,11 @@
 """output/*.json → DB 적재.
 
-  python manage.py import_json
+  python manage.py import_json            # 전체 wipe 후 재적재(기본)
+  python manage.py import_json --upsert   # PK 기준 update + 신규 insert (wipe 없음)
+  python manage.py import_json --if-empty # 데이터 있으면 건너뜀
+
+북마크는 클라이언트(localStorage)에 있어 DB엔 사용자 데이터가 없으므로,
+--upsert 는 output/*.json 을 안전하게 DB에 반영(재배포 시 자동 갱신)한다.
 """
 import datetime as dt
 import json
@@ -18,7 +23,6 @@ YEAR = 2026
 
 
 def parse_day(label):
-    # "June 29" -> date(2026, 6, 29)
     m, d = label.split()
     return dt.date(YEAR, MONTHS[m], int(d))
 
@@ -36,35 +40,47 @@ class Command(BaseCommand):
     def add_arguments(self, parser):
         parser.add_argument(
             "--if-empty", action="store_true",
-            help="이미 데이터가 있으면 건너뜀 (컨테이너 최초 기동용).")
+            help="이미 데이터가 있으면 건너뜀.")
+        parser.add_argument(
+            "--upsert", action="store_true",
+            help="wipe 없이 PK 기준 update + 신규 insert.")
 
     def load(self, name):
         path = settings.OUTPUT_DIR / name
         return json.loads(path.read_text(encoding="utf-8"))
+
+    def save(self, model, objs, unique_fields, update_fields, upsert):
+        if upsert:
+            model.objects.bulk_create(
+                objs, update_conflicts=True,
+                unique_fields=unique_fields, update_fields=update_fields)
+        else:
+            model.objects.bulk_create(objs)
 
     @transaction.atomic
     def handle(self, *args, **opts):
         if opts.get("if_empty") and Talk.objects.exists():
             self.stdout.write("data already present, skip (--if-empty)")
             return
-        # 기존 데이터 초기화 (재적재 가능하도록)
-        Talk.objects.all().delete()
-        Abstract.objects.all().delete()
-        Session.objects.all().delete()
+        upsert = opts.get("upsert")
+        if not upsert:
+            Talk.objects.all().delete()
+            Abstract.objects.all().delete()
+            Session.objects.all().delete()
 
         # 1) sessions
         sess = self.load("sessions.json")["sessions"]
-        Session.objects.bulk_create([
+        self.save(Session, [
             Session(code=s["code"], category=s["category"],
                     title=s.get("title") or "", poster_count=s.get("poster_count", 0))
             for s in sess
-        ])
+        ], ["code"], ["category", "title", "poster_count"], upsert)
         codes = set(Session.objects.values_list("code", flat=True))
         self.stdout.write(f"sessions: {len(sess)}")
 
         # 2) abstracts (원본 id 보존)
         absx = self.load("abstracts.json")["abstracts"]
-        Abstract.objects.bulk_create([
+        self.save(Abstract, [
             Abstract(
                 id=a["id"],
                 session_id=a["session"] if a["session"] in codes else None,
@@ -76,7 +92,8 @@ class Command(BaseCommand):
                 affiliations=a.get("affiliations_raw", []),
             )
             for a in absx
-        ])
+        ], ["id"], ["session", "page", "title", "abstract_text",
+                    "keywords", "authors", "affiliations"], upsert)
         self.stdout.write(f"abstracts: {len(absx)}")
 
         # 3) talks (program)
@@ -99,6 +116,10 @@ class Command(BaseCommand):
                 abstract_id=t.get("abstract_id"),
                 page=t.get("page"),
             ))
-        Talk.objects.bulk_create(objs)
+        self.save(Talk, objs, ["id"],
+                  ["date", "day_label", "room", "session", "time_start",
+                   "time_end", "title", "first_author", "kind", "abstract", "page"],
+                  upsert)
         self.stdout.write(f"talks: {len(objs)} (linked={sum(1 for o in objs if o.abstract_id)})")
-        self.stdout.write(self.style.SUCCESS("import complete"))
+        self.stdout.write(self.style.SUCCESS(
+            "import complete" + (" (upsert)" if upsert else "")))
