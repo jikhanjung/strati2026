@@ -1,5 +1,16 @@
 from django.db import models
 
+# 룸 → 층 (핸드북 p28 Floor Plan)
+ROOM_FLOOR = {
+    "International Room I": "7F",
+    "International Room II": "7F",
+    "International Room III": "7F",
+    "Room 773": "7F",
+    "Room 775": "7F",
+    "Room 776": "7F",
+    "Kunshan Hall": "3F",
+}
+
 
 class Session(models.Model):
     """학술 세션 (G1..G18, S1..S14)."""
@@ -62,3 +73,7 @@ class Talk(models.Model):
 
     def __str__(self):
         return f"[{self.day_label} {self.time_start:%H:%M}] {self.title}"
+
+    @property
+    def floor(self):
+        return ROOM_FLOOR.get(self.room, "")

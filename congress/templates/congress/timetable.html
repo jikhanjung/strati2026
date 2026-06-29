@@ -28,12 +28,14 @@
                       .sort((a,b)=>a.start.localeCompare(b.start));
     html += `<section class="room"><h2 class="room-h">${day}</h2>`;
     items.forEach(t => {
+      const place = [t.room, t.floor].filter(Boolean).join(' · ');
       html += `<div class="talk" data-id="${t.id}">
         <div class="talk-time">${t.start}${t.end?'–'+t.end:''}</div>
         <div class="talk-body">
           <a class="talk-title" href="/talk/${t.id}/">${STRATI.esc(t.title)}</a>
           <div class="talk-meta">${t.session?`<span class="badge">${t.session}</span>`:''}
-            ${t.room?`<span class="author">${STRATI.esc(t.room)}</span>`:''}</div>
+            ${t.author?`<span class="author">${STRATI.esc(t.author)}</span>`:''}</div>
+          ${place?`<div class="talk-place">📍 ${STRATI.esc(place)}</div>`:''}
         </div>
         <button class="bm" data-id="${t.id}">★</button>
       </div>`;

@@ -21,6 +21,7 @@ def _talk_payload(t):
         "date": t.date.isoformat(),
         "room": t.room,
         "session": t.session_id,
+        "floor": t.floor,
         "start": t.time_start.strftime("%H:%M") if t.time_start else "",
         "end": t.time_end.strftime("%H:%M") if t.time_end else "",
         "title": t.title,

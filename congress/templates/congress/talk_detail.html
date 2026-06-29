@@ -6,7 +6,7 @@
   <div class="detail-when">
     <span class="badge">{{ talk.session_id }}</span>
     {{ talk.day_label }} · {{ talk.time_start|time:"H:i" }}{% if talk.time_end %}–{{ talk.time_end|time:"H:i" }}{% endif %}
-    {% if talk.room %} · {{ talk.room }}{% endif %}
+    {% if talk.room %} · {{ talk.room }}{% if talk.floor %} ({{ talk.floor }}){% endif %}{% endif %}
     <button class="bm big" data-id="{{ talk.id }}" aria-label="bookmark">☆</button>
   </div>
   {% endif %}
