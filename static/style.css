@@ -42,7 +42,7 @@ a { color: inherit; text-decoration: none; }
 .daychip.on b { color: #fff; }
 
 /* Room tabs (concurrent sessions) */
-.roomtabs { display: flex; gap: 6px; overflow-x: auto; padding: 2px 2px 12px;
+.roomtabs { display: flex; gap: 6px; overflow-x: auto; padding: 2px 2px 4px;
   -webkit-overflow-scrolling: touch; }
 .roomtab { flex: 0 0 auto; background: var(--card); border: 1px solid var(--line);
   border-radius: 999px; padding: 7px 14px; font-size: 13px; font-weight: 600;
@@ -54,7 +54,7 @@ a { color: inherit; text-decoration: none; }
 /* Room section */
 .room { margin-bottom: 18px; }
 .room-h { font-size: 13px; text-transform: uppercase; letter-spacing: .6px;
-  color: var(--muted); margin: 14px 4px 8px; }
+  color: var(--muted); margin: 2px 4px 8px; }
 
 /* Talk card */
 .talk { display: flex; gap: 10px; align-items: flex-start;
