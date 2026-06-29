@@ -21,6 +21,10 @@
   {% endfor %}
 </div>
 
+<div id="ctxbar" class="ctxbar" hidden>
+  <b>{{ selected|date:'D M j' }}</b><span class="ctxsep">·</span><span id="ctxroom"></span>
+</div>
+
 {% if plenary %}
 <section class="room panel on" data-panel="plenary">
   <h2 class="room-h">Plenary &amp; Ceremony</h2>
@@ -47,12 +51,33 @@
   const tabs = [...document.querySelectorAll('.roomtab')];
   const panels = [...document.querySelectorAll('.panel')];
   if (!tabs.length) return;
+  const appbar = document.querySelector('.appbar');
+  const roomtabsEl = document.querySelector('.roomtabs');
+  const ctxbar = document.getElementById('ctxbar');
+  const ctxroom = document.getElementById('ctxroom');
+
   function activate(panel) {
     tabs.forEach(t => t.classList.toggle('on', t.dataset.panel === panel));
     panels.forEach(p => p.classList.toggle('on', p.dataset.panel === panel));
     const t = tabs.find(t => t.dataset.panel === panel);
-    if (t) sessionStorage.setItem('strati_room', t.dataset.room);
+    if (t) {
+      sessionStorage.setItem('strati_room', t.dataset.room);
+      if (ctxroom) ctxroom.textContent = t.textContent.trim();
+    }
     placeNow();
+    updateCtx();
+  }
+
+  // 날짜·룸 버튼이 위로 스크롤돼 안 보이면 현재 날짜/룸을 상단에 플로팅
+  function updateCtx() {
+    if (!ctxbar || !roomtabsEl) return;
+    const abBottom = appbar ? appbar.getBoundingClientRect().bottom : 0;
+    if (roomtabsEl.getBoundingClientRect().bottom <= abBottom + 1) {
+      ctxbar.style.top = abBottom + 'px';
+      ctxbar.hidden = false;
+    } else {
+      ctxbar.hidden = true;
+    }
   }
 
   // ── 현재 시각 빨간 줄 ──────────────────────────────────────────────
@@ -111,20 +136,15 @@
     });
   }
 
-  // DB에 일정이 없는 시간대면 배너로 알림
+  // 오늘이 학회일이 아니면 상단 배너로 알림 (진행중 아님 메시지는 현재 시각 줄에 표시)
   function updateBanner(sn) {
     if (!nowbanner) return;
-    if (!ALL_DAYS.includes(sn.date)) {            // 오늘이 학회일이 아님
+    if (!ALL_DAYS.includes(sn.date)) {
       nowbanner.textContent = 'No talks are scheduled today.';
       nowbanner.hidden = false;
-      return;
+    } else {
+      nowbanner.hidden = true;
     }
-    if (sn.date === SEL_DAY && !talkInProgress(sn.min)) {  // 학회일이지만 빈 시간
-      nowbanner.textContent = 'No talk is in session right now.';
-      nowbanner.hidden = false;
-      return;
-    }
-    nowbanner.hidden = true;
   }
 
   let lineY = null;                     // 현재 줄의 문서상 y (점프용)
@@ -144,7 +164,10 @@
     const line = document.createElement('div');
     line.className = 'nowline';
     line.style.top = y + 'px';
-    line.innerHTML = '<span class="nowdot"></span>';
+    // 진행 중인 발표가 없으면 현재 시각 줄(아침=첫 발표 위 / 저녁=마지막 발표 아래)에 안내
+    const lbl = talkInProgress(sn.min) ? ''
+      : '<span class="nowlbl">No talk in session right now</span>';
+    line.innerHTML = '<span class="nowdot"></span>' + lbl;
     panel.appendChild(line);
     lineY = line.getBoundingClientRect().top + window.scrollY;
     updateBtn();
@@ -164,8 +187,8 @@
     nowbtn.hidden = top > 60 && bottom < window.innerHeight - 60;
   }
   if (nowbtn) nowbtn.addEventListener('click', jumpToNow);
-  window.addEventListener('scroll', updateBtn, { passive: true });
-  window.addEventListener('resize', placeNow);
+  window.addEventListener('scroll', () => { updateBtn(); updateCtx(); }, { passive: true });
+  window.addEventListener('resize', () => { placeNow(); updateCtx(); });
   setInterval(placeNow, 60000);        // 1분마다 갱신
 
   // ── 좌우 스와이프로 룸 전환 (모바일) ───────────────────────────────
