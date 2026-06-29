@@ -79,6 +79,14 @@ a { color: inherit; text-decoration: none; }
 .gcol { position: relative; scroll-snap-align: start; }
 .gtalk { position: absolute; left: 0; right: 0; margin: 0; overflow: hidden; }
 
+/* Compressed empty time / break label between blocks (My Plan) */
+.gap { display: flex; align-items: center; gap: 8px; margin: 4px 2px;
+  color: var(--muted); font-size: 12px; font-weight: 600; letter-spacing: .3px;
+  justify-content: center; }
+.gap::before, .gap::after { content: ""; flex: 1; border-top: 1px dashed var(--line); }
+.gap-brk { color: #8a5a00; }
+.gap-sm { height: 6px; }
+
 /* Now indicator (current time, red line) */
 .nowline { position: absolute; left: 0; right: 0; height: 0;
   border-top: 2px solid #e23b3b; pointer-events: none; z-index: 5; }

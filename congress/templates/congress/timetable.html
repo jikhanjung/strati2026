@@ -22,7 +22,10 @@
   const mine = all.filter(t => set.has(t.id));
   if (!mine.length) { box.innerHTML = '<p class="empty">No bookmarks found.</p>'; return; }
 
-  const PX = 3.4, MIN_H = 50;      // 겹침 그리드: 분당 픽셀, 박스 최소 높이
+  // 절대 시간 기반: 발표/겹침은 시간 비례, 빈 시간은 압축
+  const PX = 7;            // 분당 픽셀 (15분 발표 ≈ 105px → 정보 다 보임)
+  const MIN_CARD = 96;     // 카드 최소 높이
+  const SINGLE_MAX = 180;  // 단독(긴) 발표 카드 최대 높이(plenary 등 과도한 여백 방지)
   function parseMin(s) {
     const m = /^(\d{1,2}):(\d{2})$/.exec(s || ""); return m ? +m[1]*60 + +m[2] : null;
   }
@@ -30,14 +33,20 @@
     const s = parseMin(t.start), e = parseMin(t.end);
     return e != null && e > s ? e : (s != null ? s + 20 : null);
   }
+  function fmtDur(m) {
+    m = Math.round(m); const h = Math.floor(m/60), mm = m%60;
+    return (h?h+'h':'') + (h&&mm?' ':'') + (mm?mm+'m':(h?'':'0m'));
+  }
 
   const days = [...new Set(mine.sort((a,b)=>a.date.localeCompare(b.date)||a.start.localeCompare(b.start)).map(t=>t.day))];
 
-  // grid=true면 클러스터 내 절대배치(top/height 인라인)
-  function talkCard(t, grid) {
+  // opts: {top,height}=클러스터 절대배치 / {minHeight}=단독 비례 높이 / 없으면 기본
+  function talkCard(t, opts) {
+    opts = opts || {};
     const place = [t.room, t.floor].filter(Boolean).join(' · ');
-    const cls = grid ? 'talk gtalk' : 'talk';
-    const style = grid ? ` style="top:${grid.top}px;height:${grid.height}px"` : '';
+    let cls = 'talk', style = '';
+    if (opts.top != null) { cls = 'talk gtalk'; style = ` style="top:${opts.top}px;height:${opts.height}px"`; }
+    else if (opts.minHeight) { style = ` style="min-height:${opts.minHeight}px"`; }
     return `<div class="${cls}" data-id="${t.id}" data-start="${t.start}" data-end="${t.end||''}"${style}>
       <div class="talk-time">${t.start}${t.end?'–'+t.end:''}</div>
       <div class="talk-body">
@@ -49,11 +58,16 @@
       <button class="bm" data-id="${t.id}">★</button>
     </div>`;
   }
-  function breakRow(b) {
-    return `<div class="brk" data-start="${b.start}" data-end="${b.end}">
-      <div class="talk-time">${b.start}–${b.end}</div>
-      <div class="brk-label">${b.label==='Lunch'?'🍽️':'☕'} ${b.label}</div>
-    </div>`;
+  // 블록 사이 빈 시간: 휴식이면 라벨, 아니면 압축(··· Xh Ym ···)
+  function gapEl(fromMin, toMin, brk) {
+    if (brk) {
+      const icon = brk.label === 'Lunch' ? '🍽️' : '☕';
+      return `<div class="gap gap-brk">${icon} ${brk.label} · ${brk.start}–${brk.end}</div>`;
+    }
+    const g = toMin - fromMin;
+    if (g >= 12) return `<div class="gap">··· ${fmtDur(g)} ···</div>`;
+    if (g > 0) return `<div class="gap-sm"></div>`;
+    return '';
   }
 
   // 시간이 겹치는 talk들을 한 묶음(클러스터)으로 — running max-end 기준
@@ -78,19 +92,23 @@
     }
     return { ncols: cols.length, colOf };
   }
-  // 2개 이상 동시: 비례 그리드 + 카드 폭 86%(옆 카드 살짝 보임) + 좌우 스크롤
-  function renderCluster(cluster) {
-    const cs = Math.min(...cluster.map(t=>parseMin(t.start)));
-    const ce = Math.max(...cluster.map(endMin));
-    const { ncols, colOf } = assignColumns(cluster);
-    const H = Math.round((ce - cs) * PX) + MIN_H;
+  function renderBlock(blk) {
+    if (blk.c.length === 1) {                       // 단독 → 전체폭, 비례 높이(잘림 방지 min-height)
+      const t = blk.c[0];
+      const h = Math.min(Math.max((endMin(t) - parseMin(t.start)) * PX, MIN_CARD), SINGLE_MAX);
+      return talkCard(t, { minHeight: Math.round(h) });
+    }
+    // 2개 이상 동시: 비례 그리드 + 카드 폭 86%(옆 카드 살짝 보임) + 좌우 스크롤
+    const cs = blk.s, ce = blk.e;
+    const { ncols, colOf } = assignColumns(blk.c);
+    const H = Math.round((ce - cs) * PX) + 6;
     const flex = ncols >= 2 ? 'flex:0 0 86%' : 'flex:0 0 100%';
     let cols = '';
     for (let c = 0; c < ncols; c++) {
       let inner = '';
-      cluster.filter(t => colOf.get(t.id) === c).forEach(t => {
+      blk.c.filter(t => colOf.get(t.id) === c).forEach(t => {
         const top = Math.round((parseMin(t.start) - cs) * PX);
-        const height = Math.max(Math.round((endMin(t) - parseMin(t.start)) * PX), MIN_H);
+        const height = Math.max(Math.round((endMin(t) - parseMin(t.start)) * PX), MIN_CARD);
         inner += talkCard(t, { top, height });
       });
       cols += `<div class="gcol" style="${flex};height:${H}px">${inner}</div>`;
@@ -114,18 +132,20 @@
     cand.forEach(b => {
       if (!breaks.some(x => x.start < b.end && b.start < x.end)) breaks.push(b);
     });
+    const breaksByEnd = {};
+    breaks.forEach(b => { breaksByEnd[parseMin(b.end)] = b; });
 
-    // 블록 = 클러스터(겹침 묶음) + 휴식, 시작시각 순
-    const blocks = [
-      ...clusterize(items).map(c => ({ s: c[0].start, k: 'c', v: c })),
-      ...breaks.map(b => ({ s: b.start, k: 'b', v: b })),
-    ].sort((a,b)=> a.s.localeCompare(b.s));
+    // 겹침 클러스터(시작시각 순) → 블록. 블록 사이는 압축된 빈 시간/휴식.
+    const blocks = clusterize(items).map(c => ({
+      c, s: Math.min(...c.map(t=>parseMin(t.start))), e: Math.max(...c.map(endMin)),
+    }));
 
     html += `<section class="room" data-date="${items[0].date}"><h2 class="room-h">${day}</h2>`;
-    blocks.forEach(blk => {
-      if (blk.k === 'b') html += breakRow(blk.v);
-      else if (blk.v.length === 1) html += talkCard(blk.v[0]);   // 단독 → 전체폭
-      else html += renderCluster(blk.v);                          // 겹침 → 컬럼
+    blocks.forEach((blk, i) => {
+      const brk = breaksByEnd[blk.s];
+      if (i === 0) { if (brk) html += gapEl(parseMin(brk.start), blk.s, brk); }
+      else html += gapEl(blocks[i-1].e, blk.s, brk);
+      html += renderBlock(blk);
     });
     html += `</section>`;
   });
