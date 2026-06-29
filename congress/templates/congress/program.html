@@ -11,6 +11,8 @@
   {% endfor %}
 </div>
 
+<div id="nowbanner" class="nowbanner" hidden></div>
+
 <div class="roomtabs" role="tablist">
   {% if plenary %}<button class="roomtab on" data-panel="plenary" data-room="Plenary">Plenary</button>{% endif %}
   {% for room, short, floor, items in columns %}
@@ -55,7 +57,9 @@
 
   // ── 현재 시각 빨간 줄 ──────────────────────────────────────────────
   const SEL_DAY = "{{ selected|date:'Y-m-d' }}";   // 현재 보고 있는 날짜
+  const ALL_DAYS = [{% for d in days %}"{{ d|date:'Y-m-d' }}"{% if not forloop.last %}, {% endif %}{% endfor %}];
   const nowbtn = document.getElementById('nowbtn');
+  const nowbanner = document.getElementById('nowbanner');
 
   function parseMin(s) {                            // "HH:MM" → 분
     const m = /^(\d{1,2}):(\d{2})$/.exec(s || "");
@@ -99,13 +103,38 @@
     return bot(last);
   }
 
+  // 지금(분) 기준, 이 날짜의 어느 룸에든 진행 중인 발표가 있는지
+  function talkInProgress(now) {
+    return [...document.querySelectorAll('.talk[data-start]')].some(el => {
+      const s = parseMin(el.dataset.start), e = parseMin(el.dataset.end);
+      return s != null && now >= s && now < (e != null && e > s ? e : s + 1);
+    });
+  }
+
+  // DB에 일정이 없는 시간대면 배너로 알림
+  function updateBanner(sn) {
+    if (!nowbanner) return;
+    if (!ALL_DAYS.includes(sn.date)) {            // 오늘이 학회일이 아님
+      nowbanner.textContent = '오늘은 예정된 학회 발표가 없습니다.';
+      nowbanner.hidden = false;
+      return;
+    }
+    if (sn.date === SEL_DAY && !talkInProgress(sn.min)) {  // 학회일이지만 빈 시간
+      nowbanner.textContent = '지금은 진행 중인 발표가 없습니다.';
+      nowbanner.hidden = false;
+      return;
+    }
+    nowbanner.hidden = true;
+  }
+
   let lineY = null;                     // 현재 줄의 문서상 y (점프용)
   function placeNow() {
     document.querySelectorAll('.nowline').forEach(n => n.remove());
     lineY = null;
     if (nowbtn) nowbtn.hidden = true;
     const sn = shanghaiNow();
-    if (sn.date !== SEL_DAY) return;    // 오늘을 보고 있을 때만 표시
+    updateBanner(sn);
+    if (sn.date !== SEL_DAY) return;    // 오늘을 보고 있을 때만 줄 표시
     const panel = panels.find(p => p.classList.contains('on'));
     if (!panel) return;
     const y = nowY(panel, sn.min);
