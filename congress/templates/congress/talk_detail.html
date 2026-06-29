@@ -19,6 +19,10 @@
   </a>
   {% endif %}
 
+  {% if talk %}
+  <a class="cal-btn" href="{% url 'calendar_ics' %}?ids={{ talk.id }}">📅 Add to Calendar</a>
+  {% endif %}
+
   {% if abstract %}
     <p class="detail-authors">{{ abstract.author_line }}</p>
     {% if abstract.corresponding %}

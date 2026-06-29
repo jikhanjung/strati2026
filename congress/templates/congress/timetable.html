@@ -3,6 +3,7 @@
 {% block content %}
 <h1 class="page-h">My Plan</h1>
 <p class="hint">Bookmarked talks are saved on this device.</p>
+<a id="cal-all" class="cal-btn" href="#" hidden>📅 Add all to Calendar</a>
 <div id="tt"><p class="empty">Loading…</p></div>
 {% endblock %}
 {% block scripts %}
@@ -62,6 +63,10 @@
   });
   box.innerHTML = html;
   STRATI.refresh();
+
+  const calAll = document.getElementById('cal-all');
+  calAll.href = '{% url "calendar_ics" %}?ids=' + mine.map(t => t.id).join(',');
+  calAll.hidden = false;
 })();
 </script>
 {% endblock %}

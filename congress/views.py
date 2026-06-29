@@ -1,10 +1,15 @@
 import datetime as dt
+from zoneinfo import ZoneInfo
 
 from django.db.models import Count, Q
-from django.http import JsonResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
+from django.utils import timezone
 
 from .models import ROOM_FLOOR, Abstract, Session, Talk
+
+CONGRESS_TZ = ZoneInfo("Asia/Shanghai")
+ALARM_MIN = 5             # 발표 N분 전 캘린더 알림
 
 ROOM_ORDER = [
     "International Room I", "International Room II", "International Room III",
@@ -161,6 +166,50 @@ def api_talks(request):
                            "start": b["start"].strftime("%H:%M"),
                            "end": b["end"].strftime("%H:%M"), "label": b["label"]})
     return JsonResponse({"talks": data, "breaks": breaks})
+
+
+def _ics_escape(s):
+    return (s or "").replace("\\", "\\\\").replace(";", "\\;") \
+        .replace(",", "\\,").replace("\n", "\\n")
+
+
+def _ics_utc(date, t):
+    local = dt.datetime.combine(date, t, tzinfo=CONGRESS_TZ)
+    return local.astimezone(dt.timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+
+
+def calendar_ics(request):
+    """북마크한 발표를 폰 캘린더에 추가(.ics). 각 일정에 N분 전 알림(VALARM)."""
+    ids = [int(x) for x in request.GET.get("ids", "").split(",") if x.strip().isdigit()]
+    talks = Talk.objects.filter(id__in=ids).select_related("session").order_by("date", "time_start")
+    stamp = timezone.now().astimezone(dt.timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+    lines = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//strati2026//EN",
+             "CALSCALE:GREGORIAN", "METHOD:PUBLISH", "X-WR-CALNAME:STRATI 2026"]
+    for t in talks:
+        if not t.time_start:
+            continue
+        end_t = t.time_end or (dt.datetime.combine(dt.date.min, t.time_start)
+                               + dt.timedelta(minutes=20)).time()
+        loc = t.room + (f" ({t.floor})" if t.floor else "")
+        desc = " · ".join(p for p in [t.session_id, t.first_author] if p)
+        lines += [
+            "BEGIN:VEVENT",
+            f"UID:talk-{t.id}@strati2026",
+            f"DTSTAMP:{stamp}",
+            f"DTSTART:{_ics_utc(t.date, t.time_start)}",
+            f"DTEND:{_ics_utc(t.date, end_t)}",
+            f"SUMMARY:{_ics_escape(t.title)}",
+            f"LOCATION:{_ics_escape(loc)}",
+            f"DESCRIPTION:{_ics_escape(desc)}",
+            "BEGIN:VALARM", "ACTION:DISPLAY", "DESCRIPTION:Reminder",
+            f"TRIGGER:-PT{ALARM_MIN}M", "END:VALARM",
+            "END:VEVENT",
+        ]
+    lines.append("END:VCALENDAR")
+    body = "\r\n".join(lines) + "\r\n"
+    resp = HttpResponse(body, content_type="text/calendar; charset=utf-8")
+    resp["Content-Disposition"] = 'attachment; filename="strati2026.ics"'
+    return resp
 
 
 def home(request):

@@ -84,6 +84,8 @@ a { color: inherit; text-decoration: none; }
 .detail-session { display: flex; gap: 8px; align-items: center; background: var(--card);
   border: 1px solid var(--line); border-radius: 12px; padding: 9px 12px; margin: 0 0 12px;
   font-size: 13.5px; color: var(--navy); }
+.cal-btn { display: inline-block; background: var(--navy); color: #fff; font-weight: 600;
+  font-size: 13.5px; border-radius: 12px; padding: 10px 16px; margin: 0 0 14px; }
 .detail-authors { font-weight: 600; margin: 0 0 4px; }
 .detail-corr { color: var(--muted); font-size: 13px; margin: 0 0 12px; }
 .detail-abstract { background: var(--card); border: 1px solid var(--line);

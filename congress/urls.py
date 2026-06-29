@@ -11,5 +11,6 @@ urlpatterns = [
     path("abstract/<int:pk>/", views.abstract_detail, name="abstract_detail"),
     path("search/", views.search, name="search"),
     path("timetable/", views.timetable, name="timetable"),
+    path("calendar.ics", views.calendar_ics, name="calendar_ics"),
     path("api/talks/", views.api_talks, name="api_talks"),
 ]
