@@ -41,7 +41,7 @@
 {% endblock %}
 
 {% block scripts %}
-<button id="nowbtn" class="nowbtn" hidden>● 현재 시각</button>
+<button id="nowbtn" class="nowbtn" hidden>● Now</button>
 <script>
 (function () {
   const tabs = [...document.querySelectorAll('.roomtab')];
@@ -115,12 +115,12 @@
   function updateBanner(sn) {
     if (!nowbanner) return;
     if (!ALL_DAYS.includes(sn.date)) {            // 오늘이 학회일이 아님
-      nowbanner.textContent = '오늘은 예정된 학회 발표가 없습니다.';
+      nowbanner.textContent = 'No talks are scheduled today.';
       nowbanner.hidden = false;
       return;
     }
     if (sn.date === SEL_DAY && !talkInProgress(sn.min)) {  // 학회일이지만 빈 시간
-      nowbanner.textContent = '지금은 진행 중인 발표가 없습니다.';
+      nowbanner.textContent = 'No talk is in session right now.';
       nowbanner.hidden = false;
       return;
     }
@@ -137,13 +137,13 @@
     if (sn.date !== SEL_DAY) return;    // 오늘을 보고 있을 때만 줄 표시
     const panel = panels.find(p => p.classList.contains('on'));
     if (!panel) return;
+    panel.style.position = 'relative';   // 측정(offsetTop) 전에 offsetParent 고정
     const y = nowY(panel, sn.min);
     if (y == null) return;
     const line = document.createElement('div');
     line.className = 'nowline';
     line.style.top = y + 'px';
     line.innerHTML = '<span class="nowdot"></span>';
-    panel.style.position = 'relative';
     panel.appendChild(line);
     lineY = line.getBoundingClientRect().top + window.scrollY;
     updateBtn();
