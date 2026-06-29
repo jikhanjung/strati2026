@@ -59,13 +59,15 @@ def program(request):
 def talk_detail(request, pk):
     t = get_object_or_404(Talk.objects.select_related("session", "abstract"), pk=pk)
     return render(request, "congress/talk_detail.html",
-                  {"talk": t, "abstract": t.abstract, "obj_title": t.title})
+                  {"talk": t, "abstract": t.abstract, "session": t.session,
+                   "obj_title": t.title})
 
 
 def abstract_detail(request, pk):
     a = get_object_or_404(Abstract.objects.select_related("session"), pk=pk)
     return render(request, "congress/talk_detail.html",
-                  {"talk": a.talks.first(), "abstract": a, "obj_title": a.title})
+                  {"talk": a.talks.first(), "abstract": a, "session": a.session,
+                   "obj_title": a.title})
 
 
 def sessions(request):
@@ -79,7 +81,7 @@ def sessions(request):
 
 def session_detail(request, code):
     s = get_object_or_404(Session, code=code)
-    talks = list(s.talks.select_related("abstract").all())
+    talks = list(s.talks.select_related("abstract", "session").all())
     linked = {t.abstract_id for t in talks if t.abstract_id}
     extra = [a for a in s.abstracts.all() if a.id not in linked]   # 구두 미편성/포스터
     return render(request, "congress/session_detail.html",

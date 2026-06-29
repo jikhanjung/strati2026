@@ -13,6 +13,12 @@
 
   <h1 class="detail-title">{{ obj_title }}</h1>
 
+  {% if session %}
+  <a class="detail-session" href="{% url 'session_detail' session.code %}">
+    <span class="badge">{{ session.code }}</span> {{ session.title|default:"(title TBD)" }}
+  </a>
+  {% endif %}
+
   {% if abstract %}
     <p class="detail-authors">{{ abstract.author_line }}</p>
     {% if abstract.corresponding %}

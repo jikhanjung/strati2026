@@ -4,7 +4,7 @@
   <div class="talk-body">
     <a class="talk-title" href="{% url 'talk_detail' t.id %}">{{ t.title }}</a>
     <div class="talk-meta">
-      {% if t.session_id %}<span class="badge">{{ t.session_id }}</span>{% endif %}
+      {% if t.session_id %}<span class="badge" title="{{ t.session.title }}">{{ t.session_id }}</span>{% endif %}
       {% if t.first_author %}<span class="author">{{ t.first_author }}</span>{% endif %}
     </div>
   </div>
