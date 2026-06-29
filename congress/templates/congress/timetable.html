@@ -46,13 +46,18 @@
   days.forEach(day => {
     const items = mine.filter(t => t.day === day)
                       .sort((a,b)=>a.start.localeCompare(b.start));
-    // 북마크한 룸 + 북마크 시간 범위 안의 휴식만, (start,end,label) 중복 제거
-    const rooms = new Set(items.map(t => t.room).filter(Boolean));
-    const lo = items[0].start, hi = items.reduce((m,t)=> (t.end||t.start) > m ? (t.end||t.start) : m, items[0].start);
-    const seen = new Set();
-    const breaks = allBreaks.filter(b => b.day === day && rooms.has(b.room)
-        && b.start >= lo && b.end <= hi)
-      .filter(b => { const k=b.start+b.end+b.label; if (seen.has(k)) return false; seen.add(k); return true; });
+    // 북마크한 talk 직전(같은 룸)의 휴식만 후보로 — 그 발표로 이어지는 break
+    const cand = [];
+    items.forEach(t => {
+      const b = allBreaks.find(b => b.day === day && b.room === t.room && b.end === t.start);
+      if (b) cand.push(b);
+    });
+    // 룸마다 5분쯤 어긋나 겹치는 휴식은 하나만 표시
+    cand.sort((a,b) => a.start.localeCompare(b.start) || a.end.localeCompare(b.end));
+    const breaks = [];
+    cand.forEach(b => {
+      if (!breaks.some(x => x.start < b.end && b.start < x.end)) breaks.push(b);
+    });
 
     const merged = [...items.map(t=>({s:t.start,k:'t',v:t})),
                     ...breaks.map(b=>({s:b.start,k:'b',v:b}))]

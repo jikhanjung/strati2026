@@ -39,6 +39,7 @@
 {% endblock %}
 
 {% block scripts %}
+<button id="nowbtn" class="nowbtn" hidden>● 현재 시각</button>
 <script>
 (function () {
   const tabs = [...document.querySelectorAll('.roomtab')];
@@ -49,8 +50,94 @@
     panels.forEach(p => p.classList.toggle('on', p.dataset.panel === panel));
     const t = tabs.find(t => t.dataset.panel === panel);
     if (t) sessionStorage.setItem('strati_room', t.dataset.room);
+    placeNow();
   }
-  // 이전에 보던 룸 이름이 오늘도 있으면 유지, 아니면 첫 탭
+
+  // ── 현재 시각 빨간 줄 ──────────────────────────────────────────────
+  const SEL_DAY = "{{ selected|date:'Y-m-d' }}";   // 현재 보고 있는 날짜
+  const nowbtn = document.getElementById('nowbtn');
+
+  function parseMin(s) {                            // "HH:MM" → 분
+    const m = /^(\d{1,2}):(\d{2})$/.exec(s || "");
+    return m ? +m[1] * 60 + +m[2] : null;
+  }
+  // 쑤저우(Asia/Shanghai) 기준 현재 날짜·분 (기기 시간대와 무관하게 산출)
+  function shanghaiNow() {
+    const f = new Intl.DateTimeFormat('en-CA', {
+      timeZone: 'Asia/Shanghai', hour12: false,
+      year: 'numeric', month: '2-digit', day: '2-digit',
+      hour: '2-digit', minute: '2-digit',
+    }).formatToParts(new Date());
+    const g = t => f.find(p => p.type === t).value;
+    return { date: `${g('year')}-${g('month')}-${g('day')}`,
+             min: +g('hour') * 60 + +g('minute') };
+  }
+
+  // now(분) → 활성 패널 내 y픽셀. 진행 중 카드 안에서 시간 비례 보간.
+  function nowY(panel, now) {
+    const cards = [...panel.querySelectorAll('[data-start]')]
+      .map(el => ({ el, s: parseMin(el.dataset.start), e: parseMin(el.dataset.end) }))
+      .filter(c => c.s != null);
+    if (!cards.length) return null;
+    cards.forEach(c => { if (c.e == null || c.e < c.s) c.e = c.s; });
+    const top = c => c.el.offsetTop, bot = c => c.el.offsetTop + c.el.offsetHeight;
+    if (now <= cards[0].s) return top(cards[0]);
+    const last = cards[cards.length - 1];
+    if (now >= last.e) return bot(last);
+    for (let i = 0; i < cards.length; i++) {
+      const c = cards[i];
+      if (now < c.s) {                  // 직전 카드와의 빈틈 → 경계 보간
+        const p = cards[i - 1];
+        const f = (now - p.e) / (c.s - p.e || 1);
+        return bot(p) + f * (top(c) - bot(p));
+      }
+      if (now <= c.e) {                 // 이 카드 진행 중
+        const f = c.e > c.s ? (now - c.s) / (c.e - c.s) : 0;
+        return top(c) + f * (c.el.offsetHeight);
+      }
+    }
+    return bot(last);
+  }
+
+  let lineY = null;                     // 현재 줄의 문서상 y (점프용)
+  function placeNow() {
+    document.querySelectorAll('.nowline').forEach(n => n.remove());
+    lineY = null;
+    if (nowbtn) nowbtn.hidden = true;
+    const sn = shanghaiNow();
+    if (sn.date !== SEL_DAY) return;    // 오늘을 보고 있을 때만 표시
+    const panel = panels.find(p => p.classList.contains('on'));
+    if (!panel) return;
+    const y = nowY(panel, sn.min);
+    if (y == null) return;
+    const line = document.createElement('div');
+    line.className = 'nowline';
+    line.style.top = y + 'px';
+    line.innerHTML = '<span class="nowdot"></span>';
+    panel.style.position = 'relative';
+    panel.appendChild(line);
+    lineY = line.getBoundingClientRect().top + window.scrollY;
+    updateBtn();
+  }
+
+  function jumpToNow() {
+    if (lineY == null) return;
+    window.scrollTo({ top: Math.max(0, lineY - window.innerHeight * 0.4),
+                      behavior: 'smooth' });
+  }
+  // 줄이 화면 밖에 있으면 플로팅 버튼 노출
+  function updateBtn() {
+    if (!nowbtn) return;
+    if (lineY == null) { nowbtn.hidden = true; return; }
+    const top = lineY - window.scrollY, bottom = top;
+    nowbtn.hidden = top > 60 && bottom < window.innerHeight - 60;
+  }
+  if (nowbtn) nowbtn.addEventListener('click', jumpToNow);
+  window.addEventListener('scroll', updateBtn, { passive: true });
+  window.addEventListener('resize', placeNow);
+  setInterval(placeNow, 60000);        // 1분마다 갱신
+
+  // 초기 활성 탭: 이전에 보던 룸 이름이 오늘도 있으면 유지, 아니면 첫 탭
   const want = sessionStorage.getItem('strati_room');
   const match = tabs.find(t => t.dataset.room === want);
   activate((match || tabs[0]).dataset.panel);

@@ -77,7 +77,12 @@ def program(request):
     if not days:
         return render(request, "congress/program.html", {"days": []})
     day_param = request.GET.get("day")
-    sel = next((d for d in days if d.isoformat() == day_param), days[0])
+    if day_param:
+        sel = next((d for d in days if d.isoformat() == day_param), days[0])
+    else:
+        # 명시적 선택이 없으면 오늘(쑤저우 시간)을, 일정에 없으면 첫째 날을 기본 선택
+        today = timezone.now().astimezone(CONGRESS_TZ).date()
+        sel = today if today in days else days[0]
     talks = list(Talk.objects.filter(date=sel).select_related("session", "abstract"))
 
     rooms = sorted({t.room for t in talks if t.room},

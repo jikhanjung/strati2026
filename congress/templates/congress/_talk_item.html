@@ -1,5 +1,5 @@
 {# 발표 1건 카드. 변수: t (Talk) #}
-<div class="talk" data-id="{{ t.id }}">
+<div class="talk" data-id="{{ t.id }}" data-start="{{ t.time_start|time:'H:i' }}" data-end="{{ t.time_end|time:'H:i' }}">
   <div class="talk-time">{{ t.time_start|time:"H:i" }}{% if t.time_end %}–{{ t.time_end|time:"H:i" }}{% endif %}</div>
   <div class="talk-body">
     <a class="talk-title" href="{% url 'talk_detail' t.id %}">{{ t.title }}</a>
