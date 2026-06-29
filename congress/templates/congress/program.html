@@ -62,7 +62,7 @@
     const t = tabs.find(t => t.dataset.panel === panel);
     if (t) {
       sessionStorage.setItem('strati_room', t.dataset.room);
-      if (ctxroom) ctxroom.textContent = t.textContent.trim();
+      if (ctxroom) ctxroom.textContent = t.dataset.room;   // 플로팅은 풀 룸 이름
     }
     placeNow();
     updateCtx();

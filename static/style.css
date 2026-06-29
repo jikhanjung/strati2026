@@ -99,7 +99,7 @@ a { color: inherit; text-decoration: none; }
 
 /* Floating date/room context (shown when the day/room buttons scroll away) */
 .ctxbar { position: fixed; left: 0; right: 0; z-index: 19; display: flex;
-  align-items: baseline; gap: 7px; justify-content: center; background: var(--navy);
+  align-items: baseline; gap: 4px; justify-content: center; background: var(--navy);
   color: #fff; font-size: 12.5px; font-weight: 700; padding: 6px 14px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, .18); }
 .ctxbar[hidden] { display: none; }
