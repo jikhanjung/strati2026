@@ -155,22 +155,39 @@ def timetable(request):
 
 
 def api_talks(request):
-    talks = list(Talk.objects.select_related("session").all())
-    data = [_talk_payload(t) for t in talks]
+    # ?ids=1,2,3 가 오면 그 발표들만 반환(My Plan 전용, 페이로드 최소화).
+    # 휴식 도출은 전체 프로그램에서 해야 정확하므로 항상 전체를 조회.
+    all_talks = list(Talk.objects.select_related("session").all())
+    ids_param = request.GET.get("ids")
+    if ids_param is not None:
+        want = {int(x) for x in ids_param.split(",") if x.strip().isdigit()}
+        sel = [t for t in all_talks if t.id in want]
+    else:
+        sel = all_talks
+    data = [_talk_payload(t) for t in sel]
 
     # (날짜·룸)별 휴식/점심 도출 (표시 전용, 북마크 불가)
     from collections import defaultdict
     grouped = defaultdict(list)
-    for t in talks:
+    for t in all_talks:
         if t.room:
             grouped[(t.day_label, t.date.isoformat(), t.room)].append(t)
+    # ids가 오면, 반환된 발표 직전의 휴식만 남겨 페이로드를 더 줄임
+    keep = {(t.date.isoformat(), t.room, t.time_start.strftime("%H:%M"))
+            for t in sel if t.room and t.time_start} if ids_param is not None else None
     breaks = []
     for (day, date, room), ts in grouped.items():
         for b in derive_breaks(ts):
+            end = b["end"].strftime("%H:%M")
+            if keep is not None and (date, room, end) not in keep:
+                continue   # 북마크 발표로 이어지는 휴식이 아니면 제외
             breaks.append({"day": day, "date": date, "room": room,
                            "start": b["start"].strftime("%H:%M"),
-                           "end": b["end"].strftime("%H:%M"), "label": b["label"]})
-    return JsonResponse({"talks": data, "breaks": breaks})
+                           "end": end, "label": b["label"]})
+    resp = JsonResponse({"talks": data, "breaks": breaks})
+    # 데이터는 배포 때만 바뀜 → 버전 쿼리(?v=)로 캐시 무효화하므로 장기 캐싱 가능
+    resp["Cache-Control"] = "public, max-age=86400"
+    return resp
 
 
 def _ics_escape(s):
