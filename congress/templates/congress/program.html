@@ -128,6 +128,7 @@
   }
 
   let lineY = null;                     // 현재 줄의 문서상 y (점프용)
+  let firstPlace = true;                // 첫 로드 1회만 현재 시각으로 자동 스크롤
   function placeNow() {
     document.querySelectorAll('.nowline').forEach(n => n.remove());
     lineY = null;
@@ -147,6 +148,7 @@
     panel.appendChild(line);
     lineY = line.getBoundingClientRect().top + window.scrollY;
     updateBtn();
+    if (firstPlace) { firstPlace = false; jumpToNow(); }   // 첫 로드 시 한 번 이동
   }
 
   function jumpToNow() {
