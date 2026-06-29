@@ -1,5 +1,5 @@
 {
-  "count": 391,
+  "count": 457,
   "talks": [
     {
       "date": "June 29",
@@ -201,13 +201,26 @@
       "date": "June 29",
       "room": "International Room I",
       "session": "G4",
+      "time_start": "15:55",
+      "time_end": "16:10",
+      "title": "Classic Cambrian Thrombolite Clots Formed by Faint Ministromatolites",
+      "first_author": "Jeong-Hyun Lee",
+      "kind": "talk",
+      "page": 8,
+      "id": 16,
+      "abstract_id": 58
+    },
+    {
+      "date": "June 29",
+      "room": "International Room I",
+      "session": "G4",
       "time_start": "16:10",
       "time_end": "16:25",
       "title": "Recalibrating the Zavkhan: A Revised Stratigraphic Framework for Southwestern Mongolia",
       "first_author": "Timothy P. Topper",
       "kind": "talk",
       "page": 8,
-      "id": 16,
+      "id": 17,
       "abstract_id": 77
     },
     {
@@ -220,7 +233,7 @@
       "first_author": "Campbell MarsdenHendrick",
       "kind": "talk",
       "page": 8,
-      "id": 17,
+      "id": 18,
       "abstract_id": 49
     },
     {
@@ -233,7 +246,7 @@
       "first_author": "Yu Zhang",
       "kind": "talk",
       "page": 8,
-      "id": 18,
+      "id": 19,
       "abstract_id": 78
     },
     {
@@ -246,7 +259,7 @@
       "first_author": "Yuan Yuan",
       "kind": "talk",
       "page": 8,
-      "id": 19,
+      "id": 20,
       "abstract_id": 79
     },
     {
@@ -259,7 +272,7 @@
       "first_author": "Fangyu Li",
       "kind": "talk",
       "page": 8,
-      "id": 20,
+      "id": 21,
       "abstract_id": 72
     },
     {
@@ -272,7 +285,7 @@
       "first_author": "Peiyao Wang",
       "kind": "talk",
       "page": 8,
-      "id": 21,
+      "id": 22,
       "abstract_id": 56
     },
     {
@@ -285,7 +298,7 @@
       "first_author": "Jinzuo Tong",
       "kind": "talk",
       "page": 8,
-      "id": 22,
+      "id": 23,
       "abstract_id": 60,
       "link_fuzzy": 0.987
     },
@@ -299,7 +312,7 @@
       "first_author": "First Author N. MacLeod",
       "kind": "talk",
       "page": 8,
-      "id": 23,
+      "id": 24,
       "abstract_id": 327
     },
     {
@@ -312,7 +325,7 @@
       "first_author": "Hanyu Zhu",
       "kind": "talk",
       "page": 8,
-      "id": 24,
+      "id": 25,
       "abstract_id": 332
     },
     {
@@ -325,7 +338,7 @@
       "first_author": "Michael H. Stephenson",
       "kind": "talk",
       "page": 8,
-      "id": 25,
+      "id": 26,
       "abstract_id": 336
     },
     {
@@ -338,7 +351,7 @@
       "first_author": "Tianyi Chu",
       "kind": "talk",
       "page": 8,
-      "id": 26,
+      "id": 27,
       "abstract_id": 335
     },
     {
@@ -351,8 +364,21 @@
       "first_author": "Mar Simonet Roda",
       "kind": "talk",
       "page": 8,
-      "id": 27,
+      "id": 28,
       "abstract_id": 331
+    },
+    {
+      "date": "June 29",
+      "room": "International Room II",
+      "session": "G17",
+      "time_start": "15:15",
+      "time_end": "15:30",
+      "title": "Discontinuous Cyclostratigraphic Age Models Recovering Using a Physics-Informed Reviewer Network Addressing Hidden Hiatuses in Astrochronology",
+      "first_author": "Zijie Chen",
+      "kind": "talk",
+      "page": 8,
+      "id": 29,
+      "abstract_id": 333
     },
     {
       "date": "June 29",
@@ -364,7 +390,7 @@
       "first_author": "Yukun Shi",
       "kind": "talk",
       "page": 8,
-      "id": 28,
+      "id": 30,
       "abstract_id": 337,
       "link_fuzzy": 0.993
     },
@@ -378,7 +404,7 @@
       "first_author": "Yu Li",
       "kind": "talk",
       "page": 8,
-      "id": 29,
+      "id": 31,
       "abstract_id": 328
     },
     {
@@ -391,7 +417,7 @@
       "first_author": "Enhao Jia",
       "kind": "talk",
       "page": 8,
-      "id": 30,
+      "id": 32,
       "abstract_id": 330
     },
     {
@@ -404,7 +430,7 @@
       "first_author": "Xianyi Liu",
       "kind": "talk",
       "page": 8,
-      "id": 31,
+      "id": 33,
       "abstract_id": 338
     },
     {
@@ -417,7 +443,7 @@
       "first_author": "Rohit Samant",
       "kind": "talk",
       "page": 8,
-      "id": 32,
+      "id": 34,
       "abstract_id": 334
     },
     {
@@ -430,8 +456,21 @@
       "first_author": "Lei Wu",
       "kind": "talk",
       "page": 8,
-      "id": 33,
+      "id": 35,
       "abstract_id": 329
+    },
+    {
+      "date": "June 29",
+      "room": "International Room II",
+      "session": "G17",
+      "time_start": "17:30",
+      "time_end": "19:00",
+      "title": "Subcommission (SQS) business meeting 12",
+      "first_author": null,
+      "kind": "talk",
+      "page": 8,
+      "id": 36,
+      "abstract_id": null
     },
     {
       "date": "June 29",
@@ -443,7 +482,7 @@
       "first_author": "Clemens Vinzenz Ullmann",
       "kind": "talk",
       "page": 9,
-      "id": 34,
+      "id": 37,
       "abstract_id": 168
     },
     {
@@ -456,7 +495,7 @@
       "first_author": "Amanda Perera",
       "kind": "talk",
       "page": 9,
-      "id": 35,
+      "id": 38,
       "abstract_id": 163
     },
     {
@@ -469,7 +508,7 @@
       "first_author": "Chunju Huang",
       "kind": "talk",
       "page": 9,
-      "id": 36,
+      "id": 39,
       "abstract_id": 164
     },
     {
@@ -482,7 +521,7 @@
       "first_author": "Ian Jarvis",
       "kind": "talk",
       "page": 9,
-      "id": 37,
+      "id": 40,
       "abstract_id": 169
     },
     {
@@ -495,8 +534,21 @@
       "first_author": "Linhao Fang",
       "kind": "talk",
       "page": 9,
-      "id": 38,
+      "id": 41,
       "abstract_id": 172
+    },
+    {
+      "date": "June 29",
+      "room": "International Room III",
+      "session": "G7",
+      "time_start": "15:20",
+      "time_end": "15:35",
+      "title": "From Crisis to Recovery: Floral Turnover and Environmental Shifts During the Triassic–jurassic in Iran",
+      "first_author": "Mohammad Taghi Badihagh",
+      "kind": "talk",
+      "page": 9,
+      "id": 42,
+      "abstract_id": 166
     },
     {
       "date": "June 29",
@@ -508,7 +560,7 @@
       "first_author": "Gabriele Gambacorta",
       "kind": "talk",
       "page": 9,
-      "id": 39,
+      "id": 43,
       "abstract_id": 173
     },
     {
@@ -521,7 +573,7 @@
       "first_author": "Anfeng Chen",
       "kind": "talk",
       "page": 9,
-      "id": 40,
+      "id": 44,
       "abstract_id": 174
     },
     {
@@ -534,7 +586,7 @@
       "first_author": "Damian Lodowski",
       "kind": "talk",
       "page": 9,
-      "id": 41,
+      "id": 45,
       "abstract_id": 170,
       "link_fuzzy": 0.994
     },
@@ -548,7 +600,7 @@
       "first_author": "Peixun Ge",
       "kind": "talk",
       "page": 9,
-      "id": 42,
+      "id": 46,
       "abstract_id": 171
     },
     {
@@ -561,7 +613,7 @@
       "first_author": "Liang Shuo",
       "kind": "talk",
       "page": 9,
-      "id": 43,
+      "id": 47,
       "abstract_id": 165
     },
     {
@@ -574,7 +626,7 @@
       "first_author": "Yi Shi",
       "kind": "talk",
       "page": 9,
-      "id": 44,
+      "id": 48,
       "abstract_id": 167
     },
     {
@@ -587,7 +639,7 @@
       "first_author": "Peng Nian",
       "kind": "talk",
       "page": 9,
-      "id": 45,
+      "id": 49,
       "abstract_id": 175,
       "link_fuzzy": 0.993
     },
@@ -601,7 +653,7 @@
       "first_author": "First Author Muhammad Aqqid Saparin",
       "kind": "talk",
       "page": 9,
-      "id": 46,
+      "id": 50,
       "abstract_id": 406
     },
     {
@@ -614,7 +666,7 @@
       "first_author": "Qijian Li",
       "kind": "talk",
       "page": 9,
-      "id": 47,
+      "id": 51,
       "abstract_id": 402
     },
     {
@@ -627,7 +679,7 @@
       "first_author": "Amalia Spina",
       "kind": "talk",
       "page": 9,
-      "id": 48,
+      "id": 52,
       "abstract_id": 409
     },
     {
@@ -640,7 +692,7 @@
       "first_author": "Zongyuan Sun",
       "kind": "talk",
       "page": 9,
-      "id": 49,
+      "id": 53,
       "abstract_id": 407
     },
     {
@@ -653,7 +705,7 @@
       "first_author": "David C. Ray",
       "kind": "talk",
       "page": 9,
-      "id": 50,
+      "id": 54,
       "abstract_id": 410
     },
     {
@@ -666,8 +718,21 @@
       "first_author": "Siying An",
       "kind": "talk",
       "page": 9,
-      "id": 51,
+      "id": 55,
       "abstract_id": 403
+    },
+    {
+      "date": "June 29",
+      "room": "Room 773",
+      "session": "S3",
+      "time_start": "15:55",
+      "time_end": "16:15",
+      "title": "Setae-Mediated Population Dynamics in Early Silurian Brachiopods",
+      "first_author": "Bing Huang",
+      "kind": "talk",
+      "page": 9,
+      "id": 56,
+      "abstract_id": 408
     },
     {
       "date": "June 29",
@@ -679,7 +744,7 @@
       "first_author": "Carlo Corradini",
       "kind": "talk",
       "page": 9,
-      "id": 52,
+      "id": 57,
       "abstract_id": 401,
       "link_fuzzy": 0.965
     },
@@ -693,7 +758,7 @@
       "first_author": "Zuzana Strossová",
       "kind": "talk",
       "page": 9,
-      "id": 53,
+      "id": 58,
       "abstract_id": 404
     },
     {
@@ -706,7 +771,7 @@
       "first_author": "Annalisa Ferretti",
       "kind": "talk",
       "page": 9,
-      "id": 54,
+      "id": 59,
       "abstract_id": 405
     },
     {
@@ -719,7 +784,7 @@
       "first_author": "Lei Yang",
       "kind": "talk",
       "page": 9,
-      "id": 55,
+      "id": 60,
       "abstract_id": null
     },
     {
@@ -732,8 +797,21 @@
       "first_author": "Lu Ran",
       "kind": "talk",
       "page": 9,
-      "id": 56,
+      "id": 61,
       "abstract_id": 400
+    },
+    {
+      "date": "June 29",
+      "room": "Room 773",
+      "session": "S3",
+      "time_start": "17:40",
+      "time_end": "19:00",
+      "title": "Silurian subcommission business meeting 14",
+      "first_author": null,
+      "kind": "talk",
+      "page": 9,
+      "id": 62,
+      "abstract_id": null
     },
     {
       "date": "June 29",
@@ -745,7 +823,7 @@
       "first_author": "Julien Denayer",
       "kind": "talk",
       "page": 10,
-      "id": 57,
+      "id": 63,
       "abstract_id": 455
     },
     {
@@ -758,7 +836,7 @@
       "first_author": "Jitao Chen",
       "kind": "talk",
       "page": 10,
-      "id": 58,
+      "id": 64,
       "abstract_id": 448
     },
     {
@@ -771,7 +849,7 @@
       "first_author": "Silvia Blanco-Ferrera",
       "kind": "talk",
       "page": 10,
-      "id": 59,
+      "id": 65,
       "abstract_id": 453
     },
     {
@@ -784,7 +862,7 @@
       "first_author": "Qiulai Wang",
       "kind": "talk",
       "page": 10,
-      "id": 60,
+      "id": 66,
       "abstract_id": 450
     },
     {
@@ -797,8 +875,21 @@
       "first_author": "Yifan Guan",
       "kind": "talk",
       "page": 10,
-      "id": 61,
+      "id": 67,
       "abstract_id": 451
+    },
+    {
+      "date": "June 29",
+      "room": "Room 775",
+      "session": "S5",
+      "time_start": "15:20",
+      "time_end": "15:35",
+      "title": "Discovery of Late Carboniferous (moscovian) Coral Reefs in the North Qiangtang Terrane",
+      "first_author": "Yusong Liu",
+      "kind": "talk",
+      "page": 10,
+      "id": 68,
+      "abstract_id": 447
     },
     {
       "date": "June 29",
@@ -810,7 +901,7 @@
       "first_author": "Keyi Hu",
       "kind": "talk",
       "page": 10,
-      "id": 62,
+      "id": 69,
       "abstract_id": 446
     },
     {
@@ -823,7 +914,7 @@
       "first_author": "Markus Aretz",
       "kind": "talk",
       "page": 10,
-      "id": 63,
+      "id": 70,
       "abstract_id": 454
     },
     {
@@ -836,7 +927,7 @@
       "first_author": "Emma Blanka Kovacs",
       "kind": "talk",
       "page": 10,
-      "id": 64,
+      "id": 71,
       "abstract_id": 444
     },
     {
@@ -849,7 +940,7 @@
       "first_author": "Mun Gi Kim",
       "kind": "talk",
       "page": 10,
-      "id": 65,
+      "id": 72,
       "abstract_id": 445
     },
     {
@@ -862,7 +953,7 @@
       "first_author": "Bingqiang Chai",
       "kind": "talk",
       "page": 10,
-      "id": 66,
+      "id": 73,
       "abstract_id": 452
     },
     {
@@ -875,8 +966,21 @@
       "first_author": "Qiqi Yang",
       "kind": "talk",
       "page": 10,
-      "id": 67,
+      "id": 74,
       "abstract_id": 449
+    },
+    {
+      "date": "June 29",
+      "room": "Room 775",
+      "session": "S5",
+      "time_start": "17:40",
+      "time_end": "19:00",
+      "title": "Carboniferous subcommission business meeting 15",
+      "first_author": null,
+      "kind": "talk",
+      "page": 10,
+      "id": 75,
+      "abstract_id": null
     },
     {
       "date": "June 29",
@@ -888,7 +992,7 @@
       "first_author": "First Author Chuanming Zhou",
       "kind": "talk",
       "page": 10,
-      "id": 68,
+      "id": 76,
       "abstract_id": 358
     },
     {
@@ -901,7 +1005,7 @@
       "first_author": "Matthew Craffey",
       "kind": "talk",
       "page": 10,
-      "id": 69,
+      "id": 77,
       "abstract_id": 356
     },
     {
@@ -914,7 +1018,7 @@
       "first_author": "Qin Ye",
       "kind": "talk",
       "page": 10,
-      "id": 70,
+      "id": 78,
       "abstract_id": 360
     },
     {
@@ -927,7 +1031,7 @@
       "first_author": "Qing Ouyang",
       "kind": "talk",
       "page": 10,
-      "id": 71,
+      "id": 79,
       "abstract_id": 350
     },
     {
@@ -940,7 +1044,7 @@
       "first_author": "Zhihui An",
       "kind": "talk",
       "page": 10,
-      "id": 72,
+      "id": 80,
       "abstract_id": 357
     },
     {
@@ -953,8 +1057,21 @@
       "first_author": "Wenfei Cui",
       "kind": "talk",
       "page": 10,
-      "id": 73,
+      "id": 81,
       "abstract_id": 349
+    },
+    {
+      "date": "June 29",
+      "room": "Room 776",
+      "session": "S1",
+      "time_start": "15:55",
+      "time_end": "16:15",
+      "title": "Drivers of Ecological Dynamics in Ediacaran Avalonian Communities (~574-560ma).",
+      "first_author": "Emily Mitchell",
+      "kind": "talk",
+      "page": 10,
+      "id": 82,
+      "abstract_id": 352
     },
     {
       "date": "June 29",
@@ -966,7 +1083,7 @@
       "first_author": "Ke Pang",
       "kind": "talk",
       "page": 10,
-      "id": 74,
+      "id": 83,
       "abstract_id": 359
     },
     {
@@ -979,7 +1096,7 @@
       "first_author": "Andrey Ivantsov",
       "kind": "talk",
       "page": 10,
-      "id": 75,
+      "id": 84,
       "abstract_id": 354
     },
     {
@@ -992,7 +1109,7 @@
       "first_author": "Chengxi Wu",
       "kind": "talk",
       "page": 10,
-      "id": 76,
+      "id": 85,
       "abstract_id": 353
     },
     {
@@ -1005,7 +1122,7 @@
       "first_author": "Heda Agic",
       "kind": "talk",
       "page": 10,
-      "id": 77,
+      "id": 86,
       "abstract_id": 355
     },
     {
@@ -1018,7 +1135,7 @@
       "first_author": "Phillip Boan",
       "kind": "talk",
       "page": 10,
-      "id": 78,
+      "id": 87,
       "abstract_id": 361
     },
     {
@@ -1031,8 +1148,21 @@
       "first_author": "Naihua Xue",
       "kind": "talk",
       "page": 10,
-      "id": 79,
+      "id": 88,
       "abstract_id": 351
+    },
+    {
+      "date": "June 29",
+      "room": "Room 776",
+      "session": "S1",
+      "time_start": "17:50",
+      "time_end": "19:00",
+      "title": "Ediacaran subcommission business meeting 16",
+      "first_author": null,
+      "kind": "talk",
+      "page": 10,
+      "id": 89,
+      "abstract_id": null
     },
     {
       "date": "June 30",
@@ -1044,7 +1174,7 @@
       "first_author": "Andrey Yu Zhuravlev",
       "kind": "talk",
       "page": 11,
-      "id": 80,
+      "id": 90,
       "abstract_id": 82
     },
     {
@@ -1057,7 +1187,7 @@
       "first_author": "Junseok Choi",
       "kind": "talk",
       "page": 11,
-      "id": 81,
+      "id": 91,
       "abstract_id": 70
     },
     {
@@ -1070,7 +1200,7 @@
       "first_author": "Yazhou Hu",
       "kind": "talk",
       "page": 11,
-      "id": 82,
+      "id": 92,
       "abstract_id": 53
     },
     {
@@ -1083,7 +1213,7 @@
       "first_author": "Fanglan Liu",
       "kind": "talk",
       "page": 11,
-      "id": 83,
+      "id": 93,
       "abstract_id": 74
     },
     {
@@ -1096,8 +1226,21 @@
       "first_author": "Weiyu Zheng",
       "kind": "talk",
       "page": 11,
-      "id": 84,
+      "id": 94,
       "abstract_id": 54
+    },
+    {
+      "date": "June 30",
+      "room": "International Room I",
+      "session": "G4",
+      "time_start": "10:20",
+      "time_end": "10:35",
+      "title": "Microfacies of Ediacaran Glacial Marine Carbonates Along Southern Margin of North China and Climato-Environmental Implications",
+      "first_author": "Yiran Wang",
+      "kind": "talk",
+      "page": 11,
+      "id": 95,
+      "abstract_id": 68
     },
     {
       "date": "June 30",
@@ -1109,7 +1252,7 @@
       "first_author": "Xuejian Zhu",
       "kind": "talk",
       "page": 11,
-      "id": 85,
+      "id": 96,
       "abstract_id": 76
     },
     {
@@ -1122,7 +1265,7 @@
       "first_author": "Run Li",
       "kind": "talk",
       "page": 11,
-      "id": 86,
+      "id": 97,
       "abstract_id": 84
     },
     {
@@ -1135,7 +1278,7 @@
       "first_author": "Rong-Hao Wei",
       "kind": "talk",
       "page": 11,
-      "id": 87,
+      "id": 98,
       "abstract_id": 61
     },
     {
@@ -1148,7 +1291,7 @@
       "first_author": "Olga Dantes",
       "kind": "talk",
       "page": 11,
-      "id": 88,
+      "id": 99,
       "abstract_id": 71
     },
     {
@@ -1161,8 +1304,21 @@
       "first_author": "Fan Liu",
       "kind": "talk",
       "page": 11,
-      "id": 89,
+      "id": 100,
       "abstract_id": 45
+    },
+    {
+      "date": "June 30",
+      "room": "International Room I",
+      "session": "G4",
+      "time_start": "12:10",
+      "time_end": "12:25",
+      "title": "Archaeocyathan (stem Group Porifera) Three-Dimensional Preservation, Reconstruction and Functional Analysis",
+      "first_author": "Aihua Yang",
+      "kind": "talk",
+      "page": 11,
+      "id": 101,
+      "abstract_id": 47
     },
     {
       "date": "June 30",
@@ -1174,7 +1330,7 @@
       "first_author": "Junaid Ur Rehman",
       "kind": "talk",
       "page": 11,
-      "id": 90,
+      "id": 102,
       "abstract_id": 67
     },
     {
@@ -1187,7 +1343,7 @@
       "first_author": "Feiyang Chen",
       "kind": "talk",
       "page": 11,
-      "id": 91,
+      "id": 103,
       "abstract_id": 52
     },
     {
@@ -1200,7 +1356,7 @@
       "first_author": "Han Zeng",
       "kind": "talk",
       "page": 11,
-      "id": 92,
+      "id": 104,
       "abstract_id": 81
     },
     {
@@ -1213,7 +1369,7 @@
       "first_author": "Jin-bo Hou",
       "kind": "talk",
       "page": 11,
-      "id": 93,
+      "id": 105,
       "abstract_id": 80
     },
     {
@@ -1226,8 +1382,21 @@
       "first_author": "Meng Gong",
       "kind": "talk",
       "page": 11,
-      "id": 94,
+      "id": 106,
       "abstract_id": 51
+    },
+    {
+      "date": "June 30",
+      "room": "International Room I",
+      "session": "G4",
+      "time_start": "15:15",
+      "time_end": "15:30",
+      "title": "Ediacaran Cordilleran-Type Mountain Ice Sheets and Their Erosion Effects",
+      "first_author": "Yazhuo Niu",
+      "kind": "talk",
+      "page": 11,
+      "id": 107,
+      "abstract_id": 62
     },
     {
       "date": "June 30",
@@ -1239,7 +1408,7 @@
       "first_author": "Ajani Bissick",
       "kind": "talk",
       "page": 11,
-      "id": 95,
+      "id": 108,
       "abstract_id": 46
     },
     {
@@ -1252,7 +1421,7 @@
       "first_author": "Xinglian Yang",
       "kind": "talk",
       "page": 11,
-      "id": 96,
+      "id": 109,
       "abstract_id": 73,
       "link_fuzzy": 0.994
     },
@@ -1266,7 +1435,7 @@
       "first_author": "Caibin Zhang",
       "kind": "talk",
       "page": 11,
-      "id": 97,
+      "id": 110,
       "abstract_id": 66
     },
     {
@@ -1279,7 +1448,7 @@
       "first_author": "Mei Luo",
       "kind": "talk",
       "page": 11,
-      "id": 98,
+      "id": 111,
       "abstract_id": null
     },
     {
@@ -1292,7 +1461,7 @@
       "first_author": "Liu Yang",
       "kind": "talk",
       "page": 11,
-      "id": 99,
+      "id": 112,
       "abstract_id": 57
     },
     {
@@ -1305,7 +1474,7 @@
       "first_author": "Yifan Wang",
       "kind": "talk",
       "page": 11,
-      "id": 100,
+      "id": 113,
       "abstract_id": 69
     },
     {
@@ -1318,7 +1487,7 @@
       "first_author": "Yulu Mao",
       "kind": "talk",
       "page": 11,
-      "id": 101,
+      "id": 114,
       "abstract_id": 48
     },
     {
@@ -1331,7 +1500,7 @@
       "first_author": "Lulin Liu",
       "kind": "talk",
       "page": 11,
-      "id": 102,
+      "id": 115,
       "abstract_id": 83
     },
     {
@@ -1344,7 +1513,7 @@
       "first_author": "Tengxiao Ma",
       "kind": "talk",
       "page": 11,
-      "id": 103,
+      "id": 116,
       "abstract_id": 59,
       "link_fuzzy": 0.989
     },
@@ -1358,7 +1527,7 @@
       "first_author": "Thomas Servais",
       "kind": "talk",
       "page": 12,
-      "id": 104,
+      "id": 117,
       "abstract_id": 95
     },
     {
@@ -1371,7 +1540,7 @@
       "first_author": "Zhifei Zhang",
       "kind": "talk",
       "page": 12,
-      "id": 105,
+      "id": 118,
       "abstract_id": 105
     },
     {
@@ -1384,7 +1553,7 @@
       "first_author": "Samuel Moura",
       "kind": "talk",
       "page": 12,
-      "id": 106,
+      "id": 119,
       "abstract_id": 110
     },
     {
@@ -1397,7 +1566,7 @@
       "first_author": "Yunnan Key Laboratory for Palaeobiology, Institute of Palaeontology, Yunnan University",
       "kind": "talk",
       "page": 12,
-      "id": 107,
+      "id": 120,
       "abstract_id": 107
     },
     {
@@ -1410,8 +1579,21 @@
       "first_author": "Zhiliang Zhang",
       "kind": "talk",
       "page": 12,
-      "id": 108,
+      "id": 121,
       "abstract_id": 98
+    },
+    {
+      "date": "June 30",
+      "room": "International Room II",
+      "session": "G5",
+      "time_start": "10:20",
+      "time_end": "10:35",
+      "title": "Brachiopod Morphospace and Character Evolution of Lophotrochozoans",
+      "first_author": "Yue Liang",
+      "kind": "talk",
+      "page": 12,
+      "id": 122,
+      "abstract_id": 93
     },
     {
       "date": "June 30",
@@ -1423,7 +1605,7 @@
       "first_author": "Shengchao Yang",
       "kind": "talk",
       "page": 12,
-      "id": 109,
+      "id": 123,
       "abstract_id": 96
     },
     {
@@ -1436,7 +1618,7 @@
       "first_author": "Claire Musajo",
       "kind": "talk",
       "page": 12,
-      "id": 110,
+      "id": 124,
       "abstract_id": 116
     },
     {
@@ -1449,7 +1631,7 @@
       "first_author": "Keyue Han",
       "kind": "talk",
       "page": 12,
-      "id": 111,
+      "id": 125,
       "abstract_id": 106
     },
     {
@@ -1462,7 +1644,7 @@
       "first_author": "Hanhui Huang",
       "kind": "talk",
       "page": 12,
-      "id": 112,
+      "id": 126,
       "abstract_id": 99
     },
     {
@@ -1475,8 +1657,21 @@
       "first_author": "David Harper",
       "kind": "talk",
       "page": 12,
-      "id": 113,
+      "id": 127,
       "abstract_id": 114
+    },
+    {
+      "date": "June 30",
+      "room": "International Room II",
+      "session": "G5",
+      "time_start": "12:15",
+      "time_end": "12:30",
+      "title": "Tempo of the Late Ordovician Mass Extinction Controlled by the Rate of Climate Change",
+      "first_author": "Chuan Yang",
+      "kind": "talk",
+      "page": 12,
+      "id": 128,
+      "abstract_id": 112
     },
     {
       "date": "June 30",
@@ -1488,7 +1683,7 @@
       "first_author": "Yuandong Zhang",
       "kind": "talk",
       "page": 12,
-      "id": 114,
+      "id": 129,
       "abstract_id": 115
     },
     {
@@ -1501,7 +1696,7 @@
       "first_author": "Tim De Backer",
       "kind": "talk",
       "page": 12,
-      "id": 115,
+      "id": 130,
       "abstract_id": 104
     },
     {
@@ -1514,7 +1709,7 @@
       "first_author": "Cameron Penn-Clarke",
       "kind": "talk",
       "page": 12,
-      "id": 116,
+      "id": 131,
       "abstract_id": 103
     },
     {
@@ -1527,7 +1722,7 @@
       "first_author": "Dipartimento di Matematica, Informatica e Geoscienze, Università di Trieste, Italy",
       "kind": "talk",
       "page": 12,
-      "id": 117,
+      "id": 132,
       "abstract_id": 97
     },
     {
@@ -1540,8 +1735,21 @@
       "first_author": "Ralph Thomas Becker",
       "kind": "talk",
       "page": 12,
-      "id": 118,
+      "id": 133,
       "abstract_id": 113
+    },
+    {
+      "date": "June 30",
+      "room": "International Room II",
+      "session": "G5",
+      "time_start": "15:20",
+      "time_end": "15:35",
+      "title": "Carboniferous Events : The Interplay of Life, Climate and Geodynamics",
+      "first_author": "Markus Aretz",
+      "kind": "talk",
+      "page": 12,
+      "id": 134,
+      "abstract_id": 94
     },
     {
       "date": "June 30",
@@ -1553,7 +1761,7 @@
       "first_author": "Jun Wang",
       "kind": "talk",
       "page": 12,
-      "id": 119,
+      "id": 135,
       "abstract_id": 111,
       "link_fuzzy": 0.988
     },
@@ -1567,7 +1775,7 @@
       "first_author": "Wenqian Wang",
       "kind": "talk",
       "page": 12,
-      "id": 120,
+      "id": 136,
       "abstract_id": 109
     },
     {
@@ -1580,7 +1788,7 @@
       "first_author": "Charles Henderson",
       "kind": "talk",
       "page": 12,
-      "id": 121,
+      "id": 137,
       "abstract_id": 101
     },
     {
@@ -1593,7 +1801,7 @@
       "first_author": "Shuhan Zhang",
       "kind": "talk",
       "page": 12,
-      "id": 122,
+      "id": 138,
       "abstract_id": 100
     },
     {
@@ -1606,8 +1814,21 @@
       "first_author": "Chongqing Huadi Resources and Environment Technology Co. LTD., China",
       "kind": "talk",
       "page": 12,
-      "id": 123,
+      "id": 139,
       "abstract_id": 108
+    },
+    {
+      "date": "June 30",
+      "room": "International Room II",
+      "session": "G5",
+      "time_start": "17:10",
+      "time_end": "17:30",
+      "title": "Life and CO2 in the Palaeozoic",
+      "first_author": "Hana Jurikova",
+      "kind": "talk",
+      "page": 12,
+      "id": 140,
+      "abstract_id": 102
     },
     {
       "date": "June 30",
@@ -1619,7 +1840,7 @@
       "first_author": null,
       "kind": "talk",
       "page": 12,
-      "id": 124,
+      "id": 141,
       "abstract_id": null
     },
     {
@@ -1632,7 +1853,7 @@
       "first_author": "Zhong-Qiang Chen",
       "kind": "talk",
       "page": 13,
-      "id": 125,
+      "id": 142,
       "abstract_id": 489
     },
     {
@@ -1645,7 +1866,7 @@
       "first_author": "Viktor Karádi",
       "kind": "talk",
       "page": 13,
-      "id": 126,
+      "id": 143,
       "abstract_id": 487
     },
     {
@@ -1658,7 +1879,7 @@
       "first_author": "Lin Jie Feng",
       "kind": "talk",
       "page": 13,
-      "id": 127,
+      "id": 144,
       "abstract_id": 476
     },
     {
@@ -1671,8 +1892,21 @@
       "first_author": "Dan Lyu",
       "kind": "talk",
       "page": 13,
-      "id": 128,
+      "id": 145,
       "abstract_id": 486
+    },
+    {
+      "date": "June 30",
+      "room": "International Room III",
+      "session": "S7",
+      "time_start": "10:05",
+      "time_end": "10:20",
+      "title": "Advances in Conodont Biostratigraphy Across the Induan-Olenekian Boundary (lower Triassic)",
+      "first_author": "Zhengyi Lyu",
+      "kind": "talk",
+      "page": 13,
+      "id": 146,
+      "abstract_id": 475
     },
     {
       "date": "June 30",
@@ -1684,7 +1918,7 @@
       "first_author": "Cecilia Benavente",
       "kind": "talk",
       "page": 13,
-      "id": 129,
+      "id": 147,
       "abstract_id": 491
     },
     {
@@ -1697,7 +1931,7 @@
       "first_author": "Laishi Zhao",
       "kind": "talk",
       "page": 13,
-      "id": 130,
+      "id": 148,
       "abstract_id": 477
     },
     {
@@ -1710,7 +1944,7 @@
       "first_author": "Xu Dai",
       "kind": "talk",
       "page": 13,
-      "id": 131,
+      "id": 149,
       "abstract_id": 472
     },
     {
@@ -1723,7 +1957,7 @@
       "first_author": "Yixing Du",
       "kind": "talk",
       "page": 13,
-      "id": 132,
+      "id": 150,
       "abstract_id": 478
     },
     {
@@ -1736,8 +1970,21 @@
       "first_author": "Yiran Cao",
       "kind": "talk",
       "page": 13,
-      "id": 133,
+      "id": 151,
       "abstract_id": 474
+    },
+    {
+      "date": "June 30",
+      "room": "International Room III",
+      "session": "S7",
+      "time_start": "12:00",
+      "time_end": "12:15",
+      "title": "Lithium and Strontium Isotopes Evidence for Continental Weathering Changes During the Carnian Pluvial Episode (late Triassic)",
+      "first_author": "Yunwang Zhang",
+      "kind": "talk",
+      "page": 13,
+      "id": 152,
+      "abstract_id": 479
     },
     {
       "date": "June 30",
@@ -1749,7 +1996,7 @@
       "first_author": "Jinnan Tong",
       "kind": "talk",
       "page": 13,
-      "id": 134,
+      "id": 153,
       "abstract_id": 485
     },
     {
@@ -1762,7 +2009,7 @@
       "first_author": "Greta Alverà",
       "kind": "talk",
       "page": 13,
-      "id": 135,
+      "id": 154,
       "abstract_id": 484
     },
     {
@@ -1775,7 +2022,7 @@
       "first_author": "Jinyuan Huang",
       "kind": "talk",
       "page": 13,
-      "id": 136,
+      "id": 155,
       "abstract_id": 494
     },
     {
@@ -1788,7 +2035,7 @@
       "first_author": "Yan Chen",
       "kind": "talk",
       "page": 13,
-      "id": 137,
+      "id": 156,
       "abstract_id": 492
     },
     {
@@ -1801,7 +2048,7 @@
       "first_author": "Guiyue Luo",
       "kind": "talk",
       "page": 13,
-      "id": 138,
+      "id": 157,
       "abstract_id": 483
     },
     {
@@ -1814,8 +2061,21 @@
       "first_author": "Yushan Shao",
       "kind": "talk",
       "page": 13,
-      "id": 139,
+      "id": 158,
       "abstract_id": 488
+    },
+    {
+      "date": "June 30",
+      "room": "International Room III",
+      "session": "S7",
+      "time_start": "15:55",
+      "time_end": "16:15",
+      "title": "The Triassic Carbon Cycle Rebuild",
+      "first_author": "Yadong Sun",
+      "kind": "talk",
+      "page": 13,
+      "id": 159,
+      "abstract_id": 493
     },
     {
       "date": "June 30",
@@ -1827,7 +2087,7 @@
       "first_author": "Viktória Baranyi",
       "kind": "talk",
       "page": 13,
-      "id": 140,
+      "id": 160,
       "abstract_id": 481
     },
     {
@@ -1840,7 +2100,7 @@
       "first_author": "Yuehan Sun",
       "kind": "talk",
       "page": 13,
-      "id": 141,
+      "id": 161,
       "abstract_id": 490
     },
     {
@@ -1853,7 +2113,7 @@
       "first_author": "Shuqin Zhou",
       "kind": "talk",
       "page": 13,
-      "id": 142,
+      "id": 162,
       "abstract_id": 482
     },
     {
@@ -1866,8 +2126,21 @@
       "first_author": "Sun Xiaoyuan",
       "kind": "talk",
       "page": 13,
-      "id": 143,
+      "id": 163,
       "abstract_id": 480
+    },
+    {
+      "date": "June 30",
+      "room": "International Room III",
+      "session": "S7",
+      "time_start": "17:30",
+      "time_end": "19:00",
+      "title": "Triassic subcommission business meeting 22",
+      "first_author": null,
+      "kind": "talk",
+      "page": 13,
+      "id": 164,
+      "abstract_id": null
     },
     {
       "date": "June 30",
@@ -1879,7 +2152,7 @@
       "first_author": "Ralph Thomas Becker",
       "kind": "talk",
       "page": 14,
-      "id": 144,
+      "id": 165,
       "abstract_id": 436
     },
     {
@@ -1892,7 +2165,7 @@
       "first_author": "Kun Liang",
       "kind": "talk",
       "page": 14,
-      "id": 145,
+      "id": 166,
       "abstract_id": 420
     },
     {
@@ -1905,7 +2178,7 @@
       "first_author": "Ladislav Slavík",
       "kind": "talk",
       "page": 14,
-      "id": 146,
+      "id": 167,
       "abstract_id": 421
     },
     {
@@ -1918,7 +2191,7 @@
       "first_author": "Nadezhda Izokh",
       "kind": "talk",
       "page": 14,
-      "id": 147,
+      "id": 168,
       "abstract_id": 431
     },
     {
@@ -1931,8 +2204,21 @@
       "first_author": "Zhang Xinsong",
       "kind": "talk",
       "page": 14,
-      "id": 148,
+      "id": 169,
       "abstract_id": 425
+    },
+    {
+      "date": "June 30",
+      "room": "Room 773",
+      "session": "S4",
+      "time_start": "10:20",
+      "time_end": "10:35",
+      "title": "Stratigraphic Significance of Microbialites Near the Frasnian-Famennian Boundary at the Liujing Section, Guangxi, South China",
+      "first_author": "Yucong Sun",
+      "kind": "talk",
+      "page": 14,
+      "id": 170,
+      "abstract_id": 433
     },
     {
       "date": "June 30",
@@ -1944,7 +2230,7 @@
       "first_author": "Anne-Christine da Silva",
       "kind": "talk",
       "page": 14,
-      "id": 149,
+      "id": 171,
       "abstract_id": 428
     },
     {
@@ -1957,7 +2243,7 @@
       "first_author": "Marhaba Khattak",
       "kind": "talk",
       "page": 14,
-      "id": 150,
+      "id": 172,
       "abstract_id": 418
     },
     {
@@ -1970,7 +2256,7 @@
       "first_author": "Elizabeth Dowding",
       "kind": "talk",
       "page": 14,
-      "id": 151,
+      "id": 173,
       "abstract_id": 427
     },
     {
@@ -1983,7 +2269,7 @@
       "first_author": "Jianfeng Lu",
       "kind": "talk",
       "page": 14,
-      "id": 152,
+      "id": 174,
       "abstract_id": 430
     },
     {
@@ -1996,8 +2282,21 @@
       "first_author": "Shouhan Wu",
       "kind": "talk",
       "page": 14,
-      "id": 153,
+      "id": 175,
       "abstract_id": 424
+    },
+    {
+      "date": "June 30",
+      "room": "Room 773",
+      "session": "S4",
+      "time_start": "12:15",
+      "time_end": "12:30",
+      "title": "The Silurian–devonian Boundary of China: Review and Perspectives",
+      "first_author": "Jiayi Yin",
+      "kind": "talk",
+      "page": 14,
+      "id": 176,
+      "abstract_id": 435
     },
     {
       "date": "June 30",
@@ -2009,7 +2308,7 @@
       "first_author": "Cameron Penn-Clarke",
       "kind": "talk",
       "page": 14,
-      "id": 154,
+      "id": 177,
       "abstract_id": 423
     },
     {
@@ -2022,7 +2321,7 @@
       "first_author": "Alexander Ivanov",
       "kind": "talk",
       "page": 14,
-      "id": 155,
+      "id": 178,
       "abstract_id": 422
     },
     {
@@ -2035,7 +2334,7 @@
       "first_author": "Yujie Chen",
       "kind": "talk",
       "page": 14,
-      "id": 156,
+      "id": 179,
       "abstract_id": 426
     },
     {
@@ -2048,8 +2347,21 @@
       "first_author": "Hui Wang",
       "kind": "talk",
       "page": 14,
-      "id": 157,
+      "id": 180,
       "abstract_id": 432
+    },
+    {
+      "date": "June 30",
+      "room": "Room 773",
+      "session": "S4",
+      "time_start": "15:05",
+      "time_end": "15:20",
+      "title": "Paleo-Oceans Were Still Transitioning to a Modern State During the Frasnian (late Devonian)",
+      "first_author": "Hui Song",
+      "kind": "talk",
+      "page": 14,
+      "id": 181,
+      "abstract_id": 429
     },
     {
       "date": "June 30",
@@ -2061,7 +2373,7 @@
       "first_author": "Javier Sanz-López",
       "kind": "talk",
       "page": 14,
-      "id": 158,
+      "id": 182,
       "abstract_id": 416
     },
     {
@@ -2074,7 +2386,7 @@
       "first_author": "Cole Naamdhew",
       "kind": "talk",
       "page": 14,
-      "id": 159,
+      "id": 183,
       "abstract_id": 434
     },
     {
@@ -2087,7 +2399,7 @@
       "first_author": "Xiaoyu Jin",
       "kind": "talk",
       "page": 14,
-      "id": 160,
+      "id": 184,
       "abstract_id": 417
     },
     {
@@ -2100,8 +2412,21 @@
       "first_author": "Hai Yan Chai",
       "kind": "talk",
       "page": 14,
-      "id": 161,
+      "id": 185,
       "abstract_id": 419
+    },
+    {
+      "date": "June 30",
+      "room": "Room 773",
+      "session": "S4",
+      "time_start": "17:00",
+      "time_end": "18:30",
+      "title": "Devonian subcommission business meeting 24",
+      "first_author": null,
+      "kind": "talk",
+      "page": 14,
+      "id": 186,
+      "abstract_id": null
     },
     {
       "date": "June 30",
@@ -2113,7 +2438,7 @@
       "first_author": "Jarno Huygh",
       "kind": "talk",
       "page": 15,
-      "id": 162,
+      "id": 187,
       "abstract_id": 243
     },
     {
@@ -2126,7 +2451,7 @@
       "first_author": "Qiang Fang",
       "kind": "talk",
       "page": 15,
-      "id": 163,
+      "id": 188,
       "abstract_id": 254
     },
     {
@@ -2139,7 +2464,7 @@
       "first_author": "Jaume Dinarès-Turell",
       "kind": "talk",
       "page": 15,
-      "id": 164,
+      "id": 189,
       "abstract_id": null
     },
     {
@@ -2152,7 +2477,7 @@
       "first_author": "Junbo Wang",
       "kind": "talk",
       "page": 15,
-      "id": 165,
+      "id": 190,
       "abstract_id": 255
     },
     {
@@ -2165,7 +2490,7 @@
       "first_author": "Micha Ruhl",
       "kind": "talk",
       "page": 15,
-      "id": 166,
+      "id": 191,
       "abstract_id": 249
     },
     {
@@ -2178,7 +2503,7 @@
       "first_author": "Chaofeng Fu",
       "kind": "talk",
       "page": 15,
-      "id": 167,
+      "id": 192,
       "abstract_id": 251
     },
     {
@@ -2191,7 +2516,7 @@
       "first_author": "Jianhao Liang",
       "kind": "talk",
       "page": 15,
-      "id": 168,
+      "id": 193,
       "abstract_id": 245
     },
     {
@@ -2204,7 +2529,7 @@
       "first_author": "Dhoha Boukhalfa",
       "kind": "talk",
       "page": 15,
-      "id": 169,
+      "id": 194,
       "abstract_id": 252
     },
     {
@@ -2217,7 +2542,7 @@
       "first_author": "Jinke Ren",
       "kind": "talk",
       "page": 15,
-      "id": 170,
+      "id": 195,
       "abstract_id": 248
     },
     {
@@ -2230,8 +2555,21 @@
       "first_author": "Qian Zhang",
       "kind": "talk",
       "page": 15,
-      "id": 171,
+      "id": 196,
       "abstract_id": 247
+    },
+    {
+      "date": "June 30",
+      "room": "Room 775",
+      "session": "G12",
+      "time_start": "12:15",
+      "time_end": "12:30",
+      "title": "Periodic Layered Deposits on Mars Reflecting Early Climate System Changes Driven by Orbital Forcing",
+      "first_author": "Zhixin Wang",
+      "kind": "talk",
+      "page": 15,
+      "id": 197,
+      "abstract_id": 253
     },
     {
       "date": "June 30",
@@ -2243,7 +2581,7 @@
       "first_author": "David de Vleeschouwer",
       "kind": "talk",
       "page": 15,
-      "id": 172,
+      "id": 198,
       "abstract_id": 250
     },
     {
@@ -2256,7 +2594,7 @@
       "first_author": "Xu Yao",
       "kind": "talk",
       "page": 15,
-      "id": 173,
+      "id": 199,
       "abstract_id": 260
     },
     {
@@ -2269,7 +2607,7 @@
       "first_author": "Nina Wichern",
       "kind": "talk",
       "page": 15,
-      "id": 174,
+      "id": 200,
       "abstract_id": 239
     },
     {
@@ -2282,7 +2620,7 @@
       "first_author": "Valentin Jamart",
       "kind": "talk",
       "page": 15,
-      "id": 175,
+      "id": 201,
       "abstract_id": 241
     },
     {
@@ -2295,7 +2633,7 @@
       "first_author": "Hanyu Zhu",
       "kind": "talk",
       "page": 15,
-      "id": 176,
+      "id": 202,
       "abstract_id": 259
     },
     {
@@ -2308,8 +2646,21 @@
       "first_author": "Cheng Peng",
       "kind": "talk",
       "page": 15,
-      "id": 177,
+      "id": 203,
       "abstract_id": 244
+    },
+    {
+      "date": "June 30",
+      "room": "Room 775",
+      "session": "G12",
+      "time_start": "15:55",
+      "time_end": "16:15",
+      "title": "Bayesian Cyclostratigraphic Age-Depth Modelling: A Cambrian Case Study",
+      "first_author": "Matthias Sinnesael",
+      "kind": "talk",
+      "page": 15,
+      "id": 204,
+      "abstract_id": 246
     },
     {
       "date": "June 30",
@@ -2321,7 +2672,7 @@
       "first_author": "Jihede Haj Messaoud",
       "kind": "talk",
       "page": 15,
-      "id": 178,
+      "id": 205,
       "abstract_id": 242
     },
     {
@@ -2334,7 +2685,7 @@
       "first_author": "Zihan Li",
       "kind": "talk",
       "page": 15,
-      "id": 179,
+      "id": 206,
       "abstract_id": 256
     },
     {
@@ -2347,7 +2698,7 @@
       "first_author": "Ruihongying Su",
       "kind": "talk",
       "page": 15,
-      "id": 180,
+      "id": 207,
       "abstract_id": 257
     },
     {
@@ -2360,8 +2711,21 @@
       "first_author": "Yingkun Cui",
       "kind": "talk",
       "page": 15,
-      "id": 181,
+      "id": 208,
       "abstract_id": 258
+    },
+    {
+      "date": "June 30",
+      "room": "Room 775",
+      "session": "G12",
+      "time_start": "17:20",
+      "time_end": "18:50",
+      "title": "Silurian Subcommission Business Meeting 26",
+      "first_author": null,
+      "kind": "talk",
+      "page": 15,
+      "id": 209,
+      "abstract_id": null
     },
     {
       "date": "June 30",
@@ -2373,7 +2737,7 @@
       "first_author": "Erik Wolfgring",
       "kind": "talk",
       "page": 16,
-      "id": 182,
+      "id": 210,
       "abstract_id": 530
     },
     {
@@ -2386,7 +2750,7 @@
       "first_author": "Maria Rose Petrizzo",
       "kind": "talk",
       "page": 16,
-      "id": 183,
+      "id": 211,
       "abstract_id": 532
     },
     {
@@ -2399,7 +2763,7 @@
       "first_author": "Sílvia Clara Silva",
       "kind": "talk",
       "page": 16,
-      "id": 184,
+      "id": 212,
       "abstract_id": 529
     },
     {
@@ -2412,7 +2776,7 @@
       "first_author": "Dangpeng Xi",
       "kind": "talk",
       "page": 16,
-      "id": 185,
+      "id": 213,
       "abstract_id": 545
     },
     {
@@ -2425,8 +2789,21 @@
       "first_author": "Shin-ichi Sano",
       "kind": "talk",
       "page": 16,
-      "id": 186,
+      "id": 214,
       "abstract_id": null
+    },
+    {
+      "date": "June 30",
+      "room": "Room 776",
+      "session": "S10",
+      "time_start": "10:20",
+      "time_end": "10:35",
+      "title": "Magnetostratigraphy of the Terrestrial Cretaceous in China: Recent Developments",
+      "first_author": "Fei Han",
+      "kind": "talk",
+      "page": 16,
+      "id": 215,
+      "abstract_id": 534
     },
     {
       "date": "June 30",
@@ -2438,7 +2815,7 @@
       "first_author": "Jahandar Ramezani",
       "kind": "talk",
       "page": 16,
-      "id": 187,
+      "id": 216,
       "abstract_id": 527
     },
     {
@@ -2451,7 +2828,7 @@
       "first_author": "Elisabetta Erba",
       "kind": "talk",
       "page": 16,
-      "id": 188,
+      "id": 217,
       "abstract_id": 538
     },
     {
@@ -2464,7 +2841,7 @@
       "first_author": "Reishi Takashima",
       "kind": "talk",
       "page": 16,
-      "id": 189,
+      "id": 218,
       "abstract_id": 528
     },
     {
@@ -2477,7 +2854,7 @@
       "first_author": "Victor Ribeiro da Silva",
       "kind": "talk",
       "page": 16,
-      "id": 190,
+      "id": 219,
       "abstract_id": 543
     },
     {
@@ -2490,8 +2867,21 @@
       "first_author": "Igor Kosenko",
       "kind": "talk",
       "page": 16,
-      "id": 191,
+      "id": 220,
       "abstract_id": 547
+    },
+    {
+      "date": "June 30",
+      "room": "Room 776",
+      "session": "S10",
+      "time_start": "12:15",
+      "time_end": "12:30",
+      "title": "New Discovery of Running Footprints from the Jehol Biota in Inner Mongolia and Analysis of Behavioral Habits",
+      "first_author": "Yang Li",
+      "kind": "talk",
+      "page": 16,
+      "id": 221,
+      "abstract_id": 537
     },
     {
       "date": "June 30",
@@ -2503,7 +2893,7 @@
       "first_author": "Zhaoxia Ge",
       "kind": "talk",
       "page": 16,
-      "id": 192,
+      "id": 222,
       "abstract_id": 535
     },
     {
@@ -2516,7 +2906,7 @@
       "first_author": "Yong-Xiang Li",
       "kind": "talk",
       "page": 16,
-      "id": 193,
+      "id": 223,
       "abstract_id": 533
     },
     {
@@ -2529,7 +2919,7 @@
       "first_author": "Xianghui Li",
       "kind": "talk",
       "page": 16,
-      "id": 194,
+      "id": 224,
       "abstract_id": 531
     },
     {
@@ -2542,7 +2932,7 @@
       "first_author": "Soobin Lee",
       "kind": "talk",
       "page": 16,
-      "id": 195,
+      "id": 225,
       "abstract_id": 542
     },
     {
@@ -2555,7 +2945,7 @@
       "first_author": "Vsevolod Efremenko",
       "kind": "talk",
       "page": 16,
-      "id": 196,
+      "id": 226,
       "abstract_id": 541
     },
     {
@@ -2568,8 +2958,21 @@
       "first_author": "Aristóteles de Moraes Rios-Netto",
       "kind": "talk",
       "page": 16,
-      "id": 197,
+      "id": 227,
       "abstract_id": 536
+    },
+    {
+      "date": "June 30",
+      "room": "Room 776",
+      "session": "S10",
+      "time_start": "15:55",
+      "time_end": "16:10",
+      "title": "A 500-kyr Pluvial Interval Triggered Lacustrine Carbon Burial in Late Cretaceous East Asia",
+      "first_author": "Yuke Liu",
+      "kind": "talk",
+      "page": 16,
+      "id": 228,
+      "abstract_id": 526
     },
     {
       "date": "June 30",
@@ -2581,7 +2984,7 @@
       "first_author": "Chunyang Bu",
       "kind": "talk",
       "page": 16,
-      "id": 198,
+      "id": 229,
       "abstract_id": 539
     },
     {
@@ -2594,7 +2997,7 @@
       "first_author": "Zihan Zhou",
       "kind": "talk",
       "page": 16,
-      "id": 199,
+      "id": 230,
       "abstract_id": 544
     },
     {
@@ -2607,8 +3010,21 @@
       "first_author": "Binchen Li",
       "kind": "talk",
       "page": 16,
-      "id": 200,
+      "id": 231,
       "abstract_id": 540
+    },
+    {
+      "date": "June 30",
+      "room": "Room 776",
+      "session": "S10",
+      "time_start": "17:00",
+      "time_end": "18:30",
+      "title": "Cretaceous subcommission business meeting 28",
+      "first_author": null,
+      "kind": "talk",
+      "page": 16,
+      "id": 232,
+      "abstract_id": null
     },
     {
       "date": "July 2",
@@ -2620,7 +3036,7 @@
       "first_author": "Cristiana Esteves",
       "kind": "talk",
       "page": 17,
-      "id": 201,
+      "id": 233,
       "abstract_id": 374
     },
     {
@@ -2633,7 +3049,7 @@
       "first_author": "Nick van Faals",
       "kind": "talk",
       "page": 17,
-      "id": 202,
+      "id": 234,
       "abstract_id": 384
     },
     {
@@ -2646,7 +3062,7 @@
       "first_author": "Shuang Dai",
       "kind": "talk",
       "page": 17,
-      "id": 203,
+      "id": 235,
       "abstract_id": 379,
       "link_fuzzy": 0.982
     },
@@ -2660,7 +3076,7 @@
       "first_author": "Xiangri Chi",
       "kind": "talk",
       "page": 17,
-      "id": 204,
+      "id": 236,
       "abstract_id": 365
     },
     {
@@ -2673,7 +3089,7 @@
       "first_author": "Andrei Dronov",
       "kind": "talk",
       "page": 17,
-      "id": 205,
+      "id": 237,
       "abstract_id": 380
     },
     {
@@ -2686,8 +3102,21 @@
       "first_author": "Guangxu Wang",
       "kind": "talk",
       "page": 17,
-      "id": 206,
+      "id": 238,
       "abstract_id": 383
+    },
+    {
+      "date": "July 2",
+      "room": "International Room I",
+      "session": "S2",
+      "time_start": "10:55",
+      "time_end": "11:15",
+      "title": "High Resolution Ordovician Carbon Isotope Chemostratigraphy: A Perspective from South China",
+      "first_author": "Rongchang Wu",
+      "kind": "talk",
+      "page": 17,
+      "id": 239,
+      "abstract_id": 372
     },
     {
       "date": "July 2",
@@ -2699,7 +3128,7 @@
       "first_author": "Julia Gadsby",
       "kind": "talk",
       "page": 17,
-      "id": 207,
+      "id": 240,
       "abstract_id": 366
     },
     {
@@ -2712,7 +3141,7 @@
       "first_author": "Lei Zhang",
       "kind": "talk",
       "page": 17,
-      "id": 208,
+      "id": 241,
       "abstract_id": 367
     },
     {
@@ -2725,7 +3154,7 @@
       "first_author": "Xiaoli Ma",
       "kind": "talk",
       "page": 17,
-      "id": 209,
+      "id": 242,
       "abstract_id": 371
     },
     {
@@ -2738,8 +3167,21 @@
       "first_author": "Olaf Elicki",
       "kind": "talk",
       "page": 17,
-      "id": 210,
+      "id": 243,
       "abstract_id": 378
+    },
+    {
+      "date": "July 2",
+      "room": "International Room I",
+      "session": "S2",
+      "time_start": "12:15",
+      "time_end": "12:30",
+      "title": "Evolution of Reef Ecosystems of the Siberian Platform During the Ordovician",
+      "first_author": "Nikita Lykov",
+      "kind": "talk",
+      "page": 17,
+      "id": 244,
+      "abstract_id": 370
     },
     {
       "date": "July 2",
@@ -2751,7 +3193,7 @@
       "first_author": "Lars Holmer",
       "kind": "talk",
       "page": 17,
-      "id": 211,
+      "id": 245,
       "abstract_id": 387
     },
     {
@@ -2764,7 +3206,7 @@
       "first_author": "Jana Bruthansova",
       "kind": "talk",
       "page": 17,
-      "id": 212,
+      "id": 246,
       "abstract_id": 375,
       "link_fuzzy": 0.994
     },
@@ -2778,7 +3220,7 @@
       "first_author": "Shijia Gao",
       "kind": "talk",
       "page": 17,
-      "id": 213,
+      "id": 247,
       "abstract_id": 386
     },
     {
@@ -2791,7 +3233,7 @@
       "first_author": "Alexis Gerbe",
       "kind": "talk",
       "page": 17,
-      "id": 214,
+      "id": 248,
       "abstract_id": 369
     },
     {
@@ -2804,8 +3246,21 @@
       "first_author": "Rao Fu",
       "kind": "talk",
       "page": 17,
-      "id": 215,
+      "id": 249,
       "abstract_id": 377
+    },
+    {
+      "date": "July 2",
+      "room": "International Room I",
+      "session": "S2",
+      "time_start": "15:20",
+      "time_end": "15:35",
+      "title": "Dynamics of the Great Ordovician Biodiversification Event in Baltica",
+      "first_author": "Meimei Xu",
+      "kind": "talk",
+      "page": 17,
+      "id": 250,
+      "abstract_id": 368
     },
     {
       "date": "July 2",
@@ -2817,7 +3272,7 @@
       "first_author": "Wenhui Wang",
       "kind": "talk",
       "page": 17,
-      "id": 216,
+      "id": 251,
       "abstract_id": 382
     },
     {
@@ -2830,7 +3285,7 @@
       "first_author": "Gisela Mabel Della Costa",
       "kind": "talk",
       "page": 17,
-      "id": 217,
+      "id": 252,
       "abstract_id": 373
     },
     {
@@ -2843,7 +3298,7 @@
       "first_author": "Yan Liang",
       "kind": "talk",
       "page": 17,
-      "id": 218,
+      "id": 253,
       "abstract_id": 376
     },
     {
@@ -2856,7 +3311,7 @@
       "first_author": "Mengxiang Yang",
       "kind": "talk",
       "page": 17,
-      "id": 219,
+      "id": 254,
       "abstract_id": 381
     },
     {
@@ -2869,7 +3324,7 @@
       "first_author": "Thomas Servais",
       "kind": "talk",
       "page": 17,
-      "id": 220,
+      "id": 255,
       "abstract_id": 385,
       "link_fuzzy": 0.992
     },
@@ -2883,7 +3338,7 @@
       "first_author": "Xiaokang Liu",
       "kind": "talk",
       "page": 18,
-      "id": 221,
+      "id": 256,
       "abstract_id": 284
     },
     {
@@ -2896,7 +3351,7 @@
       "first_author": "Xiaobing Wu",
       "kind": "talk",
       "page": 18,
-      "id": 222,
+      "id": 257,
       "abstract_id": 292
     },
     {
@@ -2909,7 +3364,7 @@
       "first_author": "Tairan Li",
       "kind": "talk",
       "page": 18,
-      "id": 223,
+      "id": 258,
       "abstract_id": 279
     },
     {
@@ -2922,7 +3377,7 @@
       "first_author": "Yuanyuan Xu",
       "kind": "talk",
       "page": 18,
-      "id": 224,
+      "id": 259,
       "abstract_id": 290
     },
     {
@@ -2935,8 +3390,21 @@
       "first_author": "P. Martin Sander",
       "kind": "talk",
       "page": 18,
-      "id": 225,
+      "id": 260,
       "abstract_id": 287
+    },
+    {
+      "date": "July 2",
+      "room": "International Room II",
+      "session": "G13",
+      "time_start": "10:15",
+      "time_end": "10:30",
+      "title": "Osmium Isotope Constraints on Magmatic Pulse Activity and Global Weathering Fluxes Across the Triassic-Jurassic Transition",
+      "first_author": "Weimu Xu",
+      "kind": "talk",
+      "page": 18,
+      "id": 261,
+      "abstract_id": 288
     },
     {
       "date": "July 2",
@@ -2948,7 +3416,7 @@
       "first_author": "Tianchen He",
       "kind": "talk",
       "page": 18,
-      "id": 226,
+      "id": 262,
       "abstract_id": 291
     },
     {
@@ -2961,7 +3429,7 @@
       "first_author": "Keyi Wu",
       "kind": "talk",
       "page": 18,
-      "id": 227,
+      "id": 263,
       "abstract_id": 295
     },
     {
@@ -2974,7 +3442,7 @@
       "first_author": "Sarah Salem",
       "kind": "talk",
       "page": 18,
-      "id": 228,
+      "id": 264,
       "abstract_id": 286
     },
     {
@@ -2987,7 +3455,7 @@
       "first_author": "David B. Kemp",
       "kind": "talk",
       "page": 18,
-      "id": 229,
+      "id": 265,
       "abstract_id": 289
     },
     {
@@ -3000,8 +3468,21 @@
       "first_author": "Zhong Han",
       "kind": "talk",
       "page": 18,
-      "id": 230,
+      "id": 266,
       "abstract_id": 283
+    },
+    {
+      "date": "July 2",
+      "room": "International Room II",
+      "session": "G13",
+      "time_start": "12:15",
+      "time_end": "12:30",
+      "title": "Fossil Ginkgo Leaves Reveal Coupled Carbon (pCO2)-Mercury (Hg) Variations Across the Early-Middle Jurassic Volcanic Forcing",
+      "first_author": "Li Zhang",
+      "kind": "talk",
+      "page": 18,
+      "id": 267,
+      "abstract_id": 281
     },
     {
       "date": "July 2",
@@ -3013,7 +3494,7 @@
       "first_author": "Yuchen Yu",
       "kind": "talk",
       "page": 18,
-      "id": 231,
+      "id": 268,
       "abstract_id": 280
     },
     {
@@ -3026,7 +3507,7 @@
       "first_author": "Brahimsamba Bomou",
       "kind": "talk",
       "page": 18,
-      "id": 232,
+      "id": 269,
       "abstract_id": 282
     },
     {
@@ -3039,7 +3520,7 @@
       "first_author": "Xiangdong Zhao",
       "kind": "talk",
       "page": 18,
-      "id": 233,
+      "id": 270,
       "abstract_id": 293
     },
     {
@@ -3052,7 +3533,7 @@
       "first_author": "Yi Zhang",
       "kind": "talk",
       "page": 18,
-      "id": 234,
+      "id": 271,
       "abstract_id": 285
     },
     {
@@ -3061,13 +3542,25 @@
       "session": "G13",
       "time_start": "15:00",
       "time_end": "15:20",
-      "title": "Unraveling the Cretaceous-Paleogene Mass Extinction : Chicxulub, Deccan Volcanism, or a Dual Catastrophe? Anthony Shields, Ying Zhou, Maoyan Zhu",
+      "title": "Unraveling the Cretaceous-Paleogene Mass Extinction : Chicxulub, Deccan Volcanism, or a Dual Catastrophe?",
       "first_author": "Thierry Adatte",
       "kind": "talk",
       "page": 18,
-      "id": 235,
-      "abstract_id": 294,
-      "link_fuzzy": "prefix"
+      "id": 272,
+      "abstract_id": 294
+    },
+    {
+      "date": "July 2",
+      "room": "International Room II",
+      "session": "G1",
+      "time_start": "15:40",
+      "time_end": "15:55",
+      "title": "A Global Stratotype Section and Point (gssp) for the Cryogenian System",
+      "first_author": "Graham Shields",
+      "kind": "talk",
+      "page": 18,
+      "id": 273,
+      "abstract_id": 1
     },
     {
       "date": "July 2",
@@ -3079,7 +3572,7 @@
       "first_author": "Xianguo Lang",
       "kind": "talk",
       "page": 18,
-      "id": 236,
+      "id": 274,
       "abstract_id": 2
     },
     {
@@ -3092,7 +3585,7 @@
       "first_author": "Kun Zhao",
       "kind": "talk",
       "page": 18,
-      "id": 237,
+      "id": 275,
       "abstract_id": 4
     },
     {
@@ -3105,7 +3598,7 @@
       "first_author": "Jin Luo",
       "kind": "talk",
       "page": 18,
-      "id": 238,
+      "id": 276,
       "abstract_id": 5
     },
     {
@@ -3118,7 +3611,7 @@
       "first_author": "Chenzhang Duan",
       "kind": "talk",
       "page": 18,
-      "id": 239,
+      "id": 277,
       "abstract_id": 7
     },
     {
@@ -3131,7 +3624,7 @@
       "first_author": "Jiajun Wang",
       "kind": "talk",
       "page": 18,
-      "id": 240,
+      "id": 278,
       "abstract_id": 3
     },
     {
@@ -3144,8 +3637,21 @@
       "first_author": "Wenyan Tang",
       "kind": "talk",
       "page": 18,
-      "id": 241,
+      "id": 279,
       "abstract_id": 6
+    },
+    {
+      "date": "July 2",
+      "room": "International Room II",
+      "session": "G13",
+      "time_start": "17:30",
+      "time_end": "19:00",
+      "title": "Stratigraphic Classification subcommission business meeting 32",
+      "first_author": null,
+      "kind": "talk",
+      "page": 18,
+      "id": 280,
+      "abstract_id": null
     },
     {
       "date": "July 2",
@@ -3157,7 +3663,7 @@
       "first_author": "Satoshi Takahashi",
       "kind": "talk",
       "page": 19,
-      "id": 242,
+      "id": 281,
       "abstract_id": 138
     },
     {
@@ -3170,7 +3676,7 @@
       "first_author": "Weihong He",
       "kind": "talk",
       "page": 19,
-      "id": 243,
+      "id": 282,
       "abstract_id": 141
     },
     {
@@ -3183,7 +3689,7 @@
       "first_author": "Jun Liu",
       "kind": "talk",
       "page": 19,
-      "id": 244,
+      "id": 283,
       "abstract_id": 148
     },
     {
@@ -3196,7 +3702,7 @@
       "first_author": "Wenchao Shu",
       "kind": "talk",
       "page": 19,
-      "id": 245,
+      "id": 284,
       "abstract_id": 149
     },
     {
@@ -3209,8 +3715,21 @@
       "first_author": "Liyan Men",
       "kind": "talk",
       "page": 19,
-      "id": 246,
+      "id": 285,
       "abstract_id": 134
+    },
+    {
+      "date": "July 2",
+      "room": "International Room III",
+      "session": "G6",
+      "time_start": "10:20",
+      "time_end": "10:35",
+      "title": "High Energy Stromatolites-Associated Sediments from Middle Triassic(guizhou, China)",
+      "first_author": "Xuan Wang",
+      "kind": "talk",
+      "page": 19,
+      "id": 286,
+      "abstract_id": 135
     },
     {
       "date": "July 2",
@@ -3222,7 +3741,7 @@
       "first_author": "Yifan Xiao",
       "kind": "talk",
       "page": 19,
-      "id": 247,
+      "id": 287,
       "abstract_id": 131
     },
     {
@@ -3235,7 +3754,7 @@
       "first_author": "Liubov Ladygina",
       "kind": "talk",
       "page": 19,
-      "id": 248,
+      "id": 288,
       "abstract_id": 144
     },
     {
@@ -3248,7 +3767,7 @@
       "first_author": "Haijun Song",
       "kind": "talk",
       "page": 19,
-      "id": 249,
+      "id": 289,
       "abstract_id": 137
     },
     {
@@ -3261,7 +3780,7 @@
       "first_author": "Peishan Li",
       "kind": "talk",
       "page": 19,
-      "id": 250,
+      "id": 290,
       "abstract_id": 143
     },
     {
@@ -3274,8 +3793,21 @@
       "first_author": "Hanchao Chen",
       "kind": "talk",
       "page": 19,
-      "id": 251,
+      "id": 291,
       "abstract_id": 136
+    },
+    {
+      "date": "July 2",
+      "room": "International Room III",
+      "session": "G6",
+      "time_start": "12:15",
+      "time_end": "12:30",
+      "title": "Influence of Intensified Volcanism in the Latest Permian on the Ecosystem: Ev-Idence from the Deep-Water Dongpan Section, South China",
+      "first_author": "Chen Wu",
+      "kind": "talk",
+      "page": 19,
+      "id": 292,
+      "abstract_id": 139
     },
     {
       "date": "July 2",
@@ -3287,7 +3819,7 @@
       "first_author": "Jianbo Chen",
       "kind": "talk",
       "page": 19,
-      "id": 252,
+      "id": 293,
       "abstract_id": 145,
       "link_fuzzy": 0.989
     },
@@ -3301,7 +3833,7 @@
       "first_author": "Noritoshi Suzuki",
       "kind": "talk",
       "page": 19,
-      "id": 253,
+      "id": 294,
       "abstract_id": 128
     },
     {
@@ -3314,7 +3846,7 @@
       "first_author": "Huiting Wu",
       "kind": "talk",
       "page": 19,
-      "id": 254,
+      "id": 295,
       "abstract_id": 130
     },
     {
@@ -3327,7 +3859,7 @@
       "first_author": "Wu Yani",
       "kind": "talk",
       "page": 19,
-      "id": 255,
+      "id": 296,
       "abstract_id": 146
     },
     {
@@ -3340,8 +3872,21 @@
       "first_author": "Kaiyue Wang",
       "kind": "talk",
       "page": 19,
-      "id": 256,
+      "id": 297,
       "abstract_id": 150
+    },
+    {
+      "date": "July 2",
+      "room": "International Room III",
+      "session": "G6",
+      "time_start": "15:20",
+      "time_end": "15:35",
+      "title": "Phased Collapse of Biotic Communities and Its Relations to Marine Anoxia Near the Permian-Triassic Boundary in Shangsi, Sichuan",
+      "first_author": "Youyou Wu",
+      "kind": "talk",
+      "page": 19,
+      "id": 298,
+      "abstract_id": 142
     },
     {
       "date": "July 2",
@@ -3353,7 +3898,7 @@
       "first_author": "Fengyu Wang",
       "kind": "talk",
       "page": 19,
-      "id": 257,
+      "id": 299,
       "abstract_id": 129
     },
     {
@@ -3366,7 +3911,7 @@
       "first_author": "Jiachun Li",
       "kind": "talk",
       "page": 19,
-      "id": 258,
+      "id": 300,
       "abstract_id": 132
     },
     {
@@ -3379,7 +3924,7 @@
       "first_author": "Xing Li",
       "kind": "talk",
       "page": 19,
-      "id": 259,
+      "id": 301,
       "abstract_id": 147
     },
     {
@@ -3392,7 +3937,7 @@
       "first_author": "Luyi Miao",
       "kind": "talk",
       "page": 19,
-      "id": 260,
+      "id": 302,
       "abstract_id": 133
     },
     {
@@ -3401,13 +3946,26 @@
       "session": "G6",
       "time_start": "17:00",
       "time_end": "17:15",
-      "title": "Morphological Evolution and Ecological Adaptation of the Triassic Bivalve Genus Unionites Yan Zhong, Hang Chu, Hong-Wei Kuang, Peng Shuan-Hong Zhang, Bing Shen, Qing Tang, Ross Nelson Mitchell",
+      "title": "Morphological Evolution and Ecological Adaptation of the Triassic Bivalve Genus Unionites Yan Zhong, Hang Chu, Hong-Wei Kuang, Peng",
       "first_author": "Wen Wu Peng,",
       "kind": "talk",
       "page": 19,
-      "id": 261,
+      "id": 303,
       "abstract_id": 140,
       "link_fuzzy": "prefix"
+    },
+    {
+      "date": "July 2",
+      "room": "International Room III",
+      "session": "G6",
+      "time_start": "17:20",
+      "time_end": "19:00",
+      "title": "A Billion-Year Odyssey of the Earth's Middle Age: New Advances in the Statherian-Tonian Multi-Stratigraphy, Global Correlation and Basin Dynamics 34",
+      "first_author": null,
+      "kind": "talk",
+      "page": 19,
+      "id": 304,
+      "abstract_id": null
     },
     {
       "date": "July 2",
@@ -3419,7 +3977,7 @@
       "first_author": "Muhammad Kamran",
       "kind": "talk",
       "page": 20,
-      "id": 262,
+      "id": 305,
       "abstract_id": 347
     },
     {
@@ -3432,7 +3990,7 @@
       "first_author": "Meiling Han",
       "kind": "talk",
       "page": 20,
-      "id": 263,
+      "id": 306,
       "abstract_id": 340
     },
     {
@@ -3445,7 +4003,7 @@
       "first_author": "Bintao Gao",
       "kind": "talk",
       "page": 20,
-      "id": 264,
+      "id": 307,
       "abstract_id": 343
     },
     {
@@ -3458,7 +4016,7 @@
       "first_author": "Diego Torromé",
       "kind": "talk",
       "page": 20,
-      "id": 265,
+      "id": 308,
       "abstract_id": 342
     },
     {
@@ -3471,7 +4029,7 @@
       "first_author": "Deng Zeng",
       "kind": "talk",
       "page": 20,
-      "id": 266,
+      "id": 309,
       "abstract_id": 341
     },
     {
@@ -3484,8 +4042,21 @@
       "first_author": "Nalan Lom",
       "kind": "talk",
       "page": 20,
-      "id": 267,
+      "id": 310,
       "abstract_id": null
+    },
+    {
+      "date": "July 2",
+      "room": "Room 773",
+      "session": "G18",
+      "time_start": "10:55",
+      "time_end": "11:15",
+      "title": "The Paleocene/eocene Boundary in the Tethyan Shallow Benthic Zonation",
+      "first_author": "Qinghai Zhang",
+      "kind": "talk",
+      "page": 20,
+      "id": 311,
+      "abstract_id": 348
     },
     {
       "date": "July 2",
@@ -3497,7 +4068,7 @@
       "first_author": "Zhongye Shi",
       "kind": "talk",
       "page": 20,
-      "id": 268,
+      "id": 312,
       "abstract_id": 345
     },
     {
@@ -3510,8 +4081,21 @@
       "first_author": "Qian Zhang",
       "kind": "talk",
       "page": 20,
-      "id": 269,
+      "id": 313,
       "abstract_id": 346
+    },
+    {
+      "date": "July 2",
+      "room": "Room 773",
+      "session": "G18",
+      "time_start": "11:45",
+      "time_end": "12:00",
+      "title": "Larger Foraminiferal Biostratigraphy and High-Resolution Strontium Isotope Stratigraphy of the Paleocene Limestones in the Guru Area, South Xizang (tibet)",
+      "first_author": "Xuesong Ma",
+      "kind": "talk",
+      "page": 20,
+      "id": 314,
+      "abstract_id": 344
     },
     {
       "date": "July 2",
@@ -3523,7 +4107,7 @@
       "first_author": "Zhangshuai Hou",
       "kind": "talk",
       "page": 20,
-      "id": 270,
+      "id": 315,
       "abstract_id": 460
     },
     {
@@ -3536,7 +4120,7 @@
       "first_author": "Ivan R. Barreiro",
       "kind": "talk",
       "page": 20,
-      "id": 271,
+      "id": 316,
       "abstract_id": 468
     },
     {
@@ -3549,7 +4133,7 @@
       "first_author": "Rudy Scarani",
       "kind": "talk",
       "page": 20,
-      "id": 272,
+      "id": 317,
       "abstract_id": 461
     },
     {
@@ -3562,7 +4146,7 @@
       "first_author": "Alessandro P. Carniti",
       "kind": "talk",
       "page": 20,
-      "id": 273,
+      "id": 318,
       "abstract_id": 463
     },
     {
@@ -3575,7 +4159,7 @@
       "first_author": "Guozhen Xu",
       "kind": "talk",
       "page": 20,
-      "id": 274,
+      "id": 319,
       "abstract_id": 462
     },
     {
@@ -3588,8 +4172,21 @@
       "first_author": "Keying Wu",
       "kind": "talk",
       "page": 20,
-      "id": 275,
+      "id": 320,
       "abstract_id": 466
+    },
+    {
+      "date": "July 2",
+      "room": "Room 773",
+      "session": "S6",
+      "time_start": "15:55",
+      "time_end": "16:15",
+      "title": "New Brachiopods and Conodonts from the Qarari Unit (upper Kungurian, Ne Oman): Implications for Biostratigraphy from a Palaeobiodiversity Hotspot",
+      "first_author": "Marco Viaretti",
+      "kind": "talk",
+      "page": 20,
+      "id": 321,
+      "abstract_id": 464
     },
     {
       "date": "July 2",
@@ -3601,7 +4198,7 @@
       "first_author": "Elina Gainullina",
       "kind": "talk",
       "page": 20,
-      "id": 276,
+      "id": 322,
       "abstract_id": 465
     },
     {
@@ -3614,7 +4211,7 @@
       "first_author": "Elizabeth - Liz Weldon",
       "kind": "talk",
       "page": 20,
-      "id": 277,
+      "id": 323,
       "abstract_id": 459
     },
     {
@@ -3627,8 +4224,21 @@
       "first_author": "Mu Fan",
       "kind": "talk",
       "page": 20,
-      "id": 278,
+      "id": 324,
       "abstract_id": 467
+    },
+    {
+      "date": "July 2",
+      "room": "Room 773",
+      "session": "G18",
+      "time_start": "17:05",
+      "time_end": "18:45",
+      "title": "Permian subcommission business meeting 36",
+      "first_author": null,
+      "kind": "talk",
+      "page": 20,
+      "id": 325,
+      "abstract_id": null
     },
     {
       "date": "July 2",
@@ -3640,7 +4250,7 @@
       "first_author": "Liz Charton",
       "kind": "talk",
       "page": 21,
-      "id": 279,
+      "id": 326,
       "abstract_id": 588
     },
     {
@@ -3653,7 +4263,7 @@
       "first_author": "Youbin Sun",
       "kind": "talk",
       "page": 21,
-      "id": 280,
+      "id": 327,
       "abstract_id": 584
     },
     {
@@ -3666,7 +4276,7 @@
       "first_author": "Alexander James",
       "kind": "talk",
       "page": 21,
-      "id": 281,
+      "id": 328,
       "abstract_id": 590
     },
     {
@@ -3679,7 +4289,7 @@
       "first_author": "Marina Addante",
       "kind": "talk",
       "page": 21,
-      "id": 282,
+      "id": 329,
       "abstract_id": 585
     },
     {
@@ -3692,8 +4302,21 @@
       "first_author": "Martin J. Head",
       "kind": "talk",
       "page": 21,
-      "id": 283,
+      "id": 330,
       "abstract_id": 583
+    },
+    {
+      "date": "July 2",
+      "room": "Room 775",
+      "session": "S13",
+      "time_start": "10:20",
+      "time_end": "10:35",
+      "title": "Termination Ii Climate Benchmarks from Zhangjia Cave Speleothems as a Potential Upper Pleistocene GSSP",
+      "first_author": "Hai Cheng",
+      "kind": "talk",
+      "page": 21,
+      "id": 331,
+      "abstract_id": 591
     },
     {
       "date": "July 2",
@@ -3705,7 +4328,7 @@
       "first_author": "Adele Bertini",
       "kind": "talk",
       "page": 21,
-      "id": 284,
+      "id": 332,
       "abstract_id": 589
     },
     {
@@ -3718,7 +4341,7 @@
       "first_author": "Gabriele Niccolini",
       "kind": "talk",
       "page": 21,
-      "id": 285,
+      "id": 333,
       "abstract_id": 592
     },
     {
@@ -3731,8 +4354,21 @@
       "first_author": "Alessandro Amorosi",
       "kind": "talk",
       "page": 21,
-      "id": 286,
+      "id": 334,
       "abstract_id": 586
+    },
+    {
+      "date": "July 2",
+      "room": "Room 775",
+      "session": "S13",
+      "time_start": "11:40",
+      "time_end": "11:55",
+      "title": "Holocene Geomagnetic Field Variations and Their Constraints on Dating and Climate Events",
+      "first_author": "Jie Fang",
+      "kind": "talk",
+      "page": 21,
+      "id": 335,
+      "abstract_id": 587
     },
     {
       "date": "July 2",
@@ -3744,7 +4380,7 @@
       "first_author": "Lucia Angiolini",
       "kind": "talk",
       "page": 21,
-      "id": 287,
+      "id": 336,
       "abstract_id": 235
     },
     {
@@ -3757,7 +4393,7 @@
       "first_author": "Haipeng Xu",
       "kind": "talk",
       "page": 21,
-      "id": 288,
+      "id": 337,
       "abstract_id": 226
     },
     {
@@ -3770,7 +4406,7 @@
       "first_author": "Masatoshi Sone",
       "kind": "talk",
       "page": 21,
-      "id": 289,
+      "id": 338,
       "abstract_id": 234
     },
     {
@@ -3783,7 +4419,7 @@
       "first_author": "Zhang Xinsong",
       "kind": "talk",
       "page": 21,
-      "id": 290,
+      "id": 339,
       "abstract_id": 221,
       "link_fuzzy": 0.996
     },
@@ -3797,7 +4433,7 @@
       "first_author": "Xiuping Zhu",
       "kind": "talk",
       "page": 21,
-      "id": 291,
+      "id": 340,
       "abstract_id": 230
     },
     {
@@ -3810,8 +4446,21 @@
       "first_author": "Jianbin Zheng",
       "kind": "talk",
       "page": 21,
-      "id": 292,
+      "id": 341,
       "abstract_id": 229
+    },
+    {
+      "date": "July 2",
+      "room": "Room 775",
+      "session": "G11",
+      "time_start": "15:55",
+      "time_end": "16:15",
+      "title": "Review of Sedimentary Records and Stratigraphic Correlation of Indochina and Sibumasu Terranes in Southeast Asia",
+      "first_author": "Mongkol Udchachon",
+      "kind": "talk",
+      "page": 21,
+      "id": 342,
+      "abstract_id": 231
     },
     {
       "date": "July 2",
@@ -3823,7 +4472,7 @@
       "first_author": "Yichun Zhang",
       "kind": "talk",
       "page": 21,
-      "id": 293,
+      "id": 343,
       "abstract_id": 225
     },
     {
@@ -3836,7 +4485,7 @@
       "first_author": "Michał Krobicki",
       "kind": "talk",
       "page": 21,
-      "id": 294,
+      "id": 344,
       "abstract_id": 227
     },
     {
@@ -3849,7 +4498,7 @@
       "first_author": "Chunling Xue",
       "kind": "talk",
       "page": 21,
-      "id": 295,
+      "id": 345,
       "abstract_id": 228
     },
     {
@@ -3862,7 +4511,7 @@
       "first_author": "Wei Wei",
       "kind": "talk",
       "page": 21,
-      "id": 296,
+      "id": 346,
       "abstract_id": 232
     },
     {
@@ -3875,7 +4524,7 @@
       "first_author": "Mei Yang",
       "kind": "talk",
       "page": 21,
-      "id": 297,
+      "id": 347,
       "abstract_id": 222
     },
     {
@@ -3888,7 +4537,7 @@
       "first_author": "Zoya Tolokonnikova",
       "kind": "talk",
       "page": 21,
-      "id": 298,
+      "id": 348,
       "abstract_id": 233
     },
     {
@@ -3901,7 +4550,7 @@
       "first_author": "Gengo Tanaka",
       "kind": "talk",
       "page": 21,
-      "id": 299,
+      "id": 349,
       "abstract_id": 223
     },
     {
@@ -3914,7 +4563,7 @@
       "first_author": "Jalil Ahmad",
       "kind": "talk",
       "page": 21,
-      "id": 300,
+      "id": 350,
       "abstract_id": 224,
       "link_fuzzy": 0.993
     },
@@ -3928,7 +4577,7 @@
       "first_author": "Yuping Qi",
       "kind": "talk",
       "page": 22,
-      "id": 301,
+      "id": 351,
       "abstract_id": 319
     },
     {
@@ -3941,7 +4590,7 @@
       "first_author": "Aisha Al Suwaidi",
       "kind": "talk",
       "page": 22,
-      "id": 302,
+      "id": 352,
       "abstract_id": 322
     },
     {
@@ -3954,7 +4603,7 @@
       "first_author": "Jacek Grabowski",
       "kind": "talk",
       "page": 22,
-      "id": 303,
+      "id": 353,
       "abstract_id": 320
     },
     {
@@ -3967,7 +4616,7 @@
       "first_author": "José Manuel Castro",
       "kind": "talk",
       "page": 22,
-      "id": 304,
+      "id": 354,
       "abstract_id": 321
     },
     {
@@ -3980,7 +4629,7 @@
       "first_author": "Ladislav Slavík",
       "kind": "talk",
       "page": 22,
-      "id": 305,
+      "id": 355,
       "abstract_id": 324,
       "link_fuzzy": 0.981
     },
@@ -3994,7 +4643,7 @@
       "first_author": "Xin Li",
       "kind": "talk",
       "page": 22,
-      "id": 306,
+      "id": 356,
       "abstract_id": 323
     },
     {
@@ -4007,7 +4656,7 @@
       "first_author": "David de Vleeschouwer",
       "kind": "talk",
       "page": 22,
-      "id": 307,
+      "id": 357,
       "abstract_id": 318
     },
     {
@@ -4016,13 +4665,25 @@
       "session": "G16",
       "time_start": "10:50",
       "time_end": "11:05",
-      "title": "Base-Olenekian Boundary GSSP: Is There an Optimal Correlation Marker? Schmitz, Anne-Christine Da Silva, Bradley",
+      "title": "Base-Olenekian Boundary GSSP: Is There an Optimal Correlation Marker?",
       "first_author": "Charles Henderson Cramer",
       "kind": "talk",
       "page": 22,
-      "id": 308,
-      "abstract_id": 317,
-      "link_fuzzy": "prefix"
+      "id": 358,
+      "abstract_id": 317
+    },
+    {
+      "date": "July 2",
+      "room": "Room 776",
+      "session": "S14",
+      "time_start": "11:25",
+      "time_end": "11:45",
+      "title": "A Brief Overview of Interpolating Time",
+      "first_author": "Robin Trayler",
+      "kind": "talk",
+      "page": 22,
+      "id": 359,
+      "abstract_id": 601
     },
     {
       "date": "July 2",
@@ -4034,7 +4695,7 @@
       "first_author": "Jikhan Jung",
       "kind": "talk",
       "page": 22,
-      "id": 309,
+      "id": 360,
       "abstract_id": 602,
       "link_fuzzy": 0.985
     },
@@ -4048,8 +4709,21 @@
       "first_author": "Jeremy Young",
       "kind": "talk",
       "page": 22,
-      "id": 310,
+      "id": 361,
       "abstract_id": 604
+    },
+    {
+      "date": "July 2",
+      "room": "Room 776",
+      "session": "S14",
+      "time_start": "12:15",
+      "time_end": "12:30",
+      "title": "Integrated Stratigraphy and Bayesian Age Modelling of the Tiout Section (an-Ti-Atlas, Morocco): Implications for Early Cambrian Geologic Time Scale Calibration",
+      "first_author": "Damien Pas",
+      "kind": "talk",
+      "page": 22,
+      "id": 362,
+      "abstract_id": 603
     },
     {
       "date": "July 2",
@@ -4061,7 +4735,7 @@
       "first_author": "Mark Schmitz",
       "kind": "talk",
       "page": 22,
-      "id": 311,
+      "id": 363,
       "abstract_id": 606
     },
     {
@@ -4074,7 +4748,7 @@
       "first_author": "James Ogg",
       "kind": "talk",
       "page": 22,
-      "id": 312,
+      "id": 364,
       "abstract_id": 605
     },
     {
@@ -4083,13 +4757,26 @@
       "session": "S14",
       "time_start": "14:35",
       "time_end": "14:50",
-      "title": "Updating the Cambrian Time Scale: A Bayesian Approach Grunert, David de Vleeschouwer, Anna-Joy Kasbohm, Frits Hilgen, Elena Turco",
+      "title": "Updating the Cambrian Time Scale: A Bayesian Approach Grunert, David de Vleeschouwer, Anna-Joy",
       "first_author": "Valentin Jamart Drury,",
       "kind": "talk",
       "page": 22,
-      "id": 313,
+      "id": 365,
       "abstract_id": 607,
       "link_fuzzy": "prefix"
+    },
+    {
+      "date": "July 2",
+      "room": "Room 776",
+      "session": "S12",
+      "time_start": "15:10",
+      "time_end": "15:30",
+      "title": "Eccentricity Rhythms in the Oligocene-Miocene Carbon Cycle Regulated by Weathering and Carbonate Burial",
+      "first_author": "Fenghao Liu",
+      "kind": "talk",
+      "page": 22,
+      "id": 366,
+      "abstract_id": 574
     },
     {
       "date": "July 2",
@@ -4101,7 +4788,7 @@
       "first_author": "Laura Martín-García",
       "kind": "talk",
       "page": 22,
-      "id": 314,
+      "id": 367,
       "abstract_id": 576
     },
     {
@@ -4114,7 +4801,7 @@
       "first_author": "Yifan Ding",
       "kind": "talk",
       "page": 22,
-      "id": 315,
+      "id": 368,
       "abstract_id": 573
     },
     {
@@ -4127,7 +4814,7 @@
       "first_author": "Xabier Puentes Jorge",
       "kind": "talk",
       "page": 22,
-      "id": 316,
+      "id": 369,
       "abstract_id": 577
     },
     {
@@ -4140,7 +4827,7 @@
       "first_author": "Marijn IJzinga",
       "kind": "talk",
       "page": 22,
-      "id": 317,
+      "id": 370,
       "abstract_id": 575
     },
     {
@@ -4153,8 +4840,21 @@
       "first_author": "Hyungi Lee",
       "kind": "talk",
       "page": 22,
-      "id": 318,
+      "id": 371,
       "abstract_id": 578
+    },
+    {
+      "date": "July 2",
+      "room": "Room 776",
+      "session": "G16",
+      "time_start": "17:10",
+      "time_end": "18:40",
+      "title": "Time Calibration subcommission business meeting 40",
+      "first_author": null,
+      "kind": "talk",
+      "page": 22,
+      "id": 372,
+      "abstract_id": null
     },
     {
       "date": "July 3",
@@ -4166,7 +4866,7 @@
       "first_author": "Gao Linzhi",
       "kind": "talk",
       "page": 23,
-      "id": 319,
+      "id": 373,
       "abstract_id": 12
     },
     {
@@ -4179,7 +4879,7 @@
       "first_author": "Shuan-Hong Zhang",
       "kind": "talk",
       "page": 23,
-      "id": 320,
+      "id": 374,
       "abstract_id": 22
     },
     {
@@ -4192,7 +4892,7 @@
       "first_author": "Jiayue Wang",
       "kind": "talk",
       "page": 23,
-      "id": 321,
+      "id": 375,
       "abstract_id": 17
     },
     {
@@ -4205,7 +4905,7 @@
       "first_author": "Chengshuai Yuan",
       "kind": "talk",
       "page": 23,
-      "id": 322,
+      "id": 376,
       "abstract_id": 13
     },
     {
@@ -4218,7 +4918,7 @@
       "first_author": "Fangfang Chen",
       "kind": "talk",
       "page": 23,
-      "id": 323,
+      "id": 377,
       "abstract_id": 16
     },
     {
@@ -4231,8 +4931,22 @@
       "first_author": "Changtai Niu",
       "kind": "talk",
       "page": 23,
-      "id": 324,
+      "id": 378,
       "abstract_id": 23
+    },
+    {
+      "date": "July 3",
+      "room": "International Room I",
+      "session": "G2",
+      "time_start": "10:25",
+      "time_end": "10:40",
+      "title": "Cyclostratigraphic Calibration of Yanliao Basin Evolutoin",
+      "first_author": "Ross Mitchell",
+      "kind": "talk",
+      "page": 23,
+      "id": 379,
+      "abstract_id": 11,
+      "link_fuzzy": 0.981
     },
     {
       "date": "July 3",
@@ -4244,7 +4958,7 @@
       "first_author": "Hongwei Kuang",
       "kind": "talk",
       "page": 23,
-      "id": 325,
+      "id": 380,
       "abstract_id": 18
     },
     {
@@ -4257,7 +4971,7 @@
       "first_author": "Peng Peng",
       "kind": "talk",
       "page": 23,
-      "id": 326,
+      "id": 381,
       "abstract_id": 14
     },
     {
@@ -4270,7 +4984,7 @@
       "first_author": "Chaoyuan Jia",
       "kind": "talk",
       "page": 23,
-      "id": 327,
+      "id": 382,
       "abstract_id": 20
     },
     {
@@ -4283,7 +4997,7 @@
       "first_author": "Sheng He",
       "kind": "talk",
       "page": 23,
-      "id": 328,
+      "id": 383,
       "abstract_id": 15
     },
     {
@@ -4296,8 +5010,21 @@
       "first_author": "Wei Wang",
       "kind": "talk",
       "page": 23,
-      "id": 329,
+      "id": 384,
       "abstract_id": 21
+    },
+    {
+      "date": "July 3",
+      "room": "International Room I",
+      "session": "G2",
+      "time_start": "11:55",
+      "time_end": "12:10",
+      "title": "Primary Iron Minerals of the Late Paleoproterozoic Xuanlong-Type Ironstone in the North China Craton Constrained by Paleomagnetic Methods",
+      "first_author": "Yuhang Cai",
+      "kind": "talk",
+      "page": 23,
+      "id": 385,
+      "abstract_id": 19
     },
     {
       "date": "July 3",
@@ -4309,7 +5036,7 @@
       "first_author": "Ricardo L Silva",
       "kind": "talk",
       "page": 23,
-      "id": 330,
+      "id": 386,
       "abstract_id": 516
     },
     {
@@ -4322,7 +5049,7 @@
       "first_author": "Yongdong Wang",
       "kind": "talk",
       "page": 23,
-      "id": 331,
+      "id": 387,
       "abstract_id": 514
     },
     {
@@ -4335,7 +5062,7 @@
       "first_author": "Mikhail Rogov",
       "kind": "talk",
       "page": 23,
-      "id": 332,
+      "id": 388,
       "abstract_id": 509
     },
     {
@@ -4348,7 +5075,7 @@
       "first_author": "Yanzhe Fu",
       "kind": "talk",
       "page": 23,
-      "id": 333,
+      "id": 389,
       "abstract_id": 507
     },
     {
@@ -4361,8 +5088,21 @@
       "first_author": "Nikita Lykov",
       "kind": "talk",
       "page": 23,
-      "id": 334,
+      "id": 390,
       "abstract_id": 517
+    },
+    {
+      "date": "July 3",
+      "room": "International Room II",
+      "session": "S9",
+      "time_start": "09:50",
+      "time_end": "10:05",
+      "title": "First Records of a Typical East Asian Mesozoic Fossil Wood - Shimakuroxylon in China",
+      "first_author": "Mengyu Chen",
+      "kind": "talk",
+      "page": 23,
+      "id": 391,
+      "abstract_id": 512
     },
     {
       "date": "July 3",
@@ -4374,7 +5114,7 @@
       "first_author": "Jiaheng Shen",
       "kind": "talk",
       "page": 23,
-      "id": 335,
+      "id": 392,
       "abstract_id": 508
     },
     {
@@ -4387,7 +5127,7 @@
       "first_author": "Christina Ifrim",
       "kind": "talk",
       "page": 23,
-      "id": 336,
+      "id": 393,
       "abstract_id": 518
     },
     {
@@ -4400,7 +5140,7 @@
       "first_author": "Yihao Guo",
       "kind": "talk",
       "page": 23,
-      "id": 337,
+      "id": 394,
       "abstract_id": 515
     },
     {
@@ -4413,7 +5153,7 @@
       "first_author": "Yuxuan Sun",
       "kind": "talk",
       "page": 23,
-      "id": 338,
+      "id": 395,
       "abstract_id": 510
     },
     {
@@ -4426,7 +5166,7 @@
       "first_author": "Dhirendra Pandey",
       "kind": "talk",
       "page": 23,
-      "id": 339,
+      "id": 396,
       "abstract_id": 513
     },
     {
@@ -4439,8 +5179,21 @@
       "first_author": "Qi-Tai Xu",
       "kind": "talk",
       "page": 23,
-      "id": 340,
+      "id": 397,
       "abstract_id": 511
+    },
+    {
+      "date": "July 3",
+      "room": "International Room II",
+      "session": "S9",
+      "time_start": "12:00",
+      "time_end": "12:15",
+      "title": "Ammonites of Tethyan Affinities in the Callovian and Upper Jurassic of the Russian Platform: A Key for Unraveling Palaeogeography, Climate Os-Cillation and Interregional Correlation",
+      "first_author": "Mikhail Rogov",
+      "kind": "talk",
+      "page": 23,
+      "id": 398,
+      "abstract_id": 506
     },
     {
       "date": "July 3",
@@ -4452,7 +5205,7 @@
       "first_author": "Gao Linzhi",
       "kind": "talk",
       "page": 24,
-      "id": 341,
+      "id": 399,
       "abstract_id": 201
     },
     {
@@ -4465,7 +5218,7 @@
       "first_author": "Shuan-Hong Zhang",
       "kind": "talk",
       "page": 24,
-      "id": 342,
+      "id": 400,
       "abstract_id": 192
     },
     {
@@ -4478,7 +5231,7 @@
       "first_author": "Jiayue Wang",
       "kind": "talk",
       "page": 24,
-      "id": 343,
+      "id": 401,
       "abstract_id": 198
     },
     {
@@ -4491,7 +5244,7 @@
       "first_author": "Chengshuai Yuan",
       "kind": "talk",
       "page": 24,
-      "id": 344,
+      "id": 402,
       "abstract_id": 195
     },
     {
@@ -4504,8 +5257,21 @@
       "first_author": "Fangfang Chen",
       "kind": "talk",
       "page": 24,
-      "id": 345,
+      "id": 403,
       "abstract_id": 191
+    },
+    {
+      "date": "July 3",
+      "room": "International Room III",
+      "session": "G9",
+      "time_start": "09:50",
+      "time_end": "10:05",
+      "title": "The Jingxing Hipparion Fauna from the East Piedmont of the Taihang Mountains and Its Biostratigraphic Significance",
+      "first_author": "Changtai Niu",
+      "kind": "talk",
+      "page": 24,
+      "id": 404,
+      "abstract_id": 200
     },
     {
       "date": "July 3",
@@ -4517,7 +5283,7 @@
       "first_author": "Ross Mitchell",
       "kind": "talk",
       "page": 24,
-      "id": 346,
+      "id": 405,
       "abstract_id": 199
     },
     {
@@ -4530,7 +5296,7 @@
       "first_author": "Hongwei Kuang",
       "kind": "talk",
       "page": 24,
-      "id": 347,
+      "id": 406,
       "abstract_id": 193
     },
     {
@@ -4543,7 +5309,7 @@
       "first_author": "Peng Peng",
       "kind": "talk",
       "page": 24,
-      "id": 348,
+      "id": 407,
       "abstract_id": 189
     },
     {
@@ -4556,7 +5322,7 @@
       "first_author": "Chaoyuan Jia",
       "kind": "talk",
       "page": 24,
-      "id": 349,
+      "id": 408,
       "abstract_id": 188
     },
     {
@@ -4569,7 +5335,7 @@
       "first_author": "Sheng He",
       "kind": "talk",
       "page": 24,
-      "id": 350,
+      "id": 409,
       "abstract_id": 190
     },
     {
@@ -4582,7 +5348,7 @@
       "first_author": "Wei Wang",
       "kind": "talk",
       "page": 24,
-      "id": 351,
+      "id": 410,
       "abstract_id": 187
     },
     {
@@ -4595,7 +5361,7 @@
       "first_author": "Yuhang Cai",
       "kind": "talk",
       "page": 24,
-      "id": 352,
+      "id": 411,
       "abstract_id": 194
     },
     {
@@ -4608,8 +5374,21 @@
       "first_author": "Chaoyuan Jia",
       "kind": "talk",
       "page": 24,
-      "id": 353,
+      "id": 412,
       "abstract_id": 196
+    },
+    {
+      "date": "July 3",
+      "room": "International Room III",
+      "session": "G9",
+      "time_start": "12:30",
+      "time_end": "12:45",
+      "title": "Simplification and Vulnerability of Large Mammal Food Webs During the Early–middle Pleistocene Transition",
+      "first_author": "Sheng He",
+      "kind": "talk",
+      "page": 24,
+      "id": 413,
+      "abstract_id": 197
     },
     {
       "date": "July 3",
@@ -4621,7 +5400,7 @@
       "first_author": "Robert Newton",
       "kind": "talk",
       "page": 24,
-      "id": 354,
+      "id": 414,
       "abstract_id": 214
     },
     {
@@ -4634,7 +5413,7 @@
       "first_author": "Yuqing Zhu",
       "kind": "talk",
       "page": 24,
-      "id": 355,
+      "id": 415,
       "abstract_id": 207
     },
     {
@@ -4647,7 +5426,7 @@
       "first_author": "Kaibo Han",
       "kind": "talk",
       "page": 24,
-      "id": 356,
+      "id": 416,
       "abstract_id": 205
     },
     {
@@ -4660,7 +5439,7 @@
       "first_author": "Deyan Zhang",
       "kind": "talk",
       "page": 24,
-      "id": 357,
+      "id": 417,
       "abstract_id": null
     },
     {
@@ -4673,8 +5452,21 @@
       "first_author": "Nikolai Rtishchev",
       "kind": "talk",
       "page": 24,
-      "id": 358,
+      "id": 418,
       "abstract_id": 204
+    },
+    {
+      "date": "July 3",
+      "room": "Room 773",
+      "session": "G10",
+      "time_start": "09:50",
+      "time_end": "10:05",
+      "title": "Biogenic Apatite Sr/ca Ratios: A Novel Dual-Proxy for Reconstructing Conodont Growth Dynamics, Paleotemperature and Phanerozoic Seawater Chemistry",
+      "first_author": "Boyan Liu",
+      "kind": "talk",
+      "page": 24,
+      "id": 419,
+      "abstract_id": 203
     },
     {
       "date": "July 3",
@@ -4686,7 +5478,7 @@
       "first_author": "Dongyu Zheng",
       "kind": "talk",
       "page": 24,
-      "id": 359,
+      "id": 420,
       "abstract_id": 216
     },
     {
@@ -4699,7 +5491,7 @@
       "first_author": "Yu Fang",
       "kind": "talk",
       "page": 24,
-      "id": 360,
+      "id": 421,
       "abstract_id": 213
     },
     {
@@ -4712,7 +5504,7 @@
       "first_author": "Xi Li",
       "kind": "talk",
       "page": 24,
-      "id": 361,
+      "id": 422,
       "abstract_id": 215
     },
     {
@@ -4725,7 +5517,7 @@
       "first_author": "Tan Qiu",
       "kind": "talk",
       "page": 24,
-      "id": 362,
+      "id": 423,
       "abstract_id": 208
     },
     {
@@ -4738,7 +5530,7 @@
       "first_author": "Yuzhu Ge",
       "kind": "talk",
       "page": 24,
-      "id": 363,
+      "id": 424,
       "abstract_id": 210
     },
     {
@@ -4751,7 +5543,7 @@
       "first_author": "Yiwei Xu",
       "kind": "talk",
       "page": 24,
-      "id": 364,
+      "id": 425,
       "abstract_id": 211
     },
     {
@@ -4764,8 +5556,21 @@
       "first_author": "Shuai Shi",
       "kind": "talk",
       "page": 24,
-      "id": 365,
+      "id": 426,
       "abstract_id": 209
+    },
+    {
+      "date": "July 3",
+      "room": "Room 773",
+      "session": "G10",
+      "time_start": "12:10",
+      "time_end": "12:25",
+      "title": "Cretaceous Pelagic Sediment Black-Red Transitions: A Preliminary Data-Driven Perspective",
+      "first_author": "Yida Yang",
+      "kind": "talk",
+      "page": 24,
+      "id": 427,
+      "abstract_id": 206
     },
     {
       "date": "July 3",
@@ -4777,7 +5582,7 @@
       "first_author": "Martin J. Head",
       "kind": "talk",
       "page": 25,
-      "id": 366,
+      "id": 428,
       "abstract_id": 181
     },
     {
@@ -4790,7 +5595,7 @@
       "first_author": "Luyuan Zhang",
       "kind": "talk",
       "page": 25,
-      "id": 367,
+      "id": 429,
       "abstract_id": 183
     },
     {
@@ -4803,7 +5608,7 @@
       "first_author": "Kyungbin Koh",
       "kind": "talk",
       "page": 25,
-      "id": 368,
+      "id": 430,
       "abstract_id": 182
     },
     {
@@ -4816,7 +5621,7 @@
       "first_author": "Shahid Iqbal",
       "kind": "talk",
       "page": 25,
-      "id": 369,
+      "id": 431,
       "abstract_id": 179
     },
     {
@@ -4829,7 +5634,7 @@
       "first_author": "Chen Liang",
       "kind": "talk",
       "page": 25,
-      "id": 370,
+      "id": 432,
       "abstract_id": 184
     },
     {
@@ -4842,7 +5647,7 @@
       "first_author": "Salvador Rojas Lequerica",
       "kind": "talk",
       "page": 25,
-      "id": 371,
+      "id": 433,
       "abstract_id": 185
     },
     {
@@ -4851,13 +5656,25 @@
       "session": "G8",
       "time_start": "10:05",
       "time_end": "10:20",
-      "title": "Anthropogenic Niche Truncation: Three Millennia of Range Contraction and Future Conservation Implications for Chinese Megafauna Reptiles Zhang, Luis A. Buatois, Renata G. Netto",
+      "title": "Anthropogenic Niche Truncation: Three Millennia of Range Contraction and Future Conservation Implications for Chinese Megafauna Reptiles",
       "first_author": "Shu An",
       "kind": "talk",
       "page": 25,
-      "id": 372,
-      "abstract_id": 180,
-      "link_fuzzy": "prefix"
+      "id": 434,
+      "abstract_id": 180
+    },
+    {
+      "date": "July 3",
+      "room": "Room 775",
+      "session": "G15",
+      "time_start": "10:40",
+      "time_end": "11:00",
+      "title": "Biostratigraphy and Palaeoecologic Turnovers at the Ediacaran-Cambrian Type Section in Newfoundland, Canada",
+      "first_author": "Romain Gougeon",
+      "kind": "talk",
+      "page": 25,
+      "id": 435,
+      "abstract_id": 306
     },
     {
       "date": "July 3",
@@ -4869,7 +5686,7 @@
       "first_author": "Mao Luo",
       "kind": "talk",
       "page": 25,
-      "id": 373,
+      "id": 436,
       "abstract_id": 307
     },
     {
@@ -4882,7 +5699,7 @@
       "first_author": "Ruo-ying Fan",
       "kind": "talk",
       "page": 25,
-      "id": 374,
+      "id": 437,
       "abstract_id": 310
     },
     {
@@ -4895,7 +5712,7 @@
       "first_author": "Hui Chen",
       "kind": "talk",
       "page": 25,
-      "id": 375,
+      "id": 438,
       "abstract_id": 308
     },
     {
@@ -4908,7 +5725,7 @@
       "first_author": "Zekun Wang",
       "kind": "talk",
       "page": 25,
-      "id": 376,
+      "id": 439,
       "abstract_id": 313
     },
     {
@@ -4921,7 +5738,7 @@
       "first_author": "Jiashu Wang",
       "kind": "talk",
       "page": 25,
-      "id": 377,
+      "id": 440,
       "abstract_id": 309
     },
     {
@@ -4934,8 +5751,21 @@
       "first_author": "Zongyan Wang",
       "kind": "talk",
       "page": 25,
-      "id": 378,
+      "id": 441,
       "abstract_id": 311
+    },
+    {
+      "date": "July 3",
+      "room": "Room 775",
+      "session": "G15",
+      "time_start": "12:30",
+      "time_end": "12:45",
+      "title": "Stratigraphic Correlation and Sedimentary Environment Analysis of the Cambrian Qiongzhusi Formation, Southern Sichuan Basin: Insights from Trace Fossils",
+      "first_author": "Mengyuan Zhang",
+      "kind": "talk",
+      "page": 25,
+      "id": 442,
+      "abstract_id": 312
     },
     {
       "date": "July 3",
@@ -4947,7 +5777,7 @@
       "first_author": "Philippe Claeys",
       "kind": "talk",
       "page": 25,
-      "id": 379,
+      "id": 443,
       "abstract_id": 561
     },
     {
@@ -4960,7 +5790,7 @@
       "first_author": "Xiumian Hu",
       "kind": "talk",
       "page": 25,
-      "id": 380,
+      "id": 444,
       "abstract_id": 566
     },
     {
@@ -4973,7 +5803,7 @@
       "first_author": "Jingxin Jiang",
       "kind": "talk",
       "page": 25,
-      "id": 381,
+      "id": 445,
       "abstract_id": 567
     },
     {
@@ -4986,7 +5816,7 @@
       "first_author": "Bridget Wade",
       "kind": "talk",
       "page": 25,
-      "id": 382,
+      "id": 446,
       "abstract_id": 564
     },
     {
@@ -4999,7 +5829,7 @@
       "first_author": "Ruigang Ma",
       "kind": "talk",
       "page": 25,
-      "id": 383,
+      "id": 447,
       "abstract_id": 565
     },
     {
@@ -5012,7 +5842,7 @@
       "first_author": "Zhengbo Lu",
       "kind": "talk",
       "page": 25,
-      "id": 384,
+      "id": 448,
       "abstract_id": 563
     },
     {
@@ -5021,13 +5851,25 @@
       "session": "S11",
       "time_start": "10:05",
       "time_end": "10:20",
-      "title": "Climate Control on Paleogene Benthic Foraminiferal Assemblages: Analysis from a Different Point of View Yu Pei",
+      "title": "Climate Control on Paleogene Benthic Foraminiferal Assemblages: Analysis from a Different Point of View",
       "first_author": "Gabriela J. ArreguínRodríguez",
       "kind": "talk",
       "page": 25,
-      "id": 385,
-      "abstract_id": 562,
-      "link_fuzzy": 0.973
+      "id": 449,
+      "abstract_id": 562
+    },
+    {
+      "date": "July 3",
+      "room": "Room 776",
+      "session": "G3",
+      "time_start": "10:40",
+      "time_end": "11:00",
+      "title": "Nanoscale Biosignatures Reveal Diverse Microbial Life in 3.7-Ga Rocks from Greenland",
+      "first_author": "Yu Pei",
+      "kind": "talk",
+      "page": 25,
+      "id": 450,
+      "abstract_id": 37
     },
     {
       "date": "July 3",
@@ -5039,7 +5881,7 @@
       "first_author": "Nora Noffke",
       "kind": "talk",
       "page": 25,
-      "id": 386,
+      "id": 451,
       "abstract_id": 32
     },
     {
@@ -5052,7 +5894,7 @@
       "first_author": "Abdulwaris Ajagunjeun",
       "kind": "talk",
       "page": 25,
-      "id": 387,
+      "id": 452,
       "abstract_id": 33
     },
     {
@@ -5065,7 +5907,7 @@
       "first_author": "Ikfi Hanif",
       "kind": "talk",
       "page": 25,
-      "id": 388,
+      "id": 453,
       "abstract_id": 38
     },
     {
@@ -5078,7 +5920,7 @@
       "first_author": "Yangchen Li",
       "kind": "talk",
       "page": 25,
-      "id": 389,
+      "id": 454,
       "abstract_id": 36
     },
     {
@@ -5091,7 +5933,7 @@
       "first_author": "Dominic Papineau",
       "kind": "talk",
       "page": 25,
-      "id": 390,
+      "id": 455,
       "abstract_id": 34
     },
     {
@@ -5104,8 +5946,21 @@
       "first_author": "Andrey Bekker",
       "kind": "talk",
       "page": 25,
-      "id": 391,
+      "id": 456,
       "abstract_id": 35
+    },
+    {
+      "date": "July 3",
+      "room": "Room 776",
+      "session": "G3",
+      "time_start": "12:30",
+      "time_end": "12:45",
+      "title": "Dominance of Tectonics Over “snowball Earth” Glaciation in Driving the Great Unconformity",
+      "first_author": "Liang Duan",
+      "kind": "talk",
+      "page": 25,
+      "id": 457,
+      "abstract_id": 31
     }
   ]
 }

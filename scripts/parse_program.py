@@ -29,6 +29,8 @@ ROOM_RE = re.compile(r"\(([^)]+)\)")
 SESS_RE = re.compile(r"[GS]\d+")
 SKIP_TITLE = re.compile(r"\b(break|lunch|coffee|photo|opening|closing|"
                         r"ceremony|guests?|introduction|formal)\b", re.I)
+# decoy(시간앵커 없는 구분행) 감지용 — 실제 발표 제목 오탐을 줄이려 좁게.
+BREAK_RE = re.compile(r"\b(break|lunch|coffee|tea)\b", re.I)
 
 
 def words_of(page):
@@ -75,14 +77,30 @@ def collect_col(side_words, rng, y_top):
     return out
 
 
-def assign_by_anchor(words, anchors_y):
-    """각 단어를 y기준 '가장 가까운' 시간앵커에 귀속.
-    제목은 앵커 위아래로 걸치므로 centroid 거리가 정확."""
+def assign_by_anchor(words, anchors_y, decoy_ys=()):
+    """각 단어를 y기준 '가장 가까운' 앵커에 귀속(centroid).
+    decoy_ys(브레이크 줄 등)에 가까운 단어는 흡수 후 폐기 → 인접 talk 제목 오염 방지."""
+    combined = [(ay, i) for i, ay in enumerate(anchors_y)] + [(d, None) for d in decoy_ys]
     groups = {i: [] for i in range(len(anchors_y))}
     for y, x, t in words:
-        i = min(range(len(anchors_y)), key=lambda k: abs(anchors_y[k] - y))
-        groups[i].append((y, x, t))
+        _, idx = min(combined, key=lambda c: abs(c[0] - y))
+        if idx is not None:
+            groups[idx].append((y, x, t))
     return groups
+
+
+def detect_break_ys(words):
+    """제목 컬럼에서 Break/Lunch/Coffee 줄의 y 위치(시간앵커 없는 구분행)."""
+    from collections import defaultdict
+    byline = defaultdict(list)
+    for y, x, t in words:
+        byline[round(y)].append((x, t))
+    ys = []
+    for yy, ws in byline.items():
+        line = " ".join(t for _, t in sorted(ws))
+        if BREAK_RE.search(line):
+            ys.append(float(yy))
+    return ys
 
 
 def join_words(group):
@@ -119,7 +137,8 @@ def parse_side(side_words, side_x1, page_no):
     if not anchors:
         return {"date": date, "room": room}, []
 
-    titles = assign_by_anchor(collect_col(side_words, bounds["title"], header_y), anchors_y)
+    title_col = collect_col(side_words, bounds["title"], header_y)
+    titles = assign_by_anchor(title_col, anchors_y, detect_break_ys(title_col))
     authors = assign_by_anchor(collect_col(side_words, bounds["author"], header_y), anchors_y)
     sessions = assign_by_anchor(collect_col(side_words, bounds["session"], header_y), anchors_y) \
         if bounds["session"] else {}
