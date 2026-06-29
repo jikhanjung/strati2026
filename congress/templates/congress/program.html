@@ -166,6 +166,31 @@
   window.addEventListener('resize', placeNow);
   setInterval(placeNow, 60000);        // 1분마다 갱신
 
+  // ── 좌우 스와이프로 룸 전환 (모바일) ───────────────────────────────
+  let sx = 0, sy = 0, swiping = false;
+  const surface = document.querySelector('.content') || document.body;
+  surface.addEventListener('touchstart', e => {
+    if (e.touches.length !== 1) { swiping = false; return; }
+    sx = e.touches[0].clientX; sy = e.touches[0].clientY; swiping = true;
+  }, { passive: true });
+  surface.addEventListener('touchend', e => {
+    if (!swiping) return;
+    swiping = false;
+    const t = e.changedTouches[0];
+    const dx = t.clientX - sx, dy = t.clientY - sy;
+    // 가로로 충분히, 세로보다 우세하게 움직였을 때만 스와이프로 인정
+    if (Math.abs(dx) < 60 || Math.abs(dx) < Math.abs(dy) * 1.5) return;
+    const cur = tabs.findIndex(b => b.classList.contains('on'));
+    if (cur < 0) return;
+    const ni = cur + (dx < 0 ? 1 : -1);      // ←(왼쪽으로 밀기): 다음 룸
+    if (ni < 0 || ni >= tabs.length) return;
+    activate(tabs[ni].dataset.panel);
+    // 선택 탭이 탭바 중앙에 오도록 — 탭바만 가로 스크롤(페이지 세로 이동 없음)
+    const bar = tabs[ni].parentElement, b = tabs[ni];
+    bar.scrollTo({ left: b.offsetLeft - bar.clientWidth / 2 + b.clientWidth / 2,
+                   behavior: 'smooth' });
+  }, { passive: true });
+
   // 초기 활성 탭: 이전에 보던 룸 이름이 오늘도 있으면 유지, 아니면 첫 탭
   const want = sessionStorage.getItem('strati_room');
   const match = tabs.find(t => t.dataset.room === want);
