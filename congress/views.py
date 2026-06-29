@@ -1,13 +1,16 @@
+import datetime as dt
+
 from django.db.models import Count, Q
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 
-from .models import Abstract, Session, Talk
+from .models import ROOM_FLOOR, Abstract, Session, Talk
 
 ROOM_ORDER = [
     "International Room I", "International Room II", "International Room III",
     "Room 773", "Room 775", "Room 776",
 ]
+MIN_BREAK_MIN = 10        # 이보다 짧은 간격은 휴식으로 보지 않음
 
 
 def short_room(name):
@@ -16,6 +19,30 @@ def short_room(name):
     if name.startswith("Room "):
         return name.split(" ", 1)[1]
     return name
+
+
+def _gap_minutes(end, start):
+    base = dt.date.min
+    return (dt.datetime.combine(base, start) - dt.datetime.combine(base, end)).total_seconds() / 60
+
+
+def _break_label(start, end):
+    # 12:30 이전 시작 & 12:30 이후 종료로 점심시간대를 덮으면 Lunch
+    if start <= dt.time(12, 30) and end >= dt.time(12, 30):
+        return "Lunch"
+    return "Break"
+
+
+def derive_breaks(talks):
+    """같은 (날짜·룸)의 연속 발표 사이 빈 시간 → 휴식/점심 entry(표시 전용)."""
+    ts = sorted([t for t in talks if t.time_start and t.time_end],
+                key=lambda t: t.time_start)
+    out = []
+    for a, b in zip(ts, ts[1:]):
+        if b.time_start > a.time_end and _gap_minutes(a.time_end, b.time_start) >= MIN_BREAK_MIN:
+            out.append({"start": a.time_end, "end": b.time_start,
+                        "label": _break_label(a.time_end, b.time_start)})
+    return out
 
 
 def _days():
@@ -57,7 +84,12 @@ def program(request):
             by_room[t.room].append(t)
         else:
             plenary.append(t)
-    columns = [(r, short_room(r), by_room[r]) for r in rooms]
+    columns = []
+    for r in rooms:
+        items = [("talk", t) for t in by_room[r]]
+        items += [("break", b) for b in derive_breaks(by_room[r])]
+        items.sort(key=lambda it: (it[1].time_start if it[0] == "talk" else it[1]["start"]))
+        columns.append((r, short_room(r), ROOM_FLOOR.get(r, ""), items))
 
     return render(request, "congress/program.html", {
         "days": days, "selected": sel, "columns": columns, "plenary": plenary,
@@ -113,8 +145,22 @@ def timetable(request):
 
 
 def api_talks(request):
-    data = [_talk_payload(t) for t in Talk.objects.select_related("session").all()]
-    return JsonResponse({"talks": data})
+    talks = list(Talk.objects.select_related("session").all())
+    data = [_talk_payload(t) for t in talks]
+
+    # (날짜·룸)별 휴식/점심 도출 (표시 전용, 북마크 불가)
+    from collections import defaultdict
+    grouped = defaultdict(list)
+    for t in talks:
+        if t.room:
+            grouped[(t.day_label, t.date.isoformat(), t.room)].append(t)
+    breaks = []
+    for (day, date, room), ts in grouped.items():
+        for b in derive_breaks(ts):
+            breaks.append({"day": day, "date": date, "room": room,
+                           "start": b["start"].strftime("%H:%M"),
+                           "end": b["end"].strftime("%H:%M"), "label": b["label"]})
+    return JsonResponse({"talks": data, "breaks": breaks})
 
 
 def home(request):

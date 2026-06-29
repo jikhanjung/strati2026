@@ -13,7 +13,7 @@
 
 <div class="roomtabs" role="tablist">
   {% if plenary %}<button class="roomtab on" data-panel="plenary" data-room="Plenary">Plenary</button>{% endif %}
-  {% for room, short, talks in columns %}
+  {% for room, short, floor, items in columns %}
     <button class="roomtab {% if not plenary and forloop.first %}on{% endif %}"
             data-panel="r{{ forloop.counter }}" data-room="{{ room }}">{{ short }}</button>
   {% endfor %}
@@ -26,10 +26,13 @@
 </section>
 {% endif %}
 
-{% for room, short, talks in columns %}
+{% for room, short, floor, items in columns %}
 <section class="room panel {% if not plenary and forloop.first %}on{% endif %}" data-panel="r{{ forloop.counter }}">
-  <h2 class="room-h">{{ room }}{% if talks.0.floor %} · {{ talks.0.floor }}{% endif %}</h2>
-  {% for t in talks %}{% include "congress/_talk_item.html" %}{% endfor %}
+  <h2 class="room-h">{{ room }}{% if floor %} · {{ floor }}{% endif %}</h2>
+  {% for kind, item in items %}
+    {% if kind == "talk" %}{% with t=item %}{% include "congress/_talk_item.html" %}{% endwith %}
+    {% else %}{% with b=item %}{% include "congress/_break_item.html" %}{% endwith %}{% endif %}
+  {% endfor %}
 </section>
 {% endfor %}
 {% endif %}

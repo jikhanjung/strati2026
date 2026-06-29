@@ -12,34 +12,52 @@
   const box = document.getElementById('tt');
   if (!ids.length) { box.innerHTML = '<p class="empty">No bookmarks yet. Tap ☆ on talks to add them.</p>'; return; }
   const res = await fetch('{% url "api_talks" %}');
-  const all = (await res.json()).talks;
+  const payload = await res.json();
+  const all = payload.talks;
+  const allBreaks = payload.breaks || [];
   const set = new Set(ids);
   const mine = all.filter(t => set.has(t.id));
   if (!mine.length) { box.innerHTML = '<p class="empty">No bookmarks found.</p>'; return; }
 
-  const byDay = {};
-  mine.forEach(t => (byDay[t.day] = byDay[t.day] || []).push(t));
-  const dayOrder = mine.map(t => t.date);
   const days = [...new Set(mine.sort((a,b)=>a.date.localeCompare(b.date)||a.start.localeCompare(b.start)).map(t=>t.day))];
+
+  function talkRow(t) {
+    const place = [t.room, t.floor].filter(Boolean).join(' · ');
+    return `<div class="talk" data-id="${t.id}">
+      <div class="talk-time">${t.start}${t.end?'–'+t.end:''}</div>
+      <div class="talk-body">
+        <a class="talk-title" href="/talk/${t.id}/">${STRATI.esc(t.title)}</a>
+        <div class="talk-meta">${t.session?`<span class="badge">${t.session}</span>`:''}
+          ${t.author?`<span class="author">${STRATI.esc(t.author)}</span>`:''}</div>
+        ${place?`<div class="talk-place">📍 ${STRATI.esc(place)}</div>`:''}
+      </div>
+      <button class="bm" data-id="${t.id}">★</button>
+    </div>`;
+  }
+  function breakRow(b) {
+    return `<div class="brk">
+      <div class="talk-time">${b.start}–${b.end}</div>
+      <div class="brk-label">${b.label==='Lunch'?'🍽️':'☕'} ${b.label}</div>
+    </div>`;
+  }
 
   let html = '';
   days.forEach(day => {
     const items = mine.filter(t => t.day === day)
                       .sort((a,b)=>a.start.localeCompare(b.start));
+    // 북마크한 룸 + 북마크 시간 범위 안의 휴식만, (start,end,label) 중복 제거
+    const rooms = new Set(items.map(t => t.room).filter(Boolean));
+    const lo = items[0].start, hi = items.reduce((m,t)=> (t.end||t.start) > m ? (t.end||t.start) : m, items[0].start);
+    const seen = new Set();
+    const breaks = allBreaks.filter(b => b.day === day && rooms.has(b.room)
+        && b.start >= lo && b.end <= hi)
+      .filter(b => { const k=b.start+b.end+b.label; if (seen.has(k)) return false; seen.add(k); return true; });
+
+    const merged = [...items.map(t=>({s:t.start,k:'t',v:t})),
+                    ...breaks.map(b=>({s:b.start,k:'b',v:b}))]
+                   .sort((a,b)=> a.s.localeCompare(b.s));
     html += `<section class="room"><h2 class="room-h">${day}</h2>`;
-    items.forEach(t => {
-      const place = [t.room, t.floor].filter(Boolean).join(' · ');
-      html += `<div class="talk" data-id="${t.id}">
-        <div class="talk-time">${t.start}${t.end?'–'+t.end:''}</div>
-        <div class="talk-body">
-          <a class="talk-title" href="/talk/${t.id}/">${STRATI.esc(t.title)}</a>
-          <div class="talk-meta">${t.session?`<span class="badge">${t.session}</span>`:''}
-            ${t.author?`<span class="author">${STRATI.esc(t.author)}</span>`:''}</div>
-          ${place?`<div class="talk-place">📍 ${STRATI.esc(place)}</div>`:''}
-        </div>
-        <button class="bm" data-id="${t.id}">★</button>
-      </div>`;
-    });
+    merged.forEach(it => { html += it.k==='t' ? talkRow(it.v) : breakRow(it.v); });
     html += `</section>`;
   });
   box.innerHTML = html;
