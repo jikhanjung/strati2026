@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}{{ session.code }} · STRATI 2026{% endblock %}
+{% block content %}
+<h1 class="page-h"><span class="badge">{{ session.code }}</span></h1>
+<p class="session-title">{{ session.title|default:"(title TBD)" }}</p>
+
+{% if talks %}
+<h2 class="room-h">Oral program</h2>
+{% for t in talks %}{% include "congress/_talk_item.html" %}{% endfor %}
+{% endif %}
+
+{% if extra %}
+<h2 class="room-h">Other abstracts</h2>
+{% for a in extra %}
+<div class="talk">
+  <div class="talk-body">
+    <a class="talk-title" href="{% url 'abstract_detail' a.id %}">{{ a.title }}</a>
+    <div class="talk-meta"><span class="author">{{ a.author_line|truncatewords:6 }}</span></div>
+  </div>
+</div>
+{% endfor %}
+{% endif %}
+{% endblock %}

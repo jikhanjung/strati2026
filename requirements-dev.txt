@@ -1,0 +1,4 @@
+-r requirements.txt
+# PDF 파싱(데이터 생성 단계 전용, 런타임 이미지에는 불필요)
+pymupdf==1.27.*
+pdfplumber==0.11.*

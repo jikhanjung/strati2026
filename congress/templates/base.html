@@ -1,0 +1,39 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0d3b66">
+  <title>{% block title %}STRATI 2026{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+  <header class="appbar">
+    <div class="appbar-inner">
+      <a href="{% url 'program' %}" class="brand">STRATI&nbsp;2026</a>
+      <span class="brand-sub">Suzhou</span>
+    </div>
+  </header>
+
+  <main class="content">
+    {% block content %}{% endblock %}
+  </main>
+
+  <nav class="tabbar">
+    {% with u=request.resolver_match.url_name %}
+    <a href="{% url 'program' %}" class="tab {% if u == 'program' %}on{% endif %}">
+      <span class="ic">🗓️</span><span>Program</span></a>
+    <a href="{% url 'sessions' %}" class="tab {% if u == 'sessions' or u == 'session_detail' %}on{% endif %}">
+      <span class="ic">📚</span><span>Sessions</span></a>
+    <a href="{% url 'search' %}" class="tab {% if u == 'search' %}on{% endif %}">
+      <span class="ic">🔍</span><span>Search</span></a>
+    <a href="{% url 'timetable' %}" class="tab {% if u == 'timetable' %}on{% endif %}">
+      <span class="ic">⭐</span><span>My Plan</span></a>
+    {% endwith %}
+  </nav>
+
+  <script src="{% static 'app.js' %}"></script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

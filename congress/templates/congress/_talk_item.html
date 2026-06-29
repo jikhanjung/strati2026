@@ -1,0 +1,12 @@
+{# 발표 1건 카드. 변수: t (Talk) #}
+<div class="talk" data-id="{{ t.id }}">
+  <div class="talk-time">{{ t.time_start|time:"H:i" }}{% if t.time_end %}–{{ t.time_end|time:"H:i" }}{% endif %}</div>
+  <div class="talk-body">
+    <a class="talk-title" href="{% url 'talk_detail' t.id %}">{{ t.title }}</a>
+    <div class="talk-meta">
+      {% if t.session_id %}<span class="badge">{{ t.session_id }}</span>{% endif %}
+      {% if t.first_author %}<span class="author">{{ t.first_author }}</span>{% endif %}
+    </div>
+  </div>
+  <button class="bm" data-id="{{ t.id }}" aria-label="bookmark" title="Bookmark">☆</button>
+</div>

@@ -2,8 +2,16 @@
 data/
 build/
 
+# Django 런타임 산출물
+*.sqlite3
+db.sqlite3
+staticfiles/
+
 # Python
 __pycache__/
 *.pyc
 .venv/
 venv/
+
+# 로컬 환경설정
+.env

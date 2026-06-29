@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Program · STRATI 2026{% endblock %}
+{% block content %}
+{% if not days %}
+  <p class="empty">No program data loaded.</p>
+{% else %}
+<div class="daybar">
+  {% for d in days %}
+    <a href="?day={{ d|date:'Y-m-d' }}"
+       class="daychip {% if d == selected %}on{% endif %}">{{ d|date:'D' }}<b>{{ d|date:'M j' }}</b></a>
+  {% endfor %}
+</div>
+
+{% if plenary %}
+<section class="room">
+  <h2 class="room-h">Plenary &amp; Ceremony</h2>
+  {% for t in plenary %}{% include "congress/_talk_item.html" %}{% endfor %}
+</section>
+{% endif %}
+
+{% for room, talks in columns %}
+<section class="room">
+  <h2 class="room-h">{{ room }}</h2>
+  {% for t in talks %}{% include "congress/_talk_item.html" %}{% endfor %}
+</section>
+{% endfor %}
+{% endif %}
+{% endblock %}

@@ -1,0 +1,15 @@
+from django.urls import path
+
+from . import views
+
+urlpatterns = [
+    path("", views.home, name="home"),
+    path("program/", views.program, name="program"),
+    path("sessions/", views.sessions, name="sessions"),
+    path("session/<str:code>/", views.session_detail, name="session_detail"),
+    path("talk/<int:pk>/", views.talk_detail, name="talk_detail"),
+    path("abstract/<int:pk>/", views.abstract_detail, name="abstract_detail"),
+    path("search/", views.search, name="search"),
+    path("timetable/", views.timetable, name="timetable"),
+    path("api/talks/", views.api_talks, name="api_talks"),
+]

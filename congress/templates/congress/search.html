@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Search · STRATI 2026{% endblock %}
+{% block content %}
+<form class="searchbar" method="get" action="{% url 'search' %}">
+  <input type="search" name="q" value="{{ q }}" placeholder="Title, author, session…" autofocus>
+  <button type="submit">Go</button>
+</form>
+
+{% if q %}
+  <p class="result-count">{{ talks|length }} result{{ talks|length|pluralize }}</p>
+  {% for t in talks %}{% include "congress/_talk_item.html" %}{% endfor %}
+  {% if not talks %}<p class="empty">No matches.</p>{% endif %}
+{% endif %}
+{% endblock %}

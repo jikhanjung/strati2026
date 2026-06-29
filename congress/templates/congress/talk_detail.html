@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}{{ obj_title }} · STRATI 2026{% endblock %}
+{% block content %}
+<article class="detail">
+  {% if talk %}
+  <div class="detail-when">
+    <span class="badge">{{ talk.session_id }}</span>
+    {{ talk.day_label }} · {{ talk.time_start|time:"H:i" }}{% if talk.time_end %}–{{ talk.time_end|time:"H:i" }}{% endif %}
+    {% if talk.room %} · {{ talk.room }}{% endif %}
+    <button class="bm big" data-id="{{ talk.id }}" aria-label="bookmark">☆</button>
+  </div>
+  {% endif %}
+
+  <h1 class="detail-title">{{ obj_title }}</h1>
+
+  {% if abstract %}
+    <p class="detail-authors">{{ abstract.author_line }}</p>
+    {% if abstract.corresponding %}
+      <p class="detail-corr">✉ Corresponding: {{ abstract.corresponding|join:", " }}</p>
+    {% endif %}
+    {% if abstract.abstract_text %}
+      <div class="detail-abstract">{{ abstract.abstract_text|linebreaks }}</div>
+    {% endif %}
+    {% if abstract.keywords %}
+      <div class="kw">{% for k in abstract.keywords %}<span class="kwchip">{{ k }}</span>{% endfor %}</div>
+    {% endif %}
+    {% if abstract.affiliations %}
+      <details class="affil"><summary>Affiliations</summary>
+        <ol>{% for a in abstract.affiliations %}<li>{{ a }}</li>{% endfor %}</ol>
+      </details>
+    {% endif %}
+  {% else %}
+    <p class="detail-authors">{{ talk.first_author }}</p>
+    <p class="empty">No abstract linked for this talk.</p>
+  {% endif %}
+</article>
+{% endblock %}

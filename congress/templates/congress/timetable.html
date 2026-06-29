@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}My Plan · STRATI 2026{% endblock %}
+{% block content %}
+<h1 class="page-h">My Plan</h1>
+<p class="hint">Bookmarked talks are saved on this device.</p>
+<div id="tt"><p class="empty">Loading…</p></div>
+{% endblock %}
+{% block scripts %}
+<script>
+(async function () {
+  const ids = STRATI.getBM();
+  const box = document.getElementById('tt');
+  if (!ids.length) { box.innerHTML = '<p class="empty">No bookmarks yet. Tap ☆ on talks to add them.</p>'; return; }
+  const res = await fetch('{% url "api_talks" %}');
+  const all = (await res.json()).talks;
+  const set = new Set(ids);
+  const mine = all.filter(t => set.has(t.id));
+  if (!mine.length) { box.innerHTML = '<p class="empty">No bookmarks found.</p>'; return; }
+
+  const byDay = {};
+  mine.forEach(t => (byDay[t.day] = byDay[t.day] || []).push(t));
+  const dayOrder = mine.map(t => t.date);
+  const days = [...new Set(mine.sort((a,b)=>a.date.localeCompare(b.date)||a.start.localeCompare(b.start)).map(t=>t.day))];
+
+  let html = '';
+  days.forEach(day => {
+    const items = mine.filter(t => t.day === day)
+                      .sort((a,b)=>a.start.localeCompare(b.start));
+    html += `<section class="room"><h2 class="room-h">${day}</h2>`;
+    items.forEach(t => {
+      html += `<div class="talk" data-id="${t.id}">
+        <div class="talk-time">${t.start}${t.end?'–'+t.end:''}</div>
+        <div class="talk-body">
+          <a class="talk-title" href="/talk/${t.id}/">${STRATI.esc(t.title)}</a>
+          <div class="talk-meta">${t.session?`<span class="badge">${t.session}</span>`:''}
+            ${t.room?`<span class="author">${STRATI.esc(t.room)}</span>`:''}</div>
+        </div>
+        <button class="bm" data-id="${t.id}">★</button>
+      </div>`;
+    });
+    html += `</section>`;
+  });
+  box.innerHTML = html;
+  STRATI.refresh();
+})();
+</script>
+{% endblock %}

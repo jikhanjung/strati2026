@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Sessions · STRATI 2026{% endblock %}
+{% block content %}
+<h1 class="page-h">Sessions</h1>
+<ul class="slist">
+  {% for s in sessions %}
+  <li>
+    <a href="{% url 'session_detail' s.code %}">
+      <span class="badge">{{ s.code }}</span>
+      <span class="stitle">{{ s.title|default:"(title TBD)" }}</span>
+      <span class="scount">{{ s.n_talks }} talks</span>
+    </a>
+  </li>
+  {% endfor %}
+</ul>
+{% endblock %}
