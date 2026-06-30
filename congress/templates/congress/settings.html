@@ -20,8 +20,8 @@
   </div>
   <div id="sync-out" class="sync-out" hidden></div>
   <div id="device-list" class="device-list"></div>
-  <button id="reset-local" class="sync-btn danger" style="margin-top:6px">Reset this device</button>
-  <p class="hint" style="margin-top:6px">“Reset this device” clears this device’s bookmarks, notes and sync link. Other devices keep theirs.</p>
+  <button id="reset-local" class="sync-btn danger" style="margin-top:6px">Reset (erase this device)</button>
+  <p class="hint" style="margin-top:6px"><b>Unlink (keep data)</b> leaves the group but keeps your bookmarks &amp; notes on this device. <b>Reset</b> erases this device’s bookmarks, notes &amp; sync link. Your other devices are unaffected either way.</p>
 </section>
 
 <div id="settings-info" class="settings-info"></div>
@@ -44,7 +44,7 @@
 
   const reset = document.getElementById('reset-local');
   if (reset) reset.addEventListener('click', () => {
-    if (!confirm('Reset this device? Bookmarks, notes and the sync link on THIS device will be cleared.')) return;
+    if (!confirm('Reset (erase this device)?\n\nThis ERASES all bookmarks and notes on THIS device and clears its sync link. Your other linked devices keep their data.')) return;
     STRATI.resetLocal();
     location.href = '{% url "program" %}';
   });
@@ -91,9 +91,10 @@
       const me = d.id === data.current;
       const name = me ? '📱 This device' : '🖥️ ' + String(d.id).slice(0, 8);
       const canUnlink = me ? (list.length > 1) : true;   // 솔로(이 기기뿐)면 분리할 게 없음
+      const label = me ? 'Unlink (keep data)' : 'Unlink';
       const btn = canUnlink
         ? '<button class="device-unlink" data-id="' + STRATI.esc(d.id) + '"'
-          + (me ? ' data-self="1"' : '') + '>Unlink</button>'
+          + (me ? ' data-self="1"' : '') + '>' + label + '</button>'
         : '';
       return '<div class="device-row"><span class="device-name">' + name + '</span>'
         + '<span class="device-seen">' + ago(d.seen) + '</span>' + btn + '</div>';
@@ -101,12 +102,12 @@
   }
   devList.addEventListener('click', async (e) => {
     const b = e.target.closest('.device-unlink'); if (!b) return;
-    if (b.dataset.self) {                  // 이 기기 → 새 솔로 토큰으로 분리
-      if (!confirm('Unlink THIS device? It stops syncing with the others (your data stays here).')) return;
+    if (b.dataset.self) {                  // 이 기기 → 새 솔로 토큰으로 분리(데이터 유지)
+      if (!confirm('Unlink this device (keep data)?\n\nYour bookmarks & notes stay on this device — they just stop syncing with your other devices.')) return;
       try { await STRATI.unlinkThisDevice(); } catch (e) {}
       location.reload();
     } else {                               // 다른 기기 → 차단(다음 동기화 때 분리됨)
-      if (!confirm('Unlink this device from the group? It is signed out on its next sync.')) return;
+      if (!confirm('Unlink this device from the group?\n\nIt keeps its own data but is signed out of the shared sync on its next connection.')) return;
       try { await STRATI.forgetDevice(b.dataset.id); } catch (e) {}
       loadDevices(); renderLinked();
     }
