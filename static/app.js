@@ -22,6 +22,7 @@
     text = (text || "").trim();
     if (text) n[id] = text; else delete n[id];
     localStorage.setItem(NKEY, JSON.stringify(n));
+    if (text) ensureBM(id);   // 메모를 남기면 자동 북마크
   }
 
   // 사진: blob은 IndexedDB, "어떤 talk에 사진이 있는지" 빠른 조회는 localStorage 인덱스
@@ -93,6 +94,7 @@
       tx.oncomplete = res; tx.onerror = () => rej(tx.error);
     });
     setPhotoId(talkId, true);
+    ensureBM(talkId);         // 사진을 추가하면 자동 북마크
   }
   async function deletePhoto(photoId, talkId) {
     const d = await db();
@@ -110,6 +112,15 @@
     if (i >= 0) a.splice(i, 1); else a.push(id);
     setBM(a);
     return i < 0; // true if now bookmarked
+  }
+  // 없으면 북마크 추가(이미 있으면 그대로). 메모/사진 추가 시 자동 북마크용.
+  function ensureBM(id) {
+    const a = getBM();
+    if (a.includes(id)) return false;
+    a.push(id); setBM(a);
+    document.querySelectorAll('.bm[data-id="' + id + '"]').forEach(paint);
+    document.dispatchEvent(new CustomEvent("bm:change", { detail: { id } }));
+    return true;
   }
   function esc(s) {
     return (s || "").replace(/[&<>"']/g, c => (
