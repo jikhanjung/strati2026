@@ -4,8 +4,8 @@
   const SKEY = "strati_state";     // {bm:{id:{v,ts}}, notes:{id:{v,ts}}}
   const DKEY = "strati_device";    // 영구 디바이스 ID (페어링해도 안 바뀜)
   const TKEY = "strati_token";     // 싱크 토큰(공유 버킷 키; 페어링 시 상대 것으로 교체)
-  const CKEY = "strati_cfg";       // 사용자 설정
-  const CFG_DEFAULT = { sync: true, photos: false, breaks: true };
+  const CKEY = "strati_cfg";       // 사용자 설정(표시 옵션만)
+  const CFG_DEFAULT = { breaks: true };   // sync/photos 는 서버(시스템) 설정으로만 제어
 
   function getCfg() {
     try { return Object.assign({}, CFG_DEFAULT, JSON.parse(localStorage.getItem(CKEY) || "{}")); }
@@ -20,10 +20,10 @@
     [SKEY, DKEY, TKEY, "strati_linked", "strati_devices", "strati_photo_ids",
      "strati_photos_migrated", "strati_bm", "strati_notes"].forEach(k => localStorage.removeItem(k));
   }
-  // 서버 전역 플래그(운영자가 /manage/ 에서 설정) 캐시
+  // 서버 전역 플래그(운영자가 /manage/ 에서 설정) 캐시. photos 기본 false(서버 기본).
   function srvCfg() {
-    try { return Object.assign({ sync: true, photos: true }, JSON.parse(localStorage.getItem("strati_srv") || "{}")); }
-    catch (e) { return { sync: true, photos: true }; }
+    try { return Object.assign({ sync: true, photos: false }, JSON.parse(localStorage.getItem("strati_srv") || "{}")); }
+    catch (e) { return { sync: true, photos: false }; }
   }
   async function loadSrvCfg() {
     try {
@@ -36,9 +36,9 @@
       if (prev.photos !== !!fresh.photos || prev.sync !== !!fresh.sync) location.reload();
     } catch (e) { /* offline 무시 */ }
   }
-  // 실효 설정 = 사용자 설정 AND 서버 전역 플래그
-  function cfgSync() { return getCfg().sync && srvCfg().sync; }
-  function cfgPhotos() { return getCfg().photos && srvCfg().photos; }
+  // 실효 설정 = 서버(시스템) 전역 플래그 (사용자 토글 없음)
+  function cfgSync() { return srvCfg().sync; }
+  function cfgPhotos() { return srvCfg().photos; }
 
   function nowTs() { return Date.now(); }
 

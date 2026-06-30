@@ -95,7 +95,7 @@ class SyncDevice(models.Model):
 class ServerConfig(models.Model):
     """서버 전역 설정(싱글톤, id=1). /manage/ 에서 운영자가 편집."""
     sync_enabled = models.BooleanField(default=True)          # 북마크/메모 동기화 전체 on/off
-    photo_sync_enabled = models.BooleanField(default=True)    # 사진 업로드 기능 on/off
+    photo_sync_enabled = models.BooleanField(default=False)   # 사진 업로드 기능 on/off (기본 off)
     photo_max_mb = models.IntegerField(default=8)             # 장당 MB
     photo_max_per_talk = models.IntegerField(default=50)      # talk당 장수
     photo_max_per_token_mb = models.IntegerField(default=1024)  # 토큰당 MB

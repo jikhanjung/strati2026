@@ -5,14 +5,6 @@
 <p class="hint">Saved on this device.</p>
 
 <div class="settings">
-  <label class="setting" id="row-sync">
-    <span class="setting-t"><b>Cloud sync</b><small>Sync bookmarks &amp; notes across your devices</small></span>
-    <input type="checkbox" id="cfg-sync">
-  </label>
-  <label class="setting" id="row-photos">
-    <span class="setting-t"><b>Photo sync</b><small>Upload photos to the server, shared across linked devices</small></span>
-    <input type="checkbox" id="cfg-photos">
-  </label>
   <label class="setting">
     <span class="setting-t"><b>Show breaks &amp; lunch</b><small>Display break/lunch slots in the program and plan</small></span>
     <input type="checkbox" id="cfg-breaks">
@@ -45,26 +37,14 @@
 <script>
 (function () {
   const cfg = STRATI.getCfg();
-  const map = { sync: 'cfg-sync', photos: 'cfg-photos', breaks: 'cfg-breaks' };
-  Object.keys(map).forEach(k => {
-    const el = document.getElementById(map[k]);
-    if (!el) return;
-    el.checked = !!cfg[k];
-    el.addEventListener('change', () => {
-      STRATI.setCfg({ [k]: el.checked });
-      // 동기화/사진/표시 동작을 깔끔히 반영하기 위해 새로고침
-      location.reload();
-    });
-  });
+  const br = document.getElementById('cfg-breaks');
+  if (br) {
+    br.checked = !!cfg.breaks;
+    br.addEventListener('change', () => { STRATI.setCfg({ breaks: br.checked }); location.reload(); });
+  }
 
   const info = document.getElementById('settings-info');
   if (info) info.innerHTML = '<div>Device: <b>' + (STRATI.deviceId() || '').slice(0, 8) + '</b></div>';
-
-  // 서버가 전역으로 끈 기능은 사용자 설정에서도 숨김
-  fetch('/api/clientconfig/').then(r => r.ok ? r.json() : { sync: true, photos: true }).then(srv => {
-    if (!srv.photos) { const r = document.getElementById('row-photos'); if (r) r.hidden = true; }
-    if (!srv.sync) { const r = document.getElementById('row-sync'); if (r) r.hidden = true; }
-  }).catch(() => {});
 
   const reset = document.getElementById('reset-local');
   if (reset) reset.addEventListener('click', () => {

@@ -25,7 +25,7 @@
   <section class="note">
     <label class="note-h" for="note">📝 My note <span class="note-status" id="note-status"></span></label>
     <textarea id="note" data-id="{{ talk.id }}" rows="2"
-              placeholder="Add a private note — saved on this device only…"></textarea>
+              placeholder="Add a note…"></textarea>
   </section>
 
   <section class="photos" data-id="{{ talk.id }}">
@@ -67,6 +67,9 @@
   if (!ta || !window.STRATI) return;
   const id = parseInt(ta.dataset.id, 10);
   const status = document.getElementById('note-status');
+  ta.placeholder = STRATI.cfgSync()
+    ? 'Add a note — synced across your linked devices…'
+    : 'Add a note — saved on this device…';
   ta.value = STRATI.getNote(id);
   function autoSize() { ta.style.height = 'auto'; ta.style.height = ta.scrollHeight + 'px'; }
   autoSize();
