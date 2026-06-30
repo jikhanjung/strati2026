@@ -5,7 +5,7 @@
   const DKEY = "strati_device";    // 영구 디바이스 ID (페어링해도 안 바뀜)
   const TKEY = "strati_token";     // 싱크 토큰(공유 버킷 키; 페어링 시 상대 것으로 교체)
   const CKEY = "strati_cfg";       // 사용자 설정
-  const CFG_DEFAULT = { sync: true, photos: true, breaks: true };
+  const CFG_DEFAULT = { sync: true, photos: false, breaks: true };
 
   function getCfg() {
     try { return Object.assign({}, CFG_DEFAULT, JSON.parse(localStorage.getItem(CKEY) || "{}")); }
