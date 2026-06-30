@@ -2,14 +2,48 @@
 {% block title %}My Plan · STRATI 2026{% endblock %}
 {% block content %}
 <h1 class="page-h">My Plan</h1>
-<p class="hint">Bookmarked talks are saved on this device.</p>
+<p class="hint">Bookmarks &amp; notes sync across your devices · photos stay on this device.</p>
 <a id="cal-all" class="cal-btn" href="#" hidden>📅 Add all to Calendar</a>
 <div id="tt"><p class="empty">Loading…</p></div>
 <button id="nowbtn" class="nowbtn" hidden>● Now</button>
+
+<section class="sync">
+  <div class="sync-row">
+    <button id="sync-link" class="sync-btn">🔗 Link a device</button>
+    <button id="sync-enter" class="sync-btn">⌨️ Enter code</button>
+  </div>
+  <div id="sync-out" class="sync-out" hidden></div>
+</section>
 {% endblock %}
 {% block scripts %}
 <script>
+// 기기 페어링 UI (북마크 유무와 무관하게 동작)
+(function () {
+  const out = document.getElementById('sync-out');
+  const link = document.getElementById('sync-link');
+  const enter = document.getElementById('sync-enter');
+  if (!link || !enter) return;
+  link.addEventListener('click', async () => {
+    out.hidden = false; out.textContent = '…';
+    try {
+      const { code, expires_in } = await STRATI.pairNew();
+      out.innerHTML = 'On your other device, open <b>My Plan → Enter code</b> and type:'
+        + '<div class="sync-code">' + code + '</div>'
+        + '<div class="sync-sub">valid for ' + Math.round(expires_in / 60) + ' min</div>';
+    } catch (e) { out.textContent = 'Could not get a code. Try again.'; }
+  });
+  enter.addEventListener('click', async () => {
+    const code = prompt('Enter the 6-digit code shown on your other device:');
+    if (!code) return;
+    out.hidden = false; out.textContent = 'Linking…';
+    try { await STRATI.pairClaim(code); out.textContent = 'Linked! Reloading…'; location.reload(); }
+    catch (e) { out.textContent = 'Invalid or expired code.'; }
+  });
+})();
+</script>
+<script>
 (async function () {
+  await STRATI.firstSync;                 // 서버 동기화로 받은 북마크/메모 반영 후 렌더
   const ids = STRATI.getBM();
   const box = document.getElementById('tt');
   if (!ids.length) { box.innerHTML = '<p class="empty">No bookmarks yet. Tap ☆ on talks to add them.</p>'; return; }

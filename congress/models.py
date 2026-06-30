@@ -77,3 +77,23 @@ class Talk(models.Model):
     @property
     def floor(self):
         return ROOM_FLOOR.get(self.room, "")
+
+
+class SyncDevice(models.Model):
+    """익명 디바이스 토큰별 동기화 상태(북마크·메모 JSON). 로그인/PII 없음."""
+    token = models.CharField(max_length=128, primary_key=True)
+    state = models.TextField(default="{}")             # {"bm":{id:{v,ts}}, "notes":{id:{v,ts}}}
+    updated = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.token
+
+
+class PairCode(models.Model):
+    """기기 페어링용 단명(短命) 숫자 코드 → 토큰. 1회용."""
+    code = models.CharField(max_length=12, primary_key=True)
+    token = models.CharField(max_length=128)
+    expires_at = models.DateTimeField()
+
+    def __str__(self):
+        return self.code

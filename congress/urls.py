@@ -13,4 +13,7 @@ urlpatterns = [
     path("timetable/", views.timetable, name="timetable"),
     path("calendar.ics", views.calendar_ics, name="calendar_ics"),
     path("api/talks/", views.api_talks, name="api_talks"),
+    path("api/sync/", views.api_sync, name="api_sync"),
+    path("api/pair/new/", views.pair_new, name="pair_new"),
+    path("api/pair/claim/", views.pair_claim, name="pair_claim"),
 ]

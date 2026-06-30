@@ -1,12 +1,17 @@
 import datetime as dt
+import json
+import secrets
 from zoneinfo import ZoneInfo
 
+from django.db import transaction
 from django.db.models import Count, Q
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_POST
 
-from .models import ROOM_FLOOR, Abstract, Session, Talk
+from .models import ROOM_FLOOR, Abstract, PairCode, Session, SyncDevice, Talk
 
 CONGRESS_TZ = ZoneInfo("Asia/Shanghai")
 ALARM_MIN = 5             # 발표 N분 전 캘린더 알림
@@ -236,3 +241,91 @@ def calendar_ics(request):
 
 def home(request):
     return redirect("program")
+
+
+# ── 동기화 (익명 디바이스 토큰 + 페어링 코드) ─────────────────────────────
+SYNC_SECTIONS = ("bm", "notes")
+PAIR_TTL = dt.timedelta(minutes=5)
+
+
+def _device_token(request):
+    t = (request.headers.get("X-Device") or "").strip()
+    return t if 8 <= len(t) <= 128 else ""
+
+
+def _merge_state(a, b):
+    """항목별 last-write-wins(ts 큰 쪽). a,b = {"bm":{id:{v,ts}}, "notes":{...}}."""
+    out = {}
+    for sec in SYNC_SECTIONS:
+        m = {}
+        for src in (a.get(sec) or {}), (b.get(sec) or {}):
+            if not isinstance(src, dict):
+                continue
+            for k, e in src.items():
+                if not isinstance(e, dict):
+                    continue
+                ts = e.get("ts") or 0
+                if k not in m or ts > (m[k].get("ts") or 0):
+                    m[k] = {"v": e.get("v"), "ts": ts}
+        out[sec] = m
+    return out
+
+
+@csrf_exempt
+@require_POST
+def api_sync(request):
+    """클라이언트 상태를 받아 서버 상태와 병합 후 병합본 반환(push+pull 일체)."""
+    token = _device_token(request)
+    if not token:
+        return JsonResponse({"error": "missing device token"}, status=400)
+    try:
+        incoming = json.loads(request.body or "{}")
+    except ValueError:
+        return JsonResponse({"error": "bad json"}, status=400)
+    if not isinstance(incoming, dict):
+        incoming = {}
+    with transaction.atomic():
+        dev, _ = SyncDevice.objects.select_for_update().get_or_create(token=token)
+        try:
+            stored = json.loads(dev.state or "{}")
+        except ValueError:
+            stored = {}
+        merged = _merge_state(stored, incoming)
+        dev.state = json.dumps(merged, separators=(",", ":"))
+        dev.save()
+    return JsonResponse(merged)
+
+
+@csrf_exempt
+@require_POST
+def pair_new(request):
+    """현재 토큰을 가리키는 1회용 6자리 코드 발급(5분)."""
+    token = _device_token(request)
+    if not token:
+        return JsonResponse({"error": "missing device token"}, status=400)
+    PairCode.objects.filter(expires_at__lt=timezone.now()).delete()   # 만료분 청소
+    for _ in range(10):
+        code = f"{secrets.randbelow(1000000):06d}"
+        if not PairCode.objects.filter(code=code).exists():
+            PairCode.objects.create(code=code, token=token,
+                                    expires_at=timezone.now() + PAIR_TTL)
+            return JsonResponse({"code": code, "expires_in": int(PAIR_TTL.total_seconds())})
+    return JsonResponse({"error": "try again"}, status=503)
+
+
+@csrf_exempt
+@require_POST
+def pair_claim(request):
+    """코드로 상대 기기의 토큰을 받아옴(1회용)."""
+    try:
+        code = str(json.loads(request.body or "{}").get("code", "")).strip()
+    except ValueError:
+        return JsonResponse({"error": "bad json"}, status=400)
+    row = PairCode.objects.filter(code=code).first()
+    if not row:
+        return JsonResponse({"error": "invalid code"}, status=404)
+    expired = row.expires_at < timezone.now()
+    row.delete()
+    if expired:
+        return JsonResponse({"error": "expired code"}, status=410)
+    return JsonResponse({"token": row.token})

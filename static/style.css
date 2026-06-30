@@ -76,6 +76,19 @@ a { color: inherit; text-decoration: none; }
 .talk-photo { width: 46px; height: 46px; object-fit: cover; border-radius: 6px;
   border: 1px solid var(--line); }
 
+/* Device sync (My Plan) */
+.sync { margin: 22px 2px 8px; padding-top: 16px; border-top: 1px solid var(--line); }
+.sync-row { display: flex; gap: 8px; }
+.sync-btn { flex: 0 0 auto; background: var(--card); border: 1px solid var(--line);
+  border-radius: 999px; padding: 8px 14px; font-size: 13px; font-weight: 600;
+  color: var(--navy); cursor: pointer; }
+.sync-out { margin-top: 10px; font-size: 13px; color: var(--muted);
+  background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; }
+.sync-out[hidden] { display: none; }
+.sync-code { font-size: 30px; font-weight: 800; letter-spacing: 6px; color: var(--navy);
+  text-align: center; margin: 8px 0 2px; }
+.sync-sub { text-align: center; font-size: 11.5px; color: var(--muted); }
+
 /* Per-talk note editor (talk detail) */
 .note { margin: 14px 0 4px; }
 .note-h { display: block; font-size: 12px; font-weight: 700; color: var(--muted);
