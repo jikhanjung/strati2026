@@ -47,6 +47,10 @@
     let cls = 'talk', style = '';
     if (opts.top != null) { cls = 'talk gtalk'; style = ` style="top:${opts.top}px;height:${opts.height}px"`; }
     else if (opts.minHeight) { style = ` style="min-height:${opts.minHeight}px"`; }
+    // 메모: 전체폭(단독) 카드에만 내용 표시(겹침 그리드 카드는 잘리므로 제외 — 📝 표시만)
+    const note = STRATI.getNote(t.id);
+    const noteHtml = (opts.top == null && note)
+      ? `<div class="talk-note">📝 ${STRATI.esc(note)}</div>` : '';
     return `<div class="${cls}" data-id="${t.id}" data-start="${t.start}" data-end="${t.end||''}"${style}>
       <div class="talk-time">${t.start}${t.end?'–'+t.end:''}</div>
       <div class="talk-body">
@@ -54,6 +58,7 @@
         <div class="talk-meta">${t.session?`<span class="badge">${t.session}</span>`:''}
           ${t.author?`<span class="author">${STRATI.esc(t.author)}</span>`:''}</div>
         ${place?`<div class="talk-place">📍 ${STRATI.esc(place)}</div>`:''}
+        ${noteHtml}
       </div>
       <button class="bm" data-id="${t.id}">★</button>
     </div>`;

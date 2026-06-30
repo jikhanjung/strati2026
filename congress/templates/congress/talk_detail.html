@@ -21,6 +21,12 @@
 
   {% if talk %}
   <a class="cal-btn" href="{% url 'calendar_ics' %}?ids={{ talk.id }}">📅 Add to Calendar</a>
+
+  <section class="note">
+    <label class="note-h" for="note">📝 My note <span class="note-status" id="note-status"></span></label>
+    <textarea id="note" data-id="{{ talk.id }}" rows="2"
+              placeholder="Add a private note — saved on this device only…"></textarea>
+  </section>
   {% endif %}
 
   {% if abstract %}
@@ -44,4 +50,30 @@
     <p class="empty">No abstract linked for this talk.</p>
   {% endif %}
 </article>
+{% endblock %}
+
+{% block scripts %}
+<script>
+(function () {
+  const ta = document.getElementById('note');
+  if (!ta || !window.STRATI) return;
+  const id = parseInt(ta.dataset.id, 10);
+  const status = document.getElementById('note-status');
+  ta.value = STRATI.getNote(id);
+  function autoSize() { ta.style.height = 'auto'; ta.style.height = ta.scrollHeight + 'px'; }
+  autoSize();
+  let timer;
+  ta.addEventListener('input', () => {
+    autoSize();
+    if (status) status.textContent = '…';
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      STRATI.setNote(id, ta.value);
+      if (status) { status.textContent = 'Saved'; setTimeout(() => {
+        if (status.textContent === 'Saved') status.textContent = '';
+      }, 1500); }
+    }, 400);
+  });
+})();
+</script>
 {% endblock %}

@@ -67,6 +67,19 @@ a { color: inherit; text-decoration: none; }
 .talk-meta { margin-top: 4px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
 .author { color: var(--muted); font-size: 12.5px; }
 .talk-place { color: var(--muted); font-size: 12px; margin-top: 3px; }
+.talk.has-note .talk-title::after { content: " 📝"; font-size: 12px; }
+.talk-note { margin-top: 5px; font-size: 12.5px; color: #5a4a00; white-space: pre-wrap;
+  background: #fff7e0; border: 1px solid #f0d98a; border-radius: 8px; padding: 4px 8px; }
+
+/* Per-talk note editor (talk detail) */
+.note { margin: 14px 0 4px; }
+.note-h { display: block; font-size: 12px; font-weight: 700; color: var(--muted);
+  text-transform: uppercase; letter-spacing: .4px; margin-bottom: 6px; }
+.note-status { text-transform: none; letter-spacing: 0; font-weight: 600; color: var(--accent); }
+#note { width: 100%; box-sizing: border-box; border: 1px solid var(--line); border-radius: 10px;
+  padding: 10px 12px; font: inherit; font-size: 14px; resize: none; overflow: hidden;
+  background: var(--card); color: var(--ink); }
+#note:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 2px rgba(13,59,102,.12); }
 
 /* "No schedule at current time" banner */
 .nowbanner { margin: 0 2px 12px; padding: 9px 12px; border-radius: 10px;
