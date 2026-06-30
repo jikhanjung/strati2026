@@ -16,4 +16,6 @@ urlpatterns = [
     path("api/sync/", views.api_sync, name="api_sync"),
     path("api/pair/new/", views.pair_new, name="pair_new"),
     path("api/pair/claim/", views.pair_claim, name="pair_claim"),
+    path("api/devices/", views.api_devices, name="api_devices"),
+    path("api/device/forget/", views.device_forget, name="device_forget"),
 ]

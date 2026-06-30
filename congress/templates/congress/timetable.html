@@ -14,6 +14,11 @@
     <button id="sync-enter" class="sync-btn">⌨️ Enter code</button>
   </div>
   <div id="sync-out" class="sync-out" hidden></div>
+  <details id="sync-devices" class="sync-devices" hidden>
+    <summary>Manage devices</summary>
+    <div id="device-list" class="device-list"></div>
+    <button id="unlink-this" class="sync-btn danger">Unlink this device</button>
+  </details>
 </section>
 {% endblock %}
 {% block scripts %}
@@ -24,15 +29,52 @@
   const link = document.getElementById('sync-link');
   const enter = document.getElementById('sync-enter');
   const status = document.getElementById('sync-status');
+  const devBox = document.getElementById('sync-devices');
+  const devList = document.getElementById('device-list');
+  const unlinkBtn = document.getElementById('unlink-this');
   if (!link || !enter) return;
   function renderLinked() {
     if (!status) return;
     const linked = STRATI.isLinked(), n = STRATI.linkedCount();
     status.hidden = !linked;
     status.textContent = '🔗 Linked' + (n >= 2 ? ' · ' + n + ' devices' : ' across devices');
+    if (devBox) devBox.hidden = !linked;
   }
   renderLinked();
   document.addEventListener('sync:applied', renderLinked);   // 동기화로 paired 확인 시 갱신
+
+  function ago(iso) {
+    const d = new Date(iso); if (isNaN(d)) return '';
+    const s = Math.max(0, (Date.now() - d.getTime()) / 1000);
+    if (s < 90) return 'just now';
+    if (s < 3600) return Math.round(s / 60) + 'm ago';
+    if (s < 86400) return Math.round(s / 3600) + 'h ago';
+    return Math.round(s / 86400) + 'd ago';
+  }
+  async function loadDevices() {
+    if (!devList) return;
+    devList.innerHTML = '<div class="device-row">…</div>';
+    let data; try { data = await STRATI.listDevices(); } catch (e) { devList.innerHTML = '<div class="device-row">Could not load.</div>'; return; }
+    devList.innerHTML = (data.devices || []).map(d => {
+      const me = d.id === data.current;
+      const name = me ? '📱 This device' : '🖥️ ' + String(d.id).slice(0, 8);
+      const x = me ? '' : '<button class="device-x" data-id="' + STRATI.esc(d.id) + '" aria-label="remove">×</button>';
+      return '<div class="device-row"><span class="device-name">' + name + '</span>'
+        + '<span class="device-seen">' + ago(d.seen) + '</span>' + x + '</div>';
+    }).join('') || '<div class="device-row">No devices.</div>';
+  }
+  if (devBox) devBox.addEventListener('toggle', () => { if (devBox.open) loadDevices(); });
+  if (devList) devList.addEventListener('click', async (e) => {
+    const b = e.target.closest('.device-x'); if (!b) return;
+    if (!confirm('Remove this device from the linked set?')) return;
+    try { await STRATI.forgetDevice(b.dataset.id); } catch (e) {}
+    loadDevices(); renderLinked();
+  });
+  if (unlinkBtn) unlinkBtn.addEventListener('click', async () => {
+    if (!confirm('Unlink THIS device? Your bookmarks/notes stay here but stop syncing with the others.')) return;
+    try { await STRATI.unlinkThisDevice(); } catch (e) {}
+    location.reload();
+  });
   link.addEventListener('click', async () => {
     out.hidden = false; out.textContent = '…';
     try {

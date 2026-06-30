@@ -132,6 +132,29 @@
   function isLinked() { return localStorage.getItem("strati_linked") === "1"; }
   function linkedCount() { return parseInt(localStorage.getItem("strati_devices") || "0", 10) || 0; }
 
+  async function listDevices() {       // {devices:[{id,seen}], current}
+    const res = await fetch("/api/devices/", {
+      headers: { "X-Device": deviceToken(), "X-Device-Id": deviceId() } });
+    if (!res.ok) throw new Error("failed");
+    return res.json();
+  }
+  async function forgetDevice(id) {    // 버킷 목록에서 특정 기기 제거
+    const res = await fetch("/api/device/forget/", {
+      method: "POST", headers: { "X-Device": deviceToken(), "Content-Type": "application/json" },
+      body: JSON.stringify({ id }) });
+    if (!res.ok) throw new Error("failed");
+    const d = await res.json();
+    if (typeof d.devices === "number") localStorage.setItem("strati_devices", String(d.devices));
+    return d;
+  }
+  async function unlinkThisDevice() {  // 이 기기를 공유 버킷에서 분리(새 솔로 토큰)
+    try { await forgetDevice(deviceId()); } catch (e) { /* best-effort */ }
+    localStorage.setItem(TKEY, randId());
+    localStorage.removeItem("strati_linked");
+    localStorage.removeItem("strati_devices");
+    await syncNow();                   // 내 데이터는 유지한 채 새 버킷으로 업로드
+  }
+
   // ── 사진 (IndexedDB, 기기 로컬 — 동기화 안 함) ───────────────────────
   const PKEY = "strati_photo_ids";
   function getPhotoIds() {
@@ -246,6 +269,7 @@
   window.STRATI = {
     getBM, isBM, toggle, esc, refresh, getNote, hasNote, setNote,
     hasPhoto, getPhotos, addPhotoFile, deletePhoto,
-    syncNow, firstSync, deviceToken, pairNew, pairClaim, isLinked, linkedCount,
+    syncNow, firstSync, deviceToken, deviceId, pairNew, pairClaim,
+    isLinked, linkedCount, listDevices, forgetDevice, unlinkThisDevice,
   };
 })();

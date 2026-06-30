@@ -310,6 +310,44 @@ def api_sync(request):
 
 
 @csrf_exempt
+def api_devices(request):
+    """이 토큰(버킷)을 쓰는 디바이스 목록(최근 접속 순)."""
+    token = _device_token(request)
+    if not token:
+        return JsonResponse({"error": "missing device token"}, status=400)
+    dev = SyncDevice.objects.filter(token=token).first()
+    raw = dev.devices if (dev and isinstance(dev.devices, list)) else []
+    items = [{"id": d.get("id"), "seen": d.get("seen")}
+             for d in raw if isinstance(d, dict) and d.get("id")]
+    items.sort(key=lambda d: d.get("seen") or "", reverse=True)
+    current = (request.headers.get("X-Device-Id") or "").strip()
+    return JsonResponse({"devices": items, "current": current})
+
+
+@csrf_exempt
+@require_POST
+def device_forget(request):
+    """버킷에서 특정 디바이스 ID 제거(목록·카운트에서 빠짐)."""
+    token = _device_token(request)
+    if not token:
+        return JsonResponse({"error": "missing device token"}, status=400)
+    try:
+        rid = str(json.loads(request.body or "{}").get("id", "")).strip()
+    except ValueError:
+        return JsonResponse({"error": "bad json"}, status=400)
+    with transaction.atomic():
+        dev = SyncDevice.objects.select_for_update().filter(token=token).first()
+        count = 0
+        if dev:
+            devs = [d for d in (dev.devices or [])
+                    if not (isinstance(d, dict) and d.get("id") == rid)]
+            dev.devices = devs
+            dev.save()
+            count = len(devs)
+    return JsonResponse({"devices": count})
+
+
+@csrf_exempt
 @require_POST
 def pair_new(request):
     """현재 토큰을 가리키는 1회용 6자리 코드 발급(5분)."""

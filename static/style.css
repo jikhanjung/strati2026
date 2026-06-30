@@ -91,6 +91,17 @@ a { color: inherit; text-decoration: none; }
 .sync-code { font-size: 30px; font-weight: 800; letter-spacing: 6px; color: var(--navy);
   text-align: center; margin: 8px 0 2px; }
 .sync-sub { text-align: center; font-size: 11.5px; color: var(--muted); }
+.sync-devices { margin-top: 12px; }
+.sync-devices[hidden] { display: none; }
+.sync-devices summary { font-size: 13px; font-weight: 600; color: var(--navy); cursor: pointer; }
+.device-list { margin: 8px 0; }
+.device-row { display: flex; align-items: center; gap: 8px; padding: 8px 4px;
+  border-bottom: 1px solid var(--line); font-size: 13px; }
+.device-name { flex: 1 1 auto; }
+.device-seen { color: var(--muted); font-size: 11.5px; }
+.device-x { flex: 0 0 auto; width: 22px; height: 22px; padding: 0; border: none; border-radius: 50%;
+  background: #f0e0e0; color: #b03030; font-size: 15px; cursor: pointer; }
+.sync-btn.danger { color: #b03030; border-color: #e3b6b6; }
 
 /* Per-talk note editor (talk detail) */
 .note { margin: 14px 0 4px; }
