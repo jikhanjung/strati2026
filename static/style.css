@@ -121,6 +121,8 @@ a { color: inherit; text-decoration: none; }
 .device-seen { color: var(--muted); font-size: 11.5px; }
 .device-x { flex: 0 0 auto; width: 22px; height: 22px; padding: 0; border: none; border-radius: 50%;
   background: #f0e0e0; color: #b03030; font-size: 15px; cursor: pointer; }
+.device-unlink { flex: 0 0 auto; border: 1px solid #e3b6b6; background: var(--card); color: #b03030;
+  border-radius: 8px; padding: 4px 12px; font-size: 12px; font-weight: 600; cursor: pointer; }
 .sync-btn.danger { color: #b03030; border-color: #e3b6b6; }
 
 /* Per-talk note editor (talk detail) */

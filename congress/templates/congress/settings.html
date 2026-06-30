@@ -11,24 +11,20 @@
   </label>
 </div>
 
+<h2 class="room-h" style="margin-top:18px">Devices</h2>
 <section class="sync" id="sync-section">
   <div id="sync-status" class="sync-status" hidden>🔗 Linked across devices</div>
-  <div class="sync-row">
+  <div class="sync-row" id="pair-row">
     <button id="sync-link" class="sync-btn">🔗 Link a device</button>
     <button id="sync-enter" class="sync-btn">⌨️ Enter code</button>
   </div>
   <div id="sync-out" class="sync-out" hidden></div>
-  <details id="sync-devices" class="sync-devices" hidden>
-    <summary>Manage devices</summary>
-    <div id="device-list" class="device-list"></div>
-    <button id="unlink-this" class="sync-btn danger">Unlink this device</button>
-  </details>
+  <div id="device-list" class="device-list"></div>
+  <button id="reset-local" class="sync-btn danger" style="margin-top:6px">Reset this device</button>
+  <p class="hint" style="margin-top:6px">“Reset this device” clears this device’s bookmarks, notes and sync link. Other devices keep theirs.</p>
 </section>
 
 <div id="settings-info" class="settings-info"></div>
-
-<button id="reset-local" class="sync-btn danger">Reset this device</button>
-<p class="hint" style="margin-top:8px">Clears bookmarks, notes and sync identity on this device. Photos already uploaded stay on the server under your other devices.</p>
 
 <p class="hint" style="margin-top:18px"><a href="{% url 'manage' %}" class="detail-session" style="color:var(--muted)">Server admin →</a></p>
 {% endblock %}
@@ -55,35 +51,29 @@
 })();
 </script>
 <script>
-// 기기 페어링/관리 UI
+// 기기 목록/페어링 UI
 (function () {
   const out = document.getElementById('sync-out');
   const link = document.getElementById('sync-link');
   const enter = document.getElementById('sync-enter');
   const status = document.getElementById('sync-status');
-  const devBox = document.getElementById('sync-devices');
+  const pairRow = document.getElementById('pair-row');
   const devList = document.getElementById('device-list');
-  const unlinkBtn = document.getElementById('unlink-this');
-  if (!link || !enter) return;
-  if (!STRATI.cfgSync()) {                 // 동기화 꺼짐 → 페어링 UI 숨김
-    const sec = document.getElementById('sync-section'); if (sec) sec.hidden = true;
+  if (!devList) return;
+
+  if (!STRATI.cfgSync()) {                 // 동기화 꺼짐 → 페어링/목록 숨김(Reset은 유지)
+    if (status) status.hidden = true;
+    if (pairRow) pairRow.hidden = true;
+    devList.innerHTML = '<div class="device-row">Cloud sync is turned off.</div>';
     return;
   }
+
   function renderLinked() {
     if (!status) return;
     const linked = STRATI.isLinked(), n = STRATI.linkedCount();
     status.hidden = !linked;
     status.textContent = '🔗 Linked' + (n >= 2 ? ' · ' + n + ' devices' : ' across devices');
-    if (devBox) devBox.hidden = !linked;
   }
-  renderLinked();
-  document.addEventListener('sync:applied', renderLinked);
-  document.addEventListener('sync:revoked', () => {
-    renderLinked();
-    if (out) { out.hidden = false;
-      out.textContent = 'This device was unlinked from the group. Your bookmarks/notes stay here.'; }
-  });
-
   function ago(iso) {
     const d = new Date(iso); if (isNaN(d)) return '';
     const s = Math.max(0, (Date.now() - d.getTime()) / 1000);
@@ -93,28 +83,33 @@
     return Math.round(s / 86400) + 'd ago';
   }
   async function loadDevices() {
-    if (!devList) return;
     devList.innerHTML = '<div class="device-row">…</div>';
-    let data; try { data = await STRATI.listDevices(); } catch (e) { devList.innerHTML = '<div class="device-row">Could not load.</div>'; return; }
-    devList.innerHTML = (data.devices || []).map(d => {
+    let data; try { data = await STRATI.listDevices(); }
+    catch (e) { devList.innerHTML = '<div class="device-row">Could not load devices.</div>'; return; }
+    const list = data.devices || [];
+    devList.innerHTML = list.map(d => {
       const me = d.id === data.current;
       const name = me ? '📱 This device' : '🖥️ ' + String(d.id).slice(0, 8);
-      const x = me ? '' : '<button class="device-x" data-id="' + STRATI.esc(d.id) + '" aria-label="remove">×</button>';
+      const canUnlink = me ? (list.length > 1) : true;   // 솔로(이 기기뿐)면 분리할 게 없음
+      const btn = canUnlink
+        ? '<button class="device-unlink" data-id="' + STRATI.esc(d.id) + '"'
+          + (me ? ' data-self="1"' : '') + '>Unlink</button>'
+        : '';
       return '<div class="device-row"><span class="device-name">' + name + '</span>'
-        + '<span class="device-seen">' + ago(d.seen) + '</span>' + x + '</div>';
+        + '<span class="device-seen">' + ago(d.seen) + '</span>' + btn + '</div>';
     }).join('') || '<div class="device-row">No devices.</div>';
   }
-  if (devBox) devBox.addEventListener('toggle', () => { if (devBox.open) loadDevices(); });
-  if (devList) devList.addEventListener('click', async (e) => {
-    const b = e.target.closest('.device-x'); if (!b) return;
-    if (!confirm('Remove this device from the linked set?')) return;
-    try { await STRATI.forgetDevice(b.dataset.id); } catch (e) {}
-    loadDevices(); renderLinked();
-  });
-  if (unlinkBtn) unlinkBtn.addEventListener('click', async () => {
-    if (!confirm('Unlink THIS device? Your bookmarks/notes stay here but stop syncing with the others.')) return;
-    try { await STRATI.unlinkThisDevice(); } catch (e) {}
-    location.reload();
+  devList.addEventListener('click', async (e) => {
+    const b = e.target.closest('.device-unlink'); if (!b) return;
+    if (b.dataset.self) {                  // 이 기기 → 새 솔로 토큰으로 분리
+      if (!confirm('Unlink THIS device? It stops syncing with the others (your data stays here).')) return;
+      try { await STRATI.unlinkThisDevice(); } catch (e) {}
+      location.reload();
+    } else {                               // 다른 기기 → 차단(다음 동기화 때 분리됨)
+      if (!confirm('Unlink this device from the group? It is signed out on its next sync.')) return;
+      try { await STRATI.forgetDevice(b.dataset.id); } catch (e) {}
+      loadDevices(); renderLinked();
+    }
   });
   link.addEventListener('click', async () => {
     out.hidden = false; out.textContent = '…';
@@ -131,6 +126,14 @@
     out.hidden = false; out.textContent = 'Linking…';
     try { await STRATI.pairClaim(code); out.textContent = 'Linked! Reloading…'; location.reload(); }
     catch (e) { out.textContent = 'Invalid or expired code.'; }
+  });
+
+  renderLinked();
+  loadDevices();
+  document.addEventListener('sync:applied', () => { renderLinked(); loadDevices(); });
+  document.addEventListener('sync:revoked', () => {
+    renderLinked(); loadDevices();
+    if (out) { out.hidden = false; out.textContent = 'This device was unlinked from the group.'; }
   });
 })();
 </script>
