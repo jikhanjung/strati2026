@@ -287,6 +287,9 @@ def api_sync(request):
     device_id = (request.headers.get("X-Device-Id") or "").strip()[:128]
     with transaction.atomic():
         dev, _ = SyncDevice.objects.select_for_update().get_or_create(token=token)
+        # 이 버킷에서 제거(차단)된 기기면 데이터 제공 없이 거부 → 클라가 새 토큰으로 분리
+        if device_id and device_id in (dev.revoked or []):
+            return JsonResponse({"revoked": True}, status=409)
         try:
             stored = json.loads(dev.state or "{}")
         except ValueError:
@@ -342,6 +345,10 @@ def device_forget(request):
             devs = [d for d in (dev.devices or [])
                     if not (isinstance(d, dict) and d.get("id") == rid)]
             dev.devices = devs
+            rev = dev.revoked or []
+            if rid and rid not in rev:          # 차단 목록에 추가 → 재접속 시 거부
+                rev.append(rid)
+            dev.revoked = rev
             dev.save()
             count = len(devs)
     return JsonResponse({"devices": count})
@@ -379,6 +386,13 @@ def pair_claim(request):
     row.delete()
     if expired:
         return JsonResponse({"error": "expired code"}, status=410)
-    # 양쪽(코드 생성 기기·청구 기기)이 공유하는 버킷을 "페어링됨"으로 표시
-    SyncDevice.objects.update_or_create(token=row.token, defaults={"paired": True})
+    # 양쪽(코드 생성 기기·청구 기기)이 공유하는 버킷을 "페어링됨"으로 표시.
+    # 청구 기기가 이전에 제거(차단)됐었다면 재페어링이므로 차단 해제.
+    claimer = (request.headers.get("X-Device-Id") or "").strip()[:128]
+    with transaction.atomic():
+        dev, _ = SyncDevice.objects.select_for_update().get_or_create(token=row.token)
+        dev.paired = True
+        if claimer:
+            dev.revoked = [r for r in (dev.revoked or []) if r != claimer]
+        dev.save()
     return JsonResponse({"token": row.token})

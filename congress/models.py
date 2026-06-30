@@ -85,6 +85,7 @@ class SyncDevice(models.Model):
     state = models.TextField(default="{}")             # {"bm":{id:{v,ts}}, "notes":{id:{v,ts}}}
     paired = models.BooleanField(default=False)        # 한 번이라도 다른 기기와 페어링됨
     devices = models.JSONField(default=list)           # 이 버킷을 쓴 디바이스 ID들 [{id, seen}]
+    revoked = models.JSONField(default=list)           # 제거된(차단된) 디바이스 ID들
     updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):

@@ -90,6 +90,15 @@
                    "Content-Type": "application/json" },
         body: JSON.stringify(STATE),
       });
+      if (res.status === 409) {
+        // 이 기기가 공유 버킷에서 제거됨 → 새 솔로 토큰으로 분리(로컬 데이터 유지)
+        localStorage.setItem(TKEY, randId());
+        localStorage.removeItem("strati_linked");
+        localStorage.removeItem("strati_devices");
+        document.dispatchEvent(new CustomEvent("sync:revoked"));
+        scheduleSync();                 // 새 토큰으로 곧 재동기화
+        return;
+      }
       if (res.ok) {
         const merged = await res.json();
         mergeInto(merged);
@@ -120,7 +129,8 @@
   }
   async function pairClaim(code) {     // 코드로 상대 토큰 채택 후 데이터 합치기
     const res = await fetch("/api/pair/claim/", {
-      method: "POST", headers: { "Content-Type": "application/json" },
+      method: "POST",
+      headers: { "Content-Type": "application/json", "X-Device-Id": deviceId() },
       body: JSON.stringify({ code: String(code || "").trim() }) });
     if (!res.ok) throw new Error(res.status === 410 ? "expired" : "invalid");
     const data = await res.json();

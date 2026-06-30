@@ -42,6 +42,11 @@
   }
   renderLinked();
   document.addEventListener('sync:applied', renderLinked);   // 동기화로 paired 확인 시 갱신
+  document.addEventListener('sync:revoked', () => {          // 다른 기기가 이 기기를 제거함
+    renderLinked();
+    if (out) { out.hidden = false;
+      out.textContent = 'This device was unlinked from the group. Your bookmarks/notes stay here.'; }
+  });
 
   function ago(iso) {
     const d = new Date(iso); if (isNaN(d)) return '';
