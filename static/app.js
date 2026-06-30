@@ -28,7 +28,12 @@
   async function loadSrvCfg() {
     try {
       const r = await fetch("/api/clientconfig/");
-      if (r.ok) localStorage.setItem("strati_srv", JSON.stringify(await r.json()));
+      if (!r.ok) return;
+      const fresh = await r.json();
+      const prev = srvCfg();
+      localStorage.setItem("strati_srv", JSON.stringify(fresh));
+      // 전역 플래그가 바뀌면 게이팅이 달라지므로 화면을 한 번 갱신
+      if (prev.photos !== !!fresh.photos || prev.sync !== !!fresh.sync) location.reload();
     } catch (e) { /* offline 무시 */ }
   }
   // 실효 설정 = 사용자 설정 AND 서버 전역 플래그
