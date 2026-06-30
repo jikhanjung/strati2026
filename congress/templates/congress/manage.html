@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+{% block title %}Server admin · STRATI 2026{% endblock %}
+{% block content %}
+<h1 class="page-h">Server admin</h1>
+
+<div id="gate">
+  <p class="hint">Enter the admin password to manage server settings.</p>
+  <input type="password" id="adm-pw" class="adm-input" placeholder="Admin password" autocomplete="current-password">
+  <button id="adm-go" class="sync-btn">Unlock</button>
+  <div id="adm-msg" class="sync-out" hidden></div>
+</div>
+
+<form id="panel" class="settings" hidden>
+  <label class="setting">
+    <span class="setting-t"><b>Cloud sync</b><small>Bookmark/note sync for all devices</small></span>
+    <input type="checkbox" name="sync_enabled">
+  </label>
+  <label class="setting">
+    <span class="setting-t"><b>Photo sync</b><small>Allow photo uploads</small></span>
+    <input type="checkbox" name="photo_sync_enabled">
+  </label>
+  <label class="setting">
+    <span class="setting-t"><b>Max photo size (MB)</b></span>
+    <input type="number" name="photo_max_mb" min="1" class="adm-num">
+  </label>
+  <label class="setting">
+    <span class="setting-t"><b>Photos per talk</b></span>
+    <input type="number" name="photo_max_per_talk" min="0" class="adm-num">
+  </label>
+  <label class="setting">
+    <span class="setting-t"><b>Storage per device (MB)</b></span>
+    <input type="number" name="photo_max_per_token_mb" min="0" class="adm-num">
+  </label>
+  <button type="submit" class="sync-btn" style="margin-top:12px">Save</button>
+  <span id="save-msg" class="note-status"></span>
+</form>
+
+<div id="stats" class="settings-info"></div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+(function () {
+  const NUM = ["photo_max_mb", "photo_max_per_talk", "photo_max_per_token_mb"];
+  const BOOL = ["sync_enabled", "photo_sync_enabled"];
+  const gate = document.getElementById('gate');
+  const panel = document.getElementById('panel');
+  const stats = document.getElementById('stats');
+  const msg = document.getElementById('adm-msg');
+  let pw = "";
+
+  function fmtBytes(n) {
+    if (n > 1e9) return (n / 1e9).toFixed(2) + ' GB';
+    if (n > 1e6) return (n / 1e6).toFixed(1) + ' MB';
+    return (n / 1e3).toFixed(0) + ' KB';
+  }
+  function fill(c) {
+    BOOL.forEach(k => { panel.elements[k].checked = !!c[k]; });
+    NUM.forEach(k => { panel.elements[k].value = c[k]; });
+    if (c.stats) stats.innerHTML = 'Devices: <b>' + c.stats.devices + '</b> · Photos: <b>'
+      + c.stats.photos + '</b> · Storage used: <b>' + fmtBytes(c.stats.photo_bytes) + '</b>';
+  }
+  async function load() {
+    const r = await fetch('/api/admin/config/', { headers: { 'X-Admin': pw } });
+    if (r.status === 401) { throw new Error('Wrong password.'); }
+    if (!r.ok) throw new Error('Error.');
+    fill(await r.json());
+  }
+  document.getElementById('adm-go').addEventListener('click', async () => {
+    pw = document.getElementById('adm-pw').value;
+    msg.hidden = true;
+    try { await load(); sessionStorage.setItem('strati_adm', pw); gate.hidden = true; panel.hidden = false; }
+    catch (e) { msg.hidden = false; msg.textContent = e.message; }
+  });
+  panel.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const body = {};
+    BOOL.forEach(k => { body[k] = panel.elements[k].checked; });
+    NUM.forEach(k => { body[k] = parseInt(panel.elements[k].value, 10) || 0; });
+    const sm = document.getElementById('save-msg'); sm.textContent = 'Saving…';
+    const r = await fetch('/api/admin/config/', {
+      method: 'POST', headers: { 'X-Admin': pw, 'Content-Type': 'application/json' },
+      body: JSON.stringify(body) });
+    if (r.ok) { fill(await r.json()); sm.textContent = 'Saved'; setTimeout(() => sm.textContent = '', 1500); }
+    else { sm.textContent = 'Error'; }
+  });
+
+  // 세션에 비번이 있으면 자동 진입
+  const saved = sessionStorage.getItem('strati_adm');
+  if (saved) { pw = saved; load().then(() => { gate.hidden = true; panel.hidden = false; }).catch(() => {}); }
+})();
+</script>
+{% endblock %}

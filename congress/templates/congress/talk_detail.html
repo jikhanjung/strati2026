@@ -29,7 +29,7 @@
   </section>
 
   <section class="photos" data-id="{{ talk.id }}">
-    <div class="note-h">📷 Photos <span class="note-status">device only</span></div>
+    <div class="note-h">📷 Photos <span class="note-status">synced</span></div>
     <div id="photo-strip" class="photo-strip"></div>
     <label class="photo-add">＋ Add photo
       <input id="photo-input" type="file" accept="image/*" hidden>
@@ -87,7 +87,7 @@
   const strip = document.getElementById('photo-strip');
   const input = document.getElementById('photo-input');
   if (!strip || !input) return;
-  if (!STRATI.getCfg().photos) {                 // 사진 기능 꺼짐 → 섹션 숨김
+  if (!STRATI.cfgPhotos()) {                 // 사진 기능 꺼짐 → 섹션 숨김
     const sec = strip.closest('.photos'); if (sec) sec.hidden = true;
     return;
   }

@@ -12,6 +12,7 @@ urlpatterns = [
     path("search/", views.search, name="search"),
     path("timetable/", views.timetable, name="timetable"),
     path("settings/", views.settings_page, name="settings"),
+    path("manage/", views.manage_page, name="manage"),
     path("calendar.ics", views.calendar_ics, name="calendar_ics"),
     path("api/talks/", views.api_talks, name="api_talks"),
     path("api/sync/", views.api_sync, name="api_sync"),
@@ -24,4 +25,6 @@ urlpatterns = [
     path("api/photos/talks/", views.photo_talks, name="photo_talks"),
     path("api/photos/file/<int:pid>", views.photo_file, name="photo_file"),
     path("api/photos/<int:pid>/delete/", views.photo_delete, name="photo_delete"),
+    path("api/clientconfig/", views.client_config, name="client_config"),
+    path("api/admin/config/", views.admin_config, name="admin_config"),
 ]

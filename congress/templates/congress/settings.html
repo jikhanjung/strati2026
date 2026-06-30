@@ -23,6 +23,8 @@
 
 <button id="reset-local" class="sync-btn danger">Reset this device</button>
 <p class="hint" style="margin-top:8px">Clears bookmarks, notes and sync identity on this device. Photos already uploaded stay on the server under your other devices.</p>
+
+<p class="hint" style="margin-top:18px"><a href="{% url 'manage' %}" class="detail-session" style="color:var(--muted)">Server admin →</a></p>
 {% endblock %}
 
 {% block scripts %}

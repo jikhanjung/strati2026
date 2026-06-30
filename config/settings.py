@@ -94,12 +94,13 @@ STORAGES = {
 # JSON 산출물 위치 (import_json 커맨드가 읽음)
 OUTPUT_DIR = Path(os.environ.get("STRATI_OUTPUT_DIR", BASE_DIR / "output"))
 
-# 사진 동기화: 미디어 저장 위치(운영은 /srv/strati2026/media 볼륨 마운트) + 업로드 한도
+# 사진 저장 위치(운영은 /srv/strati2026/media 볼륨 마운트). 쿼터/기능 on-off는
+# 서버 전역 설정(ServerConfig, DB)에서 관리 — /manage/ 관리자 페이지.
 MEDIA_ROOT = Path(os.environ.get("STRATI_MEDIA_ROOT", BASE_DIR / "media"))
-PHOTO_MAX_BYTES = 8 * 1024 * 1024        # 장당 8MB
-PHOTO_MAX_PER_TALK = 50                   # talk당 50장
-PHOTO_MAX_PER_TOKEN = 1024 * 1024 * 1024  # 토큰당 1GB
-DATA_UPLOAD_MAX_MEMORY_SIZE = 12 * 1024 * 1024
-FILE_UPLOAD_MAX_MEMORY_SIZE = 12 * 1024 * 1024
+DATA_UPLOAD_MAX_MEMORY_SIZE = 64 * 1024 * 1024
+FILE_UPLOAD_MAX_MEMORY_SIZE = 4 * 1024 * 1024
+
+# 관리자 페이지 비밀번호(.env 에서 변경 권장)
+STRATI_ADMIN_PASSWORD = os.environ.get("STRATI_ADMIN_PASSWORD", "strati2026")
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"

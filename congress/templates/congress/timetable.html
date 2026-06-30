@@ -2,7 +2,7 @@
 {% block title %}My Plan · STRATI 2026{% endblock %}
 {% block content %}
 <h1 class="page-h">My Plan</h1>
-<p class="hint">Bookmarks &amp; notes sync across your devices · photos stay on this device.</p>
+<p class="hint">Bookmarks, notes &amp; photos sync across your linked devices.</p>
 <a id="cal-all" class="cal-btn" href="#" hidden>📅 Add all to Calendar</a>
 <div id="tt"><p class="empty">Loading…</p></div>
 <button id="nowbtn" class="nowbtn" hidden>● Now</button>
@@ -33,7 +33,7 @@
   const devList = document.getElementById('device-list');
   const unlinkBtn = document.getElementById('unlink-this');
   if (!link || !enter) return;
-  if (!STRATI.getCfg().sync) {                 // 동기화 꺼짐 → 페어링 UI 숨김
+  if (!STRATI.cfgSync()) {                 // 동기화 꺼짐 → 페어링 UI 숨김
     const sec = link.closest('.sync'); if (sec) sec.hidden = true;
     return;
   }
@@ -254,7 +254,7 @@
   STRATI.refresh();
 
   // 단독(전체폭) 카드에 사진 썸네일 (겹침 그리드 카드는 잘리므로 제외)
-  if (STRATI.getCfg().photos) document.querySelectorAll('#tt .talk[data-id]').forEach(async el => {
+  if (STRATI.cfgPhotos()) document.querySelectorAll('#tt .talk[data-id]').forEach(async el => {
     if (el.classList.contains('gtalk')) return;
     const tid = parseInt(el.dataset.id, 10);
     if (!STRATI.hasPhoto(tid)) return;

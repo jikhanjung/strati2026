@@ -15,8 +15,8 @@ from django.utils import timezone
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_GET, require_POST
 
-from .models import (ROOM_FLOOR, Abstract, PairCode, Session, SyncDevice,
-                     SyncPhoto, Talk)
+from .models import (ROOM_FLOOR, Abstract, PairCode, ServerConfig, Session,
+                     SyncDevice, SyncPhoto, Talk)
 
 CONGRESS_TZ = ZoneInfo("Asia/Shanghai")
 ALARM_MIN = 5             # 발표 N분 전 캘린더 알림
@@ -169,6 +169,63 @@ def settings_page(request):
     return render(request, "congress/settings.html", {})
 
 
+def manage_page(request):
+    """운영자 전역 설정 페이지. 접근/저장은 비밀번호(X-Admin)로 보호."""
+    return render(request, "congress/manage.html", {})
+
+
+# ── 서버 전역 설정 (운영자) ───────────────────────────────────────────────
+_CFG_FIELDS = ["sync_enabled", "photo_sync_enabled", "photo_max_mb",
+               "photo_max_per_talk", "photo_max_per_token_mb"]
+
+
+def _admin_ok(request):
+    pw = request.headers.get("X-Admin") or ""
+    expected = settings.STRATI_ADMIN_PASSWORD or ""
+    return bool(expected) and hmac.compare_digest(pw, expected)
+
+
+def _cfg_dict(cfg, with_stats=False):
+    d = {f: getattr(cfg, f) for f in _CFG_FIELDS}
+    if with_stats:
+        d["stats"] = {
+            "devices": SyncDevice.objects.count(),
+            "photos": SyncPhoto.objects.count(),
+            "photo_bytes": SyncPhoto.objects.aggregate(s=Sum("size"))["s"] or 0,
+        }
+    return d
+
+
+@csrf_exempt
+def client_config(request):
+    """클라이언트가 UI 게이팅에 쓰는 공개 플래그(전역 on/off)."""
+    cfg = ServerConfig.get()
+    return JsonResponse({"sync": cfg.sync_enabled, "photos": cfg.photo_sync_enabled})
+
+
+@csrf_exempt
+def admin_config(request):
+    if not _admin_ok(request):
+        return JsonResponse({"error": "unauthorized"}, status=401)
+    cfg = ServerConfig.get()
+    if request.method == "POST":
+        try:
+            data = json.loads(request.body or "{}")
+        except ValueError:
+            return JsonResponse({"error": "bad json"}, status=400)
+        for f in _CFG_FIELDS:
+            if f in data:
+                if f.endswith("_enabled"):
+                    setattr(cfg, f, bool(data[f]))
+                else:
+                    try:
+                        setattr(cfg, f, max(0, int(data[f])))
+                    except (TypeError, ValueError):
+                        pass
+        cfg.save()
+    return JsonResponse(_cfg_dict(cfg, with_stats=True))
+
+
 def api_talks(request):
     # ?ids=1,2,3 가 오면 그 발표들만 반환(My Plan 전용, 페이로드 최소화).
     # 휴식 도출은 전체 프로그램에서 해야 정확하므로 항상 전체를 조회.
@@ -285,13 +342,16 @@ def photo_upload(request):
     f = request.FILES.get("file")
     if not talk_id or not f:
         return JsonResponse({"error": "talk and file required"}, status=400)
-    if f.size > settings.PHOTO_MAX_BYTES:
+    cfg = ServerConfig.get()
+    if not cfg.photo_sync_enabled:
+        return JsonResponse({"error": "photo sync is disabled"}, status=403)
+    if f.size > cfg.photo_max_mb * 1024 * 1024:
         return JsonResponse({"error": "file too large"}, status=413)
     # 쿼터: talk당 장수 · 토큰당 총 용량
-    if SyncPhoto.objects.filter(token=token, talk_id=talk_id).count() >= settings.PHOTO_MAX_PER_TALK:
+    if SyncPhoto.objects.filter(token=token, talk_id=talk_id).count() >= cfg.photo_max_per_talk:
         return JsonResponse({"error": "per-talk limit reached"}, status=409)
     used = SyncPhoto.objects.filter(token=token).aggregate(s=Sum("size"))["s"] or 0
-    if used + f.size > settings.PHOTO_MAX_PER_TOKEN:
+    if used + f.size > cfg.photo_max_per_token_mb * 1024 * 1024:
         return JsonResponse({"error": "storage quota reached"}, status=409)
 
     sub = hashlib.sha256(token.encode()).hexdigest()[:16]
@@ -414,6 +474,8 @@ def api_sync(request):
         return JsonResponse({"error": "bad json"}, status=400)
     if not isinstance(incoming, dict):
         incoming = {}
+    if not ServerConfig.get().sync_enabled:        # 전역 동기화 OFF
+        return JsonResponse({"disabled": True}, status=503)
     device_id = (request.headers.get("X-Device-Id") or "").strip()[:128]
     with transaction.atomic():
         dev, _ = SyncDevice.objects.select_for_update().get_or_create(token=token)

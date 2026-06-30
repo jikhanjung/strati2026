@@ -20,6 +20,20 @@
     [SKEY, DKEY, TKEY, "strati_linked", "strati_devices", "strati_photo_ids",
      "strati_photos_migrated", "strati_bm", "strati_notes"].forEach(k => localStorage.removeItem(k));
   }
+  // 서버 전역 플래그(운영자가 /manage/ 에서 설정) 캐시
+  function srvCfg() {
+    try { return Object.assign({ sync: true, photos: true }, JSON.parse(localStorage.getItem("strati_srv") || "{}")); }
+    catch (e) { return { sync: true, photos: true }; }
+  }
+  async function loadSrvCfg() {
+    try {
+      const r = await fetch("/api/clientconfig/");
+      if (r.ok) localStorage.setItem("strati_srv", JSON.stringify(await r.json()));
+    } catch (e) { /* offline 무시 */ }
+  }
+  // 실효 설정 = 사용자 설정 AND 서버 전역 플래그
+  function cfgSync() { return getCfg().sync && srvCfg().sync; }
+  function cfgPhotos() { return getCfg().photos && srvCfg().photos; }
 
   function nowTs() { return Date.now(); }
 
@@ -96,11 +110,11 @@
   }
   let syncT, syncing = false, syncAgain = false;
   function scheduleSync() {
-    if (!getCfg().sync) return;
+    if (!cfgSync()) return;
     clearTimeout(syncT); syncT = setTimeout(syncNow, 800);
   }
   async function syncNow() {
-    if (!getCfg().sync) return;       // 동기화 꺼짐 → 순수 로컬
+    if (!cfgSync()) return;            // 동기화 꺼짐 → 순수 로컬
     if (syncing) { syncAgain = true; return; }
     syncing = true;
     try {
@@ -137,7 +151,7 @@
   let firstDone;
   const firstSync = new Promise(r => { firstDone = r; });
   function initSync() {
-    if (!getCfg().sync) { firstDone(); return; }   // 동기화 꺼짐 → 즉시 진행
+    if (!cfgSync()) { firstDone(); return; }       // 동기화 꺼짐 → 즉시 진행
     const cap = setTimeout(firstDone, 3000);
     syncNow().finally(() => { clearTimeout(cap); firstDone(); });
   }
@@ -250,7 +264,7 @@
   }
   // 이 토큰이 사진 가진 talk 목록 동기화 → 카드 마커 갱신
   async function syncPhotoTalks() {
-    if (!getCfg().photos || !getCfg().sync) return;
+    if (!cfgPhotos() || !cfgSync()) return;
     try {
       const res = await fetch("/api/photos/talks/", { headers: { "X-Device": deviceToken() } });
       if (!res.ok) return;
@@ -260,7 +274,7 @@
   }
   // 구버전 로컬(IndexedDB) 사진을 서버로 1회 업로드
   async function migratePhotos() {
-    if (!getCfg().photos || !getCfg().sync) return;
+    if (!cfgPhotos() || !cfgSync()) return;
     if (localStorage.getItem("strati_photos_migrated") === "1") return;
     let d;
     try {
@@ -333,6 +347,7 @@
   document.addEventListener("DOMContentLoaded", function () {
     document.body.classList.toggle("hide-breaks", !getCfg().breaks);
     refresh(); initSync(); syncPhotoTalks(); migratePhotos();
+    loadSrvCfg();   // 다음 로드부터 서버 전역 플래그 반영
   });
 
   window.STRATI = {
@@ -340,6 +355,6 @@
     hasPhoto, getPhotos, addPhotoFile, deletePhoto, syncPhotoTalks,
     syncNow, firstSync, deviceToken, deviceId, pairNew, pairClaim,
     isLinked, linkedCount, listDevices, forgetDevice, unlinkThisDevice,
-    getCfg, setCfg, resetLocal,
+    getCfg, setCfg, resetLocal, cfgSync, cfgPhotos,
   };
 })();
