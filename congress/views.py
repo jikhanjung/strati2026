@@ -293,7 +293,8 @@ def api_sync(request):
         merged = _merge_state(stored, incoming)
         dev.state = json.dumps(merged, separators=(",", ":"))
         dev.save()
-    return JsonResponse(merged)
+        paired = dev.paired
+    return JsonResponse({**merged, "paired": paired})
 
 
 @csrf_exempt
@@ -328,4 +329,6 @@ def pair_claim(request):
     row.delete()
     if expired:
         return JsonResponse({"error": "expired code"}, status=410)
+    # 양쪽(코드 생성 기기·청구 기기)이 공유하는 버킷을 "페어링됨"으로 표시
+    SyncDevice.objects.update_or_create(token=row.token, defaults={"paired": True})
     return JsonResponse({"token": row.token})

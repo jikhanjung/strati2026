@@ -8,6 +8,7 @@
 <button id="nowbtn" class="nowbtn" hidden>● Now</button>
 
 <section class="sync">
+  <div id="sync-status" class="sync-status" hidden>🔗 Linked across devices</div>
   <div class="sync-row">
     <button id="sync-link" class="sync-btn">🔗 Link a device</button>
     <button id="sync-enter" class="sync-btn">⌨️ Enter code</button>
@@ -22,7 +23,11 @@
   const out = document.getElementById('sync-out');
   const link = document.getElementById('sync-link');
   const enter = document.getElementById('sync-enter');
+  const status = document.getElementById('sync-status');
   if (!link || !enter) return;
+  function renderLinked() { if (status) status.hidden = !STRATI.isLinked(); }
+  renderLinked();
+  document.addEventListener('sync:applied', renderLinked);   // 동기화로 paired 확인 시 갱신
   link.addEventListener('click', async () => {
     out.hidden = false; out.textContent = '…';
     try {

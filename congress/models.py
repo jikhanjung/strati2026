@@ -83,6 +83,7 @@ class SyncDevice(models.Model):
     """익명 디바이스 토큰별 동기화 상태(북마크·메모 JSON). 로그인/PII 없음."""
     token = models.CharField(max_length=128, primary_key=True)
     state = models.TextField(default="{}")             # {"bm":{id:{v,ts}}, "notes":{id:{v,ts}}}
+    paired = models.BooleanField(default=False)        # 한 번이라도 다른 기기와 페어링됨
     updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):

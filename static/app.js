@@ -84,7 +84,9 @@
         body: JSON.stringify(STATE),
       });
       if (res.ok) {
-        mergeInto(await res.json());
+        const merged = await res.json();
+        mergeInto(merged);
+        if (merged.paired) localStorage.setItem("strati_linked", "1");
         refresh();
         document.dispatchEvent(new CustomEvent("sync:applied"));
       }
@@ -115,9 +117,11 @@
     if (!res.ok) throw new Error(res.status === 410 ? "expired" : "invalid");
     const data = await res.json();
     localStorage.setItem(DKEY, data.token);   // 상대 기기의 토큰을 내 토큰으로
+    localStorage.setItem("strati_linked", "1");
     await syncNow();                           // 내 로컬을 공유 버킷에 병합 + 병합본 수신
     return true;
   }
+  function isLinked() { return localStorage.getItem("strati_linked") === "1"; }
 
   // ── 사진 (IndexedDB, 기기 로컬 — 동기화 안 함) ───────────────────────
   const PKEY = "strati_photo_ids";
@@ -233,6 +237,6 @@
   window.STRATI = {
     getBM, isBM, toggle, esc, refresh, getNote, hasNote, setNote,
     hasPhoto, getPhotos, addPhotoFile, deletePhoto,
-    syncNow, firstSync, deviceToken, pairNew, pairClaim,
+    syncNow, firstSync, deviceToken, pairNew, pairClaim, isLinked,
   };
 })();
