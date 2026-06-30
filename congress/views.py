@@ -164,6 +164,11 @@ def timetable(request):
     return render(request, "congress/timetable.html", {})
 
 
+def settings_page(request):
+    """사용자 설정(동기화·사진 on/off 등). 값은 localStorage, JS로 처리."""
+    return render(request, "congress/settings.html", {})
+
+
 def api_talks(request):
     # ?ids=1,2,3 가 오면 그 발표들만 반환(My Plan 전용, 페이로드 최소화).
     # 휴식 도출은 전체 프로그램에서 해야 정확하므로 항상 전체를 조회.

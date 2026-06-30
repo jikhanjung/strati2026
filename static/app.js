@@ -4,6 +4,22 @@
   const SKEY = "strati_state";     // {bm:{id:{v,ts}}, notes:{id:{v,ts}}}
   const DKEY = "strati_device";    // 영구 디바이스 ID (페어링해도 안 바뀜)
   const TKEY = "strati_token";     // 싱크 토큰(공유 버킷 키; 페어링 시 상대 것으로 교체)
+  const CKEY = "strati_cfg";       // 사용자 설정
+  const CFG_DEFAULT = { sync: true, photos: true, breaks: true };
+
+  function getCfg() {
+    try { return Object.assign({}, CFG_DEFAULT, JSON.parse(localStorage.getItem(CKEY) || "{}")); }
+    catch (e) { return Object.assign({}, CFG_DEFAULT); }
+  }
+  function setCfg(patch) {
+    const c = Object.assign(getCfg(), patch);
+    localStorage.setItem(CKEY, JSON.stringify(c));
+    return c;
+  }
+  function resetLocal() {
+    [SKEY, DKEY, TKEY, "strati_linked", "strati_devices", "strati_photo_ids",
+     "strati_photos_migrated", "strati_bm", "strati_notes"].forEach(k => localStorage.removeItem(k));
+  }
 
   function nowTs() { return Date.now(); }
 
@@ -79,8 +95,12 @@
     saveState();
   }
   let syncT, syncing = false, syncAgain = false;
-  function scheduleSync() { clearTimeout(syncT); syncT = setTimeout(syncNow, 800); }
+  function scheduleSync() {
+    if (!getCfg().sync) return;
+    clearTimeout(syncT); syncT = setTimeout(syncNow, 800);
+  }
   async function syncNow() {
+    if (!getCfg().sync) return;       // 동기화 꺼짐 → 순수 로컬
     if (syncing) { syncAgain = true; return; }
     syncing = true;
     try {
@@ -117,6 +137,7 @@
   let firstDone;
   const firstSync = new Promise(r => { firstDone = r; });
   function initSync() {
+    if (!getCfg().sync) { firstDone(); return; }   // 동기화 꺼짐 → 즉시 진행
     const cap = setTimeout(firstDone, 3000);
     syncNow().finally(() => { clearTimeout(cap); firstDone(); });
   }
@@ -229,6 +250,7 @@
   }
   // 이 토큰이 사진 가진 talk 목록 동기화 → 카드 마커 갱신
   async function syncPhotoTalks() {
+    if (!getCfg().photos || !getCfg().sync) return;
     try {
       const res = await fetch("/api/photos/talks/", { headers: { "X-Device": deviceToken() } });
       if (!res.ok) return;
@@ -238,6 +260,7 @@
   }
   // 구버전 로컬(IndexedDB) 사진을 서버로 1회 업로드
   async function migratePhotos() {
+    if (!getCfg().photos || !getCfg().sync) return;
     if (localStorage.getItem("strati_photos_migrated") === "1") return;
     let d;
     try {
@@ -308,6 +331,7 @@
   });
 
   document.addEventListener("DOMContentLoaded", function () {
+    document.body.classList.toggle("hide-breaks", !getCfg().breaks);
     refresh(); initSync(); syncPhotoTalks(); migratePhotos();
   });
 
@@ -316,5 +340,6 @@
     hasPhoto, getPhotos, addPhotoFile, deletePhoto, syncPhotoTalks,
     syncNow, firstSync, deviceToken, deviceId, pairNew, pairClaim,
     isLinked, linkedCount, listDevices, forgetDevice, unlinkThisDevice,
+    getCfg, setCfg, resetLocal,
   };
 })();

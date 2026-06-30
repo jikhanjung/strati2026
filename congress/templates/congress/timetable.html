@@ -33,6 +33,10 @@
   const devList = document.getElementById('device-list');
   const unlinkBtn = document.getElementById('unlink-this');
   if (!link || !enter) return;
+  if (!STRATI.getCfg().sync) {                 // 동기화 꺼짐 → 페어링 UI 숨김
+    const sec = link.closest('.sync'); if (sec) sec.hidden = true;
+    return;
+  }
   function renderLinked() {
     if (!status) return;
     const linked = STRATI.isLinked(), n = STRATI.linkedCount();
@@ -250,7 +254,7 @@
   STRATI.refresh();
 
   // 단독(전체폭) 카드에 사진 썸네일 (겹침 그리드 카드는 잘리므로 제외)
-  document.querySelectorAll('#tt .talk[data-id]').forEach(async el => {
+  if (STRATI.getCfg().photos) document.querySelectorAll('#tt .talk[data-id]').forEach(async el => {
     if (el.classList.contains('gtalk')) return;
     const tid = parseInt(el.dataset.id, 10);
     if (!STRATI.hasPhoto(tid)) return;

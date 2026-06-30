@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block title %}Settings · STRATI 2026{% endblock %}
+{% block content %}
+<h1 class="page-h">Settings</h1>
+<p class="hint">Saved on this device.</p>
+
+<div class="settings">
+  <label class="setting">
+    <span class="setting-t"><b>Cloud sync</b><small>Sync bookmarks &amp; notes across your devices</small></span>
+    <input type="checkbox" id="cfg-sync">
+  </label>
+  <label class="setting">
+    <span class="setting-t"><b>Photo sync</b><small>Upload photos to the server, shared across linked devices</small></span>
+    <input type="checkbox" id="cfg-photos">
+  </label>
+  <label class="setting">
+    <span class="setting-t"><b>Show breaks &amp; lunch</b><small>Display break/lunch slots in the program and plan</small></span>
+    <input type="checkbox" id="cfg-breaks">
+  </label>
+</div>
+
+<div id="settings-info" class="settings-info"></div>
+
+<button id="reset-local" class="sync-btn danger">Reset this device</button>
+<p class="hint" style="margin-top:8px">Clears bookmarks, notes and sync identity on this device. Photos already uploaded stay on the server under your other devices.</p>
+{% endblock %}
+
+{% block scripts %}
+<script>
+(function () {
+  const cfg = STRATI.getCfg();
+  const map = { sync: 'cfg-sync', photos: 'cfg-photos', breaks: 'cfg-breaks' };
+  Object.keys(map).forEach(k => {
+    const el = document.getElementById(map[k]);
+    if (!el) return;
+    el.checked = !!cfg[k];
+    el.addEventListener('change', () => {
+      STRATI.setCfg({ [k]: el.checked });
+      // 동기화/사진/표시 동작을 깔끔히 반영하기 위해 새로고침
+      location.reload();
+    });
+  });
+
+  const info = document.getElementById('settings-info');
+  if (info) {
+    const linked = STRATI.isLinked(), n = STRATI.linkedCount();
+    const dev = (STRATI.deviceId() || '').slice(0, 8);
+    info.innerHTML = '<div>Device: <b>' + dev + '</b></div>'
+      + '<div>Sync status: <b>' + (cfg.sync ? (linked ? 'Linked' + (n >= 2 ? ' · ' + n + ' devices' : '') : 'On (this device only)') : 'Off') + '</b></div>';
+  }
+
+  const reset = document.getElementById('reset-local');
+  if (reset) reset.addEventListener('click', () => {
+    if (!confirm('Reset this device? Bookmarks, notes and the sync link on THIS device will be cleared.')) return;
+    STRATI.resetLocal();
+    location.href = '{% url "program" %}';
+  });
+})();
+</script>
+{% endblock %}
