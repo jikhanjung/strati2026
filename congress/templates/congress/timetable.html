@@ -157,6 +157,24 @@
   box.innerHTML = html;
   STRATI.refresh();
 
+  // 단독(전체폭) 카드에 사진 썸네일 (겹침 그리드 카드는 잘리므로 제외)
+  document.querySelectorAll('#tt .talk[data-id]').forEach(async el => {
+    if (el.classList.contains('gtalk')) return;
+    const tid = parseInt(el.dataset.id, 10);
+    if (!STRATI.hasPhoto(tid)) return;
+    let photos; try { photos = await STRATI.getPhotos(tid); } catch (e) { return; }
+    if (!photos.length) return;
+    const body = el.querySelector('.talk-body'); if (!body) return;
+    const strip = document.createElement('div'); strip.className = 'talk-photos';
+    photos.slice(0, 4).forEach(p => {
+      const im = document.createElement('img');
+      im.className = 'talk-photo'; im.loading = 'lazy';
+      im.src = URL.createObjectURL(p.blob);
+      strip.appendChild(im);
+    });
+    body.appendChild(strip);
+  });
+
   const calAll = document.getElementById('cal-all');
   calAll.href = '{% url "calendar_ics" %}?ids=' + mine.map(t => t.id).join(',');
   calAll.hidden = false;

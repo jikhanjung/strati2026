@@ -27,6 +27,14 @@
     <textarea id="note" data-id="{{ talk.id }}" rows="2"
               placeholder="Add a private note — saved on this device only…"></textarea>
   </section>
+
+  <section class="photos" data-id="{{ talk.id }}">
+    <div class="note-h">📷 Photos <span class="note-status">device only</span></div>
+    <div id="photo-strip" class="photo-strip"></div>
+    <label class="photo-add">＋ Add photo
+      <input id="photo-input" type="file" accept="image/*" hidden>
+    </label>
+  </section>
   {% endif %}
 
   {% if abstract %}
@@ -74,6 +82,46 @@
       }, 1500); }
     }, 400);
   });
+
+  // ── 사진 (IndexedDB, 기기 로컬) ───────────────────────────────────
+  const strip = document.getElementById('photo-strip');
+  const input = document.getElementById('photo-input');
+  if (!strip || !input) return;
+  const urls = [];
+  function openLightbox(url) {
+    const ov = document.createElement('div');
+    ov.className = 'lightbox';
+    ov.innerHTML = '<img src="' + url + '" alt="">';
+    ov.addEventListener('click', () => ov.remove());
+    document.body.appendChild(ov);
+  }
+  async function renderPhotos() {
+    urls.forEach(URL.revokeObjectURL); urls.length = 0;
+    strip.innerHTML = '';
+    let photos;
+    try { photos = await STRATI.getPhotos(id); } catch (e) { return; }
+    photos.forEach(p => {
+      const url = URL.createObjectURL(p.blob); urls.push(url);
+      const fig = document.createElement('div');
+      fig.className = 'photo-thumb';
+      fig.innerHTML = '<img src="' + url + '" alt=""><button class="photo-del" aria-label="delete">×</button>';
+      fig.querySelector('img').addEventListener('click', () => openLightbox(url));
+      fig.querySelector('.photo-del').addEventListener('click', async () => {
+        if (!confirm('Delete this photo?')) return;
+        await STRATI.deletePhoto(p.id, id);
+        renderPhotos();
+      });
+      strip.appendChild(fig);
+    });
+  }
+  input.addEventListener('change', async () => {
+    const f = input.files && input.files[0];
+    input.value = '';
+    if (!f) return;
+    try { await STRATI.addPhotoFile(id, f); await renderPhotos(); }
+    catch (e) { alert('Could not add photo: ' + (e.message || e)); }
+  });
+  renderPhotos();
 })();
 </script>
 {% endblock %}
