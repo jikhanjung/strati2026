@@ -87,7 +87,6 @@
   const strip = document.getElementById('photo-strip');
   const input = document.getElementById('photo-input');
   if (!strip || !input) return;
-  const urls = [];
   function openLightbox(url) {
     const ov = document.createElement('div');
     ov.className = 'lightbox';
@@ -96,19 +95,17 @@
     document.body.appendChild(ov);
   }
   async function renderPhotos() {
-    urls.forEach(URL.revokeObjectURL); urls.length = 0;
     strip.innerHTML = '';
     let photos;
     try { photos = await STRATI.getPhotos(id); } catch (e) { return; }
     photos.forEach(p => {
-      const url = URL.createObjectURL(p.blob); urls.push(url);
       const fig = document.createElement('div');
       fig.className = 'photo-thumb';
-      fig.innerHTML = '<img src="' + url + '" alt=""><button class="photo-del" aria-label="delete">×</button>';
-      fig.querySelector('img').addEventListener('click', () => openLightbox(url));
+      fig.innerHTML = '<img src="' + p.url + '" alt="" loading="lazy"><button class="photo-del" aria-label="delete">×</button>';
+      fig.querySelector('img').addEventListener('click', () => openLightbox(p.url));
       fig.querySelector('.photo-del').addEventListener('click', async () => {
         if (!confirm('Delete this photo?')) return;
-        await STRATI.deletePhoto(p.id, id);
+        try { await STRATI.deletePhoto(p.id, id); } catch (e) {}
         renderPhotos();
       });
       strip.appendChild(fig);
@@ -118,8 +115,11 @@
     const f = input.files && input.files[0];
     input.value = '';
     if (!f) return;
+    const lbl = input.closest('.photo-add');
+    if (lbl) lbl.classList.add('busy');
     try { await STRATI.addPhotoFile(id, f); await renderPhotos(); }
     catch (e) { alert('Could not add photo: ' + (e.message || e)); }
+    finally { if (lbl) lbl.classList.remove('busy'); }
   });
   renderPhotos();
 })();

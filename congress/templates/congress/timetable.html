@@ -261,7 +261,7 @@
     photos.slice(0, 4).forEach(p => {
       const im = document.createElement('img');
       im.className = 'talk-photo'; im.loading = 'lazy';
-      im.src = URL.createObjectURL(p.blob);
+      im.src = p.url;
       strip.appendChild(im);
     });
     body.appendChild(strip);

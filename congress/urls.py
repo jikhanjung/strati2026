@@ -18,4 +18,9 @@ urlpatterns = [
     path("api/pair/claim/", views.pair_claim, name="pair_claim"),
     path("api/devices/", views.api_devices, name="api_devices"),
     path("api/device/forget/", views.device_forget, name="device_forget"),
+    path("api/photos/", views.photo_list, name="photo_list"),
+    path("api/photos/upload/", views.photo_upload, name="photo_upload"),
+    path("api/photos/talks/", views.photo_talks, name="photo_talks"),
+    path("api/photos/file/<int:pid>", views.photo_file, name="photo_file"),
+    path("api/photos/<int:pid>/delete/", views.photo_delete, name="photo_delete"),
 ]

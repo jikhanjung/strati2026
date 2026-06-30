@@ -1,17 +1,22 @@
 import datetime as dt
+import hashlib
+import hmac
 import json
+import os
 import secrets
 from zoneinfo import ZoneInfo
 
+from django.conf import settings
 from django.db import transaction
-from django.db.models import Count, Q
-from django.http import HttpResponse, JsonResponse
+from django.db.models import Count, Q, Sum
+from django.http import FileResponse, HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
 from django.views.decorators.csrf import csrf_exempt
-from django.views.decorators.http import require_POST
+from django.views.decorators.http import require_GET, require_POST
 
-from .models import ROOM_FLOOR, Abstract, PairCode, Session, SyncDevice, Talk
+from .models import (ROOM_FLOOR, Abstract, PairCode, Session, SyncDevice,
+                     SyncPhoto, Talk)
 
 CONGRESS_TZ = ZoneInfo("Asia/Shanghai")
 ALARM_MIN = 5             # 발표 N분 전 캘린더 알림
@@ -241,6 +246,126 @@ def calendar_ics(request):
 
 def home(request):
     return redirect("program")
+
+
+# ── 사진 동기화 (서버 저장 + 서명 URL) ────────────────────────────────────
+PHOTO_URL_TTL = 30 * 24 * 3600   # 서명 URL 유효기간(초)
+
+
+def _photo_sig(pid, exp):
+    msg = f"{pid}:{exp}".encode()
+    return hmac.new(settings.SECRET_KEY.encode(), msg, hashlib.sha256).hexdigest()[:32]
+
+
+def _photo_url(p):
+    exp = int(timezone.now().timestamp()) + PHOTO_URL_TTL
+    return f"/api/photos/file/{p.id}?exp={exp}&sig={_photo_sig(p.id, exp)}"
+
+
+def _photo_meta(p):
+    return {"id": p.id, "talk": p.talk_id, "size": p.size,
+            "ts": p.created.isoformat(), "url": _photo_url(p)}
+
+
+@csrf_exempt
+@require_POST
+def photo_upload(request):
+    token = _device_token(request)
+    if not token:
+        return JsonResponse({"error": "missing device token"}, status=400)
+    try:
+        talk_id = int(request.POST.get("talk") or 0)
+    except ValueError:
+        talk_id = 0
+    f = request.FILES.get("file")
+    if not talk_id or not f:
+        return JsonResponse({"error": "talk and file required"}, status=400)
+    if f.size > settings.PHOTO_MAX_BYTES:
+        return JsonResponse({"error": "file too large"}, status=413)
+    # 쿼터: talk당 장수 · 토큰당 총 용량
+    if SyncPhoto.objects.filter(token=token, talk_id=talk_id).count() >= settings.PHOTO_MAX_PER_TALK:
+        return JsonResponse({"error": "per-talk limit reached"}, status=409)
+    used = SyncPhoto.objects.filter(token=token).aggregate(s=Sum("size"))["s"] or 0
+    if used + f.size > settings.PHOTO_MAX_PER_TOKEN:
+        return JsonResponse({"error": "storage quota reached"}, status=409)
+
+    sub = hashlib.sha256(token.encode()).hexdigest()[:16]
+    folder = os.path.join(settings.MEDIA_ROOT, "photos", sub)
+    os.makedirs(folder, exist_ok=True)
+    p = SyncPhoto.objects.create(token=token, talk_id=talk_id, filename="", size=f.size)
+    rel = os.path.join("photos", sub, f"{p.id}.jpg")
+    with open(os.path.join(settings.MEDIA_ROOT, rel), "wb") as out:
+        for chunk in f.chunks():
+            out.write(chunk)
+    p.filename = rel
+    p.save(update_fields=["filename"])
+    return JsonResponse(_photo_meta(p))
+
+
+@csrf_exempt
+@require_GET
+def photo_list(request):
+    token = _device_token(request)
+    if not token:
+        return JsonResponse({"error": "missing device token"}, status=400)
+    qs = SyncPhoto.objects.filter(token=token)
+    talk = request.GET.get("talk")
+    if talk and talk.isdigit():
+        qs = qs.filter(talk_id=int(talk))
+    return JsonResponse({"photos": [_photo_meta(p) for p in qs]})
+
+
+@csrf_exempt
+@require_GET
+def photo_talks(request):
+    """이 토큰이 사진을 가진 talk id 목록(카드 📷 표시용)."""
+    token = _device_token(request)
+    if not token:
+        return JsonResponse({"error": "missing device token"}, status=400)
+    ids = list(SyncPhoto.objects.filter(token=token)
+               .values_list("talk_id", flat=True).distinct())
+    return JsonResponse({"talks": ids})
+
+
+@require_GET
+def photo_file(request, pid):
+    """서명 URL로만 접근(헤더 인증 불가한 <img> 대응)."""
+    try:
+        exp = int(request.GET.get("exp") or 0)
+    except ValueError:
+        exp = 0
+    sig = request.GET.get("sig") or ""
+    if exp < timezone.now().timestamp() or not hmac.compare_digest(sig, _photo_sig(pid, exp)):
+        return HttpResponse(status=403)
+    p = SyncPhoto.objects.filter(id=pid).first()
+    if not p or not p.filename:
+        return HttpResponse(status=404)
+    path = os.path.join(settings.MEDIA_ROOT, p.filename)
+    if not os.path.exists(path):
+        return HttpResponse(status=404)
+    resp = FileResponse(open(path, "rb"), content_type="image/jpeg")
+    resp["Cache-Control"] = "private, max-age=2592000"
+    return resp
+
+
+@csrf_exempt
+@require_POST
+def photo_delete(request, pid):
+    token = _device_token(request)
+    if not token:
+        return JsonResponse({"error": "missing device token"}, status=400)
+    p = SyncPhoto.objects.filter(id=pid, token=token).first()
+    if not p:
+        return JsonResponse({"error": "not found"}, status=404)
+    if p.filename:
+        try:
+            os.remove(os.path.join(settings.MEDIA_ROOT, p.filename))
+        except OSError:
+            pass
+    talk_id = p.talk_id
+    p.delete()
+    remaining = SyncPhoto.objects.filter(token=token, talk_id=talk_id).count()
+    return JsonResponse({"deleted": True, "talk": talk_id, "remaining": remaining})
 
 
 # ── 동기화 (익명 디바이스 토큰 + 페어링 코드) ─────────────────────────────

@@ -137,6 +137,7 @@
     localStorage.setItem(TKEY, data.token);   // 싱크 토큰만 교체(디바이스 ID는 유지)
     localStorage.setItem("strati_linked", "1");
     await syncNow();                           // 내 로컬을 공유 버킷에 병합 + 병합본 수신
+    await syncPhotoTalks();                     // 공유 버킷의 사진 마커 반영
     return true;
   }
   function isLinked() { return localStorage.getItem("strati_linked") === "1"; }
@@ -165,8 +166,8 @@
     await syncNow();                   // 내 데이터는 유지한 채 새 버킷으로 업로드
   }
 
-  // ── 사진 (IndexedDB, 기기 로컬 — 동기화 안 함) ───────────────────────
-  const PKEY = "strati_photo_ids";
+  // ── 사진 (서버 저장 + 서명 URL; IndexedDB는 구버전 이관용만) ──────────
+  const PKEY = "strati_photo_ids";   // 사진 가진 talk id 목록(카드 📷 마커용)
   function getPhotoIds() {
     try { return JSON.parse(localStorage.getItem(PKEY) || "[]"); }
     catch (e) { return []; }
@@ -176,35 +177,6 @@
     let a = getPhotoIds();
     if (on) { if (!a.includes(id)) a.push(id); } else { a = a.filter(x => x !== id); }
     localStorage.setItem(PKEY, JSON.stringify(a));
-  }
-  let _db;
-  function db() {
-    return _db || (_db = new Promise((res, rej) => {
-      const r = indexedDB.open("strati", 1);
-      r.onupgradeneeded = () => {
-        const d = r.result;
-        if (!d.objectStoreNames.contains("photos")) {
-          const os = d.createObjectStore("photos", { keyPath: "id", autoIncrement: true });
-          os.createIndex("talkId", "talkId", { unique: false });
-        }
-      };
-      r.onsuccess = () => res(r.result);
-      r.onerror = () => rej(r.error);
-    }));
-  }
-  async function getPhotos(talkId) {
-    const d = await db();
-    return new Promise((res, rej) => {
-      const out = [];
-      const req = d.transaction("photos").objectStore("photos")
-        .index("talkId").openCursor(IDBKeyRange.only(talkId));
-      req.onsuccess = () => {
-        const c = req.result;
-        if (c) { out.push({ id: c.value.id, blob: c.value.blob }); c.continue(); }
-        else res(out);
-      };
-      req.onerror = () => rej(req.error);
-    });
   }
   function downscale(file, maxDim, quality) {
     return new Promise((res, rej) => {
@@ -223,26 +195,87 @@
       img.src = URL.createObjectURL(file);
     });
   }
+  async function uploadBlob(talkId, blob) {
+    const fd = new FormData();
+    fd.append("talk", String(talkId));
+    fd.append("file", blob, "photo.jpg");
+    const res = await fetch("/api/photos/upload/", {
+      method: "POST", headers: { "X-Device": deviceToken() }, body: fd });
+    if (!res.ok) {
+      let msg = "upload failed";
+      try { msg = (await res.json()).error || msg; } catch (e) {}
+      throw new Error(msg);
+    }
+    return res.json();              // {id, talk, size, ts, url}
+  }
   async function addPhotoFile(talkId, file) {
     const blob = await downscale(file, 1280, 0.8);
-    const d = await db();
-    await new Promise((res, rej) => {
-      const tx = d.transaction("photos", "readwrite");
-      tx.objectStore("photos").add({ talkId, blob, ts: Date.now() });
-      tx.oncomplete = res; tx.onerror = () => rej(tx.error);
-    });
+    await uploadBlob(talkId, blob);
     setPhotoId(talkId, true);
-    ensureBM(talkId);         // 사진을 추가하면 자동 북마크
+    ensureBM(talkId);              // 사진을 추가하면 자동 북마크
+  }
+  async function getPhotos(talkId) {
+    const res = await fetch("/api/photos/?talk=" + encodeURIComponent(talkId),
+      { headers: { "X-Device": deviceToken() } });
+    if (!res.ok) return [];
+    return (await res.json()).photos || [];   // [{id, url, size, ts, talk}]
   }
   async function deletePhoto(photoId, talkId) {
-    const d = await db();
-    await new Promise((res, rej) => {
-      const tx = d.transaction("photos", "readwrite");
-      tx.objectStore("photos").delete(photoId);
-      tx.oncomplete = res; tx.onerror = () => rej(tx.error);
-    });
-    const rest = await getPhotos(talkId);
-    if (!rest.length) setPhotoId(talkId, false);
+    const res = await fetch("/api/photos/" + photoId + "/delete/", {
+      method: "POST", headers: { "X-Device": deviceToken() } });
+    if (!res.ok) throw new Error("delete failed");
+    const d = await res.json();
+    if (d.remaining === 0) setPhotoId(talkId, false);
+  }
+  // 이 토큰이 사진 가진 talk 목록 동기화 → 카드 마커 갱신
+  async function syncPhotoTalks() {
+    try {
+      const res = await fetch("/api/photos/talks/", { headers: { "X-Device": deviceToken() } });
+      if (!res.ok) return;
+      localStorage.setItem(PKEY, JSON.stringify((await res.json()).talks || []));
+      refresh();
+    } catch (e) { /* offline 무시 */ }
+  }
+  // 구버전 로컬(IndexedDB) 사진을 서버로 1회 업로드
+  async function migratePhotos() {
+    if (localStorage.getItem("strati_photos_migrated") === "1") return;
+    let d;
+    try {
+      d = await new Promise((res, rej) => {
+        const r = indexedDB.open("strati", 1);
+        r.onupgradeneeded = () => {
+          const dd = r.result;
+          if (!dd.objectStoreNames.contains("photos"))
+            dd.createObjectStore("photos", { keyPath: "id", autoIncrement: true });
+        };
+        r.onsuccess = () => res(r.result);
+        r.onerror = () => rej(r.error);
+      });
+    } catch (e) { return; }
+    let rows;
+    try {
+      rows = await new Promise((res, rej) => {
+        const out = [];
+        const req = d.transaction("photos").objectStore("photos").openCursor();
+        req.onsuccess = () => {
+          const c = req.result;
+          if (c) { out.push({ key: c.primaryKey, talkId: c.value.talkId, blob: c.value.blob }); c.continue(); }
+          else res(out);
+        };
+        req.onerror = () => rej(req.error);
+      });
+    } catch (e) { return; }
+    if (!rows.length) { localStorage.setItem("strati_photos_migrated", "1"); return; }
+    for (const r of rows) {
+      try {
+        if (r.blob && r.talkId) { await uploadBlob(r.talkId, r.blob); setPhotoId(r.talkId, true); }
+        await new Promise(res => {
+          const tx = d.transaction("photos", "readwrite");
+          tx.objectStore("photos").delete(r.key); tx.oncomplete = res; tx.onerror = res;
+        });
+      } catch (e) { return; }       // 실패(오프라인/쿼터) → 다음 기회에 재시도
+    }
+    localStorage.setItem("strati_photos_migrated", "1");
   }
 
   // ── UI helpers ───────────────────────────────────────────────────────
@@ -274,11 +307,13 @@
     document.dispatchEvent(new CustomEvent("bm:change", { detail: { id } }));
   });
 
-  document.addEventListener("DOMContentLoaded", function () { refresh(); initSync(); });
+  document.addEventListener("DOMContentLoaded", function () {
+    refresh(); initSync(); syncPhotoTalks(); migratePhotos();
+  });
 
   window.STRATI = {
     getBM, isBM, toggle, esc, refresh, getNote, hasNote, setNote,
-    hasPhoto, getPhotos, addPhotoFile, deletePhoto,
+    hasPhoto, getPhotos, addPhotoFile, deletePhoto, syncPhotoTalks,
     syncNow, firstSync, deviceToken, deviceId, pairNew, pairClaim,
     isLinked, linkedCount, listDevices, forgetDevice, unlinkThisDevice,
   };

@@ -92,6 +92,18 @@ class SyncDevice(models.Model):
         return self.token
 
 
+class SyncPhoto(models.Model):
+    """토큰(버킷)별 talk 사진. 파일은 MEDIA_ROOT, DB엔 메타만."""
+    token = models.CharField(max_length=128, db_index=True)
+    talk_id = models.IntegerField(db_index=True)
+    filename = models.CharField(max_length=255)        # MEDIA_ROOT 기준 상대경로
+    size = models.IntegerField(default=0)
+    created = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["created"]
+
+
 class PairCode(models.Model):
     """기기 페어링용 단명(短命) 숫자 코드 → 토큰. 1회용."""
     code = models.CharField(max_length=12, primary_key=True)
