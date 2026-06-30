@@ -2,7 +2,8 @@
    anonymous device token. Photos stay device-local (IndexedDB), not synced. */
 (function () {
   const SKEY = "strati_state";     // {bm:{id:{v,ts}}, notes:{id:{v,ts}}}
-  const DKEY = "strati_device";    // anonymous device token
+  const DKEY = "strati_device";    // 영구 디바이스 ID (페어링해도 안 바뀜)
+  const TKEY = "strati_token";     // 싱크 토큰(공유 버킷 키; 페어링 시 상대 것으로 교체)
 
   function nowTs() { return Date.now(); }
 
@@ -46,15 +47,20 @@
     if (text) ensureBM(id);                        // 메모를 남기면 자동 북마크
   }
 
-  // ── 동기화 (익명 디바이스 토큰) ───────────────────────────────────────
-  function deviceToken() {
+  // ── 동기화 (영구 디바이스 ID + 공유 싱크 토큰) ────────────────────────
+  function randId() {
+    return (window.crypto && crypto.randomUUID)
+      ? crypto.randomUUID()
+      : "d" + Math.random().toString(36).slice(2) + nowTs().toString(36);
+  }
+  function deviceId() {            // 이 브라우저 고유·영구
     let t = localStorage.getItem(DKEY);
-    if (!t || t.length < 8) {
-      t = (window.crypto && crypto.randomUUID)
-        ? crypto.randomUUID()
-        : "d" + Math.random().toString(36).slice(2) + nowTs().toString(36);
-      localStorage.setItem(DKEY, t);
-    }
+    if (!t || t.length < 8) { t = randId(); localStorage.setItem(DKEY, t); }
+    return t;
+  }
+  function deviceToken() {         // 공유 버킷 키(기본=디바이스 ID, 페어링 시 교체)
+    let t = localStorage.getItem(TKEY);
+    if (!t || t.length < 8) { t = deviceId(); localStorage.setItem(TKEY, t); }
     return t;
   }
   // 서버 응답(merged)을 현재 STATE에 항목별 ts 큰 쪽으로 병합(진행 중 로컬편집 보존)
@@ -80,13 +86,15 @@
     try {
       const res = await fetch("/api/sync/", {
         method: "POST",
-        headers: { "X-Device": deviceToken(), "Content-Type": "application/json" },
+        headers: { "X-Device": deviceToken(), "X-Device-Id": deviceId(),
+                   "Content-Type": "application/json" },
         body: JSON.stringify(STATE),
       });
       if (res.ok) {
         const merged = await res.json();
         mergeInto(merged);
         if (merged.paired) localStorage.setItem("strati_linked", "1");
+        if (typeof merged.devices === "number") localStorage.setItem("strati_devices", String(merged.devices));
         refresh();
         document.dispatchEvent(new CustomEvent("sync:applied"));
       }
@@ -116,12 +124,13 @@
       body: JSON.stringify({ code: String(code || "").trim() }) });
     if (!res.ok) throw new Error(res.status === 410 ? "expired" : "invalid");
     const data = await res.json();
-    localStorage.setItem(DKEY, data.token);   // 상대 기기의 토큰을 내 토큰으로
+    localStorage.setItem(TKEY, data.token);   // 싱크 토큰만 교체(디바이스 ID는 유지)
     localStorage.setItem("strati_linked", "1");
     await syncNow();                           // 내 로컬을 공유 버킷에 병합 + 병합본 수신
     return true;
   }
   function isLinked() { return localStorage.getItem("strati_linked") === "1"; }
+  function linkedCount() { return parseInt(localStorage.getItem("strati_devices") || "0", 10) || 0; }
 
   // ── 사진 (IndexedDB, 기기 로컬 — 동기화 안 함) ───────────────────────
   const PKEY = "strati_photo_ids";
@@ -237,6 +246,6 @@
   window.STRATI = {
     getBM, isBM, toggle, esc, refresh, getNote, hasNote, setNote,
     hasPhoto, getPhotos, addPhotoFile, deletePhoto,
-    syncNow, firstSync, deviceToken, pairNew, pairClaim, isLinked,
+    syncNow, firstSync, deviceToken, pairNew, pairClaim, isLinked, linkedCount,
   };
 })();

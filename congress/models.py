@@ -84,6 +84,7 @@ class SyncDevice(models.Model):
     token = models.CharField(max_length=128, primary_key=True)
     state = models.TextField(default="{}")             # {"bm":{id:{v,ts}}, "notes":{id:{v,ts}}}
     paired = models.BooleanField(default=False)        # 한 번이라도 다른 기기와 페어링됨
+    devices = models.JSONField(default=list)           # 이 버킷을 쓴 디바이스 ID들 [{id, seen}]
     updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):

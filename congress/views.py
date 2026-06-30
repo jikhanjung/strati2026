@@ -284,6 +284,7 @@ def api_sync(request):
         return JsonResponse({"error": "bad json"}, status=400)
     if not isinstance(incoming, dict):
         incoming = {}
+    device_id = (request.headers.get("X-Device-Id") or "").strip()[:128]
     with transaction.atomic():
         dev, _ = SyncDevice.objects.select_for_update().get_or_create(token=token)
         try:
@@ -292,9 +293,20 @@ def api_sync(request):
             stored = {}
         merged = _merge_state(stored, incoming)
         dev.state = json.dumps(merged, separators=(",", ":"))
+        # 이 버킷을 쓴 디바이스 ID 기록(중복 방지) → 연결 기기 수 산출
+        devices = dev.devices if isinstance(dev.devices, list) else []
+        now_iso = timezone.now().isoformat()
+        if device_id:
+            entry = next((d for d in devices if isinstance(d, dict) and d.get("id") == device_id), None)
+            if entry:
+                entry["seen"] = now_iso
+            else:
+                devices.append({"id": device_id, "seen": now_iso})
+        dev.devices = devices
         dev.save()
-        paired = dev.paired
-    return JsonResponse({**merged, "paired": paired})
+        count = len(devices)
+        paired = dev.paired or count >= 2
+    return JsonResponse({**merged, "paired": paired, "devices": count})
 
 
 @csrf_exempt

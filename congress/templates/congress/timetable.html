@@ -25,7 +25,12 @@
   const enter = document.getElementById('sync-enter');
   const status = document.getElementById('sync-status');
   if (!link || !enter) return;
-  function renderLinked() { if (status) status.hidden = !STRATI.isLinked(); }
+  function renderLinked() {
+    if (!status) return;
+    const linked = STRATI.isLinked(), n = STRATI.linkedCount();
+    status.hidden = !linked;
+    status.textContent = '🔗 Linked' + (n >= 2 ? ' · ' + n + ' devices' : ' across devices');
+  }
   renderLinked();
   document.addEventListener('sync:applied', renderLinked);   // 동기화로 paired 확인 시 갱신
   link.addEventListener('click', async () => {
